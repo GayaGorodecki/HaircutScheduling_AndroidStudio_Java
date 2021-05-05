@@ -4,7 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.fragments.LoginFragment;
@@ -22,9 +26,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
-//        LoginFragment loginFragment = new LoginFragment();
-//
-//        fragmentTransaction.add(R.id.fragmentcon, loginFragment).commit();
+        LoginFragment loginFragment = new LoginFragment();
 
+        fragmentTransaction.add(R.id.fragmentcon, loginFragment).commit();
     }
 }

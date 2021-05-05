@@ -7,22 +7,9 @@
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textViewTitle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="0.9"
-        android:gravity="center"
-        android:text="Get A Haircut"
-        android:textColor="@color/design_default_color_primary"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
     <FrameLayout
         android:id="@+id/fragmentcon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="0.1" />
+        android:layout_margin="10dp" />
 </LinearLayout>
