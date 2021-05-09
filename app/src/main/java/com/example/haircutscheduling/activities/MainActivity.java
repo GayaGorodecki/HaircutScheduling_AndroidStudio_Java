@@ -3,6 +3,9 @@ package com.example.haircutscheduling.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -12,14 +15,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.CustomAdapter;
+import com.example.haircutscheduling.classes.DataModel;
+import com.example.haircutscheduling.classes.HairStylesData;
+import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
+    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView recyclerView;
+    private static ArrayList<DataModel> hairstyleData;
+    private static CustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,5 +78,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         MainFragment mainFragment = new MainFragment();
         fragmentTransaction.replace(R.id.fragmentcon, mainFragment).addToBackStack(null).commit();
+    }
+
+    public void setAppoitmentsMainFragment() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AppointmentsMainFragment appointmentsMainFragment = new AppointmentsMainFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, appointmentsMainFragment).addToBackStack(null).commit();
     }
 }
