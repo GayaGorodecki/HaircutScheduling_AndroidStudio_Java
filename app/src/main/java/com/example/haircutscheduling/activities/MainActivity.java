@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.fragments.LoginFragment;
+import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,10 +32,23 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragmentcon, loginFragment).commit();
     }
 
-    public void setSigninFragment()
-    {
+    public void setSigninFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         SigninFragment signinFragment = new SigninFragment();
         fragmentTransaction.replace(R.id.fragmentcon, signinFragment).addToBackStack(null).commit();
+    }
+
+    public void Login() {
+
+        // if (TODO:: ... check if user email & password is in database...)
+//        {
+            setMainFragment();
+//        }
+    }
+
+    public void setMainFragment() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        MainFragment mainFragment = new MainFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, mainFragment).addToBackStack(null).commit();
     }
 }
