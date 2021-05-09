@@ -35,7 +35,7 @@
         <ImageView
             android:id="@+id/imageViewLogoLogin"
             android:layout_width="wrap_content"
-            android:layout_height="204dp"
+            android:layout_height="129dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
@@ -123,7 +123,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_margin="10dp"
+            android:gravity="bottom"
             android:orientation="vertical"
             android:padding="10dp">
 

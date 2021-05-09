@@ -26,8 +26,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
+        setLoginFragment();
+    }
 
+    public void setLoginFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
         fragmentTransaction.add(R.id.fragmentcon, loginFragment).commit();
     }
@@ -42,8 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
         // if (TODO:: ... check if user email & password is in database...)
 //        {
-            setMainFragment();
+        setMainFragment();
 //        }
+    }
+
+    public void Register() {
+//        TODO:: register to DB
+        setLoginFragment();
     }
 
     public void setMainFragment() {
