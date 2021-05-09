@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -25,12 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        TODO:: 1. save last fragment on screen orientation change
+//        TODO:: 2. Shared Preferences -> if user allready login or 'remember me' button
+//        TODO:: 3. check design in all screen size
+
+
         fragmentManager = getSupportFragmentManager();
         setLoginFragment();
     }
 
-    public void setLoginFragment()
-    {
+    public void setLoginFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
         fragmentTransaction.add(R.id.fragmentcon, loginFragment).commit();
@@ -44,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void Login() {
 
-        // if (TODO:: ... check if user email & password is in database...)
+//        TODO:: if(... check if user email & password is in DB...)
 //        {
         setMainFragment();
 //        }
