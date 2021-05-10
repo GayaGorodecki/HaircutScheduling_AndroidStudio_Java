@@ -1,29 +1,15 @@
 package com.example.haircutscheduling.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Fragment;
-import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.CustomAdapter;
+import com.example.haircutscheduling.classes.MainCustomAdapter;
 import com.example.haircutscheduling.classes.DataModel;
-import com.example.haircutscheduling.classes.HairStylesData;
 import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
@@ -31,7 +17,6 @@ import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<DataModel> hairstyleData;
-    private static CustomAdapter adapter;
+    private static MainCustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

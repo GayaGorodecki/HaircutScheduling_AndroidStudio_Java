@@ -3,12 +3,21 @@ package com.example.haircutscheduling.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.BookedCustomAdapter;
+import com.example.haircutscheduling.classes.MainCustomAdapter;
+import com.example.haircutscheduling.classes.DataModel;
+import com.example.haircutscheduling.classes.HairStylesData;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +34,11 @@ public class BookedAppoitmentsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView recyclerView;
+    private static ArrayList<DataModel> bookedAppointmentData;
+    private static BookedCustomAdapter adapter;
 
     public BookedAppoitmentsFragment() {
         // Required empty public constructor
@@ -61,6 +75,30 @@ public class BookedAppoitmentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_booked_appoitments, container, false);
+        View view = inflater.inflate(R.layout.fragment_booked_appoitments, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerBooked);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+//        TODO:: get data from db (booked appoitments) and delete this:
+        bookedAppointmentData = new ArrayList<DataModel>();
+        for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
+            bookedAppointmentData.add(new DataModel(
+                    HairStylesData.hairStyleArray[i],
+                    HairStylesData.descriptationArray[i],
+                    HairStylesData.id[i],
+                    HairStylesData.drawableArray[i]
+            ));
+        }
+
+        adapter = new BookedCustomAdapter(bookedAppointmentData);
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
 }

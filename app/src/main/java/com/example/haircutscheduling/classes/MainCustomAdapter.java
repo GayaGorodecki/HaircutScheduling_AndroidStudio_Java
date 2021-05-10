@@ -14,11 +14,11 @@ import com.example.haircutscheduling.R;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder>{
+public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.MyViewHolder>{
 
     private final ArrayList<DataModel> dataSet;
 
-    public CustomAdapter(ArrayList<DataModel> data)
+    public MainCustomAdapter(ArrayList<DataModel> data)
     {
         this.dataSet = data;
     }

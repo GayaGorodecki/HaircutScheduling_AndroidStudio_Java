@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
-import com.example.haircutscheduling.classes.CustomAdapter;
+import com.example.haircutscheduling.classes.MainCustomAdapter;
 import com.example.haircutscheduling.classes.DataModel;
 import com.example.haircutscheduling.classes.HairStylesData;
 
@@ -36,10 +35,11 @@ public class AppointmentsMainFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<DataModel> hairstyleData;
-    private static CustomAdapter adapter;
+    private static MainCustomAdapter adapter;
 
     public AppointmentsMainFragment() {
         // Required empty public constructor
@@ -90,13 +90,13 @@ public class AppointmentsMainFragment extends Fragment {
         for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
             hairstyleData.add(new DataModel(
                     HairStylesData.hairStyleArray[i],
-                    HairStylesData.descriptaionArray[i],
+                    HairStylesData.descriptationArray[i],
                     HairStylesData.id[i],
                     HairStylesData.drawableArray[i]
             ));
         }
 
-        adapter = new CustomAdapter(hairstyleData);
+        adapter = new MainCustomAdapter(hairstyleData);
         recyclerView.setAdapter(adapter);
 
         return view;
