@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical">
 
@@ -17,6 +17,7 @@
             android:id="@+id/textViewLoginTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
@@ -36,7 +37,7 @@
             android:id="@+id/imageViewLogoLogin"
             android:layout_width="wrap_content"
             android:layout_height="129dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center|top"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"
@@ -47,6 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginEnd="20dp"
@@ -59,6 +61,7 @@
                 android:id="@+id/textViewLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:text="התחבר לחשבון"
@@ -133,6 +136,7 @@
                 android:id="@+id/textViewSignin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:gravity="center"
                 android:paddingBottom="10dp"
                 android:text="עדיין לא רשום?" />
@@ -141,7 +145,7 @@
                 android:id="@+id/buttonSignin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="bottom|center"
                 android:background="@drawable/connection_buttoms_design"
                 android:text="פתח חשבון"
                 android:textAllCaps="false"
