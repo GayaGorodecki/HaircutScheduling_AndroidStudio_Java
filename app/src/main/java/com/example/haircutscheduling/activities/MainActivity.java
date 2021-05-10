@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        TODO:: 1. save last fragment on screen orientation change
 //        TODO:: 2. Shared Preferences -> if user allready login or 'remember me' button
-//        TODO:: 3. check design in all screen size
 
         fragmentManager = getSupportFragmentManager();
 
