@@ -57,7 +57,12 @@ public class MainActivity extends AppCompatActivity {
 
 //        TODO:: if(... check if user email & password is in DB...)
 //        {
-        setMainFragment();
+//          if (user == admin) {
+//              setAdminFragment()
+//          }
+//          else {
+                setMainFragment();
+//          }
 //        }
     }
 
