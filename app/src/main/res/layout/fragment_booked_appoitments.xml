@@ -2,43 +2,36 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp"
-    tools:context=".fragments.AppointmentsMainFragment">
-
+    android:layout_height="match_parent"
+    tools:context=".fragments.BookedAppoitmentsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewBooked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center|right"
             android:padding="10dp"
-            android:text="בחר סוג תספורת:"
+            android:text="תורים שנקבעו"
             android:textColor="#5CA7B1"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <RelativeLayout
-            android:id="@+id/relativeManager"
+            android:id="@+id/relativeBooked"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/hairstyleRecyclerView"
+                android:id="@+id/recyclerBooked"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:layout_height="match_parent" />
         </RelativeLayout>
-
     </LinearLayout>
-
 </FrameLayout>
