@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:tag="cards main container">
+    android:tag="cards booked container">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/available_card_view"
-        app:cardElevation="5dp"
-        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,23 +38,23 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textViewHairStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:text="סוג תספורת"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
                     android:id="@+id/textViewPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="מחיר \ זמן" />
+                    android:text="מחיר \ זמן"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="הזמן" />
 
             </LinearLayout>
 

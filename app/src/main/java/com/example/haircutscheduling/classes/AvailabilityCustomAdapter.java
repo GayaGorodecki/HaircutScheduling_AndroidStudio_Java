@@ -14,11 +14,11 @@ import com.example.haircutscheduling.R;
 
 import java.util.ArrayList;
 
-public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapter.MyViewHolder> {
+public class AvailabilityCustomAdapter extends RecyclerView.Adapter<AvailabilityCustomAdapter.MyViewHolder>  {
 
     private final ArrayList<DataModel> dataSet;
 
-    public BookedCustomAdapter(ArrayList<DataModel> data) {
+    public AvailabilityCustomAdapter(ArrayList<DataModel> data) {
         this.dataSet = data;
     }
 
@@ -32,7 +32,7 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            this.cardViewBooked = (CardView) itemView.findViewById(R.id.card_view_booked);
+            this.cardViewBooked = (CardView) itemView.findViewById(R.id.available_card_view);
             this.textViewHairStyleBooked = (TextView) itemView.findViewById(R.id.textViewHairStyleBooked);
             this.textViewPriceBooked = (TextView) itemView.findViewById(R.id.textViewPriceBooked);
             this.imageViewIconBooked = (ImageView) itemView.findViewById(R.id.imageViewHairStyleBooked);
@@ -41,27 +41,27 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
 
     @NonNull
     @Override
-    public BookedCustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AvailabilityCustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.booked_cards, parent, false);
+                .inflate(R.layout.available_card, parent, false);
 
-        BookedCustomAdapter.MyViewHolder myViewHolder = new BookedCustomAdapter.MyViewHolder(view);
+        AvailabilityCustomAdapter.MyViewHolder myViewHolder = new AvailabilityCustomAdapter.MyViewHolder(view);
 
         return myViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookedCustomAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AvailabilityCustomAdapter.MyViewHolder holder, int position) {
 
         TextView textViewHairStyleBooked = holder.textViewHairStyleBooked;
         TextView textViewDescriptionBooked = holder.textViewPriceBooked;
         ImageView imageViewBooked = holder.imageViewIconBooked;
         CardView cardViewBooked = holder.cardViewBooked;
 
-        textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
+        /*textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
         textViewDescriptionBooked.setText(dataSet.get(position).getDescription());
-        imageViewBooked.setImageResource(dataSet.get(position).getImage());
+        imageViewBooked.setImageResource(dataSet.get(position).getImage());*/
 
 
     }

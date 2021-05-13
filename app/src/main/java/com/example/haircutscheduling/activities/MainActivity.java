@@ -14,6 +14,7 @@ import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
+import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
 
 import java.util.ArrayList;
@@ -88,5 +89,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         BookedAppoitmentsFragment bookedAppoitmentsFragment = new BookedAppoitmentsFragment();
         fragmentTransaction.replace(R.id.fragmentcon, bookedAppoitmentsFragment).addToBackStack(null).commit();
+    }
+
+    public void setSelectAppointmentsFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        SelectAppointmentsFragment selectAppointmentsFragment = new SelectAppointmentsFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
     }
 }

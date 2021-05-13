@@ -11,18 +11,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.activities.MainActivity;
 
 import java.util.ArrayList;
 
 public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.MyViewHolder>{
-
+    MainActivity mainActivity;
     private final ArrayList<DataModel> dataSet;
-
-    public MainCustomAdapter(ArrayList<DataModel> data)
+    public MainCustomAdapter(ArrayList<DataModel> data,MainActivity Activity)
     {
         this.dataSet = data;
+        mainActivity = Activity;
     }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
@@ -32,8 +32,7 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.My
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
-            this.cardView = (CardView) itemView.findViewById(R.id.card_view);
+            this.cardView = (CardView) itemView.findViewById(R.id.available_card_view);
             this.textViewHairStyle = (TextView) itemView.findViewById(R.id.textViewHairStyle);
             this.textViewPrice = (TextView) itemView.findViewById(R.id.textViewPrice);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageViewHairStyle);
@@ -63,6 +62,13 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.My
         textViewHairStyle.setText(dataSet.get(position).getHairStyle());
         textViewDescription.setText(dataSet.get(position).getDescription());
         imageView.setImageResource(dataSet.get(position).getImage());
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.setSelectAppointmentsFragment();
+            }
+        });
     }
 
     @Override

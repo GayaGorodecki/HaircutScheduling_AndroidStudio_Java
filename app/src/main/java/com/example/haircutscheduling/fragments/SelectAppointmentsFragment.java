@@ -13,18 +13,25 @@ import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
-import com.example.haircutscheduling.classes.MainCustomAdapter;
+import com.example.haircutscheduling.classes.AvailabilityCustomAdapter;
+import com.example.haircutscheduling.classes.BookedCustomAdapter;
 import com.example.haircutscheduling.classes.DataModel;
 import com.example.haircutscheduling.classes.HairStylesData;
+import com.example.haircutscheduling.classes.MainCustomAdapter;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AppointmentsMainFragment#newInstance} factory method to
+ * Use the {@link SelectAppointmentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AppointmentsMainFragment extends Fragment {
+public class SelectAppointmentsFragment extends Fragment {
+
+    private RecyclerView.LayoutManager layoutManager;
+    private static RecyclerView recyclerView;
+    private static ArrayList<DataModel> bookedAppointmentData;
+    private static AvailabilityCustomAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,14 +41,8 @@ public class AppointmentsMainFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    MainActivity mainActivity;
 
-    private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
-    private static ArrayList<DataModel> hairstyleData;
-    private static MainCustomAdapter adapter;
-
-    public AppointmentsMainFragment() {
+    public SelectAppointmentsFragment() {
         // Required empty public constructor
     }
 
@@ -51,11 +52,11 @@ public class AppointmentsMainFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AppointmentsMainFragment.
+     * @return A new instance of fragment SelectAppointmentsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AppointmentsMainFragment newInstance(String param1, String param2) {
-        AppointmentsMainFragment fragment = new AppointmentsMainFragment();
+    public static SelectAppointmentsFragment newInstance(String param1, String param2) {
+        SelectAppointmentsFragment fragment = new SelectAppointmentsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,10 +76,10 @@ public class AppointmentsMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_appointments_main, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.hairstyleRecyclerView);
+        View view = inflater.inflate(R.layout.fragment_select_appointments, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerAvailbility);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getActivity());
@@ -86,19 +87,19 @@ public class AppointmentsMainFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        hairstyleData = new ArrayList<DataModel>();
+        bookedAppointmentData = new ArrayList<DataModel>();
         for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
-            hairstyleData.add(new DataModel(
+            bookedAppointmentData.add(new DataModel(
                     HairStylesData.hairStyleArray[i],
                     HairStylesData.descriptationArray[i],
                     HairStylesData.id[i],
                     HairStylesData.drawableArray[i]
             ));
         }
-        mainActivity = (MainActivity) getActivity();
-        adapter = new MainCustomAdapter(hairstyleData,mainActivity);
-        recyclerView.setAdapter(adapter);
 
+        adapter = new AvailabilityCustomAdapter(bookedAppointmentData);
+        recyclerView.setAdapter(adapter);
+        // Inflate the layout for this fragment
         return view;
     }
 }
