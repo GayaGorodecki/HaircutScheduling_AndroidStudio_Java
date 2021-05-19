@@ -1,15 +1,19 @@
 package com.example.haircutscheduling.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +31,9 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String USERNAME = "userName";
+    public static final String PASSWORD = "password";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -42,6 +49,7 @@ public class LoginFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance(String param1, String param2) {
+
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -64,6 +72,9 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+        TextView userNameTextView = view.findViewById(R.id.editTextTextEmailAddressLogin);
+        TextView passwordTextView = view.findViewById(R.id.editTextTextPasswordLogin);
+
 
         Button signin = view.findViewById(R.id.buttonSignin);
         signin.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +89,15 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = v.getContext().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).edit();
+                String userName = userNameTextView.getText().toString();
+                String password = passwordTextView.getText().toString();
+                editor.putString(USERNAME,userName);
+                editor.putString(PASSWORD,password);
+                editor.apply();
+                
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.Login();
+                mainActivity.Login(userName,password);
             }
         });
 

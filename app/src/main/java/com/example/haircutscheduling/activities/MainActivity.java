@@ -5,11 +5,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.MainCustomAdapter;
 import com.example.haircutscheduling.classes.DataModel;
+import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
@@ -18,6 +20,10 @@ import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
 
 import java.util.ArrayList;
+
+import static com.example.haircutscheduling.fragments.LoginFragment.PASSWORD;
+import static com.example.haircutscheduling.fragments.LoginFragment.SHARED_PREFS;
+import static com.example.haircutscheduling.fragments.LoginFragment.USERNAME;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,14 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //        TODO:: 1. save last fragment on screen orientation change
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        TODO:: 1. save last fragment on screen orientation change
-//        TODO:: 2. Shared Preferences -> if user allready login or 'remember me' button
-
         fragmentManager = getSupportFragmentManager();
 
+        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String userName = prefs.getString(USERNAME,"");
+        String password = prefs.getString(PASSWORD,"");
+
+        //Login(userName,password);
         setLoginFragment();
     }
 
@@ -54,17 +63,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, signinFragment).addToBackStack(null).commit();
     }
 
-    public void Login() {
+    public void Login(String userName,String password) {
 
-//        TODO:: if(... check if user email & password is in DB...)
-//        {
-//          if (user == admin) {
-//              setAdminFragment()
-//          }
-//          else {
-                setMainFragment();
-//          }
-//        }
+          //TODO:: if(... check if user email & password is in DB...)
+          if (userName.equals("admin") && password.equals("admin")) {
+              //setAdminFragment();
+          }
+          //if(insideDB)
+          // setMainFragment();
+          else{
+              setMainFragment();
+          }
+          //else
+        //setLoginFragment again
+
+
     }
 
     public void Register() {
@@ -96,5 +109,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         SelectAppointmentsFragment selectAppointmentsFragment = new SelectAppointmentsFragment();
         fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
+    }
+
+    public void setAdminFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        AdminFragment adminFragment = new AdminFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, adminFragment).addToBackStack(null).commit();
     }
 }
