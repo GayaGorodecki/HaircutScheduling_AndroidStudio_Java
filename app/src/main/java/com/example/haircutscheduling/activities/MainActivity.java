@@ -1,25 +1,15 @@
 package com.example.haircutscheduling.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Lifecycle;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.FirstEntry;
-import com.example.haircutscheduling.classes.MainCustomAdapter;
-import com.example.haircutscheduling.classes.DataModel;
+import com.example.haircutscheduling.classes.User;
 import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
@@ -28,18 +18,11 @@ import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
-    private static ArrayList<DataModel> hairstyleData;
-    private static MainCustomAdapter adapter;
     private boolean savedUserFlag;
 
     public static final String SHARED_PREFS = "sharedPrefs";
@@ -55,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        if (FirstEntry.flag == true)
+        if (FirstEntry.flag)
         {
             FirstEntry.flag = false;
 
@@ -122,7 +105,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Register(String name, String email, String password, String phone) {
-//        TODO:: register to DB
+
+        // TODO:: register to DB
+
+        User user = new User(name, email, password, phone);
+
         //if success:
         setLoginFragment();
         //toast "please login"
@@ -137,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         MainFragment mainFragment = new MainFragment();
 
-        if (savedUserFlag == false) {
+        if (!savedUserFlag) {
             fragmentTransaction.replace(R.id.fragmentcon, mainFragment).addToBackStack(null).commit();
         }
         else {
