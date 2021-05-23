@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //  TODO:: 1. save all last fragment data - with room \ SharedPreferences
-        // TODO:: 2. handle app opan after closing on back button
+        //  TODO:: save all last fragment data - with room \ SharedPreferences
 
         fragmentManager = getSupportFragmentManager();
 
