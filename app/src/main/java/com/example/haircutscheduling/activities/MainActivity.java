@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.FirstEntry;
@@ -28,6 +29,7 @@ import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +74,17 @@ public class MainActivity extends AppCompatActivity {
                 Login(userName, password);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (fragmentManager.findFragmentById(R.id.fragmentcon).getClass() == MainFragment.class)
+        {
+            FirstEntry.flag = true;
+        }
+
+        super.onBackPressed();
     }
 
     public void setLoginFragment() {
