@@ -62,8 +62,6 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
         /*textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
         textViewDescriptionBooked.setText(dataSet.get(position).getDescription());
         imageViewBooked.setImageResource(dataSet.get(position).getImage());*/
-
-
     }
 
     @Override

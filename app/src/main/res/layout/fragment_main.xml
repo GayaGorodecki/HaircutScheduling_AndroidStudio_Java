@@ -116,6 +116,90 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|fill|fill_horizontal|fill_vertical"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
+                <Button
+                    android:id="@+id/buttonUpdateBoard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="עדכונים"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
+
+                <Button
+                    android:id="@+id/buttonGetApoointmentHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="תורים קודמים"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|fill|fill_horizontal|fill_vertical"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
+                <Button
+                    android:id="@+id/buttonContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="צור קשר"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
+
+                <Button
+                    android:id="@+id/buttonSwitchUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="החלף משתמש"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

@@ -77,7 +77,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"
@@ -86,6 +86,24 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonGetApoointmentHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="תורים קודמים"
+                    android:textSize="24sp"
+                    app:backgroundTint="#5CA7B1"
+                    app:iconSize="10sp" />
 
                 <Button
                     android:id="@+id/buttonShowBookedAppointment"
@@ -101,7 +119,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
                     android:text="תורים שנקבעו"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
                     app:backgroundTint="#5CA7B1"
                     app:iconSize="10sp" />
 
@@ -119,7 +137,76 @@
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
                     android:text="קבע תור"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
+                    app:backgroundTint="#5CA7B1"
+                    app:iconSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonContactUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="צור קשר"
+                    android:textSize="24sp"
+                    app:backgroundTint="#5CA7B1"
+                    app:iconSize="10sp" />
+
+
+                <Button
+                    android:id="@+id/buttonSwitchUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="החלף משתמש"
+                    android:textSize="24sp"
+                    app:backgroundTint="#5CA7B1"
+                    app:iconSize="10sp" />
+
+                <Button
+                    android:id="@+id/buttonUpdateBoard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/connection_buttoms_design"
+                    android:text="עדכונים"
+                    android:textSize="24sp"
                     app:backgroundTint="#5CA7B1"
                     app:iconSize="10sp" />
 

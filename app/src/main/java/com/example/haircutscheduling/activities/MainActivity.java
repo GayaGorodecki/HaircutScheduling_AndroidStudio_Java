@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
     public void setLoginFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
-        fragmentTransaction.add(R.id.fragmentcon, loginFragment).addToBackStack(null).commit();
+
+        fragmentTransaction.replace(R.id.fragmentcon, loginFragment).commit();
     }
 
     public void setSigninFragment() {
