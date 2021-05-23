@@ -1,13 +1,19 @@
 package com.example.haircutscheduling.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.widget.FrameLayout;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.FirstEntry;
@@ -32,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static RecyclerView recyclerView;
     private static ArrayList<DataModel> hairstyleData;
     private static MainCustomAdapter adapter;
+    private boolean savedUserFlag;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String USERNAME = "userName";
@@ -42,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //  TODO:: save all last fragment data - with room \ SharedPreferences
+        //  TODO:: 1. save all last fragment data - with room \ SharedPreferences
+        // TODO:: 2. handle app opan after closing on back button
 
         fragmentManager = getSupportFragmentManager();
 
@@ -56,9 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
             if (userName.equals("") || password.equals(""))
             {
+                savedUserFlag = false;
                 setLoginFragment();
             }
             else {
+                savedUserFlag = true;
                 Login(userName, password);
             }
         }
@@ -67,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     public void setLoginFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
-        fragmentTransaction.add(R.id.fragmentcon, loginFragment).commit();
+        fragmentTransaction.add(R.id.fragmentcon, loginFragment).addToBackStack(null).commit();
     }
 
     public void setSigninFragment() {
@@ -114,10 +124,16 @@ public class MainActivity extends AppCompatActivity {
     public void setMainFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         MainFragment mainFragment = new MainFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, mainFragment).addToBackStack(null).commit();
+
+        if (savedUserFlag == false) {
+            fragmentTransaction.replace(R.id.fragmentcon, mainFragment).addToBackStack(null).commit();
+        }
+        else {
+            fragmentTransaction.replace(R.id.fragmentcon, mainFragment).commit();
+        }
     }
 
-    public void setAppoitmentsMainFragment() {
+    public void setAppointmentsMainFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         AppointmentsMainFragment appointmentsMainFragment = new AppointmentsMainFragment();
         fragmentTransaction.replace(R.id.fragmentcon, appointmentsMainFragment).addToBackStack(null).commit();

@@ -87,9 +87,8 @@
 
                 <Button
                     android:id="@+id/buttonNotAvailable"
-                    app:backgroundTint="#5CA7B1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
@@ -97,13 +96,14 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
-                    android:text="ערוך ימי חופשה" />
+                    android:text="ערוך ימי חופשה"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
 
                 <Button
                     android:id="@+id/buttonOpeningHour"
-                    app:backgroundTint="#5CA7B1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
@@ -111,7 +111,9 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
-                    android:text="ערוך זמני פעילות" />
+                    android:text="ערוך זמני פעילות"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
 
             </LinearLayout>
 
@@ -127,9 +129,8 @@
 
                 <Button
                     android:id="@+id/buttonTodayAppointment"
-                    app:backgroundTint="#5CA7B1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
@@ -137,13 +138,14 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
-                    android:text="פירוט תורי היום" />
+                    android:text="פירוט תורי היום"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
 
                 <Button
                     android:id="@+id/buttonManageUsers"
-                    app:backgroundTint="#5CA7B1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="10dp"
@@ -151,7 +153,9 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
-                    android:text="ניהול משתמשים" />
+                    android:text="ניהול משתמשים"
+                    android:textSize="30sp"
+                    app:backgroundTint="#5CA7B1" />
             </LinearLayout>
 
         </LinearLayout>

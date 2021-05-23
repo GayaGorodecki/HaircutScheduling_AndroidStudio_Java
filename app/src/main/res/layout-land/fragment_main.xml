@@ -90,7 +90,7 @@
                 <Button
                     android:id="@+id/buttonShowBookedAppointment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
@@ -101,13 +101,14 @@
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
                     android:text="תורים שנקבעו"
+                    android:textSize="30sp"
                     app:backgroundTint="#5CA7B1"
                     app:iconSize="10sp" />
 
                 <Button
                     android:id="@+id/buttonScheduleAppointment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
@@ -118,6 +119,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/connection_buttoms_design"
                     android:text="קבע תור"
+                    android:textSize="30sp"
                     app:backgroundTint="#5CA7B1"
                     app:iconSize="10sp" />
 

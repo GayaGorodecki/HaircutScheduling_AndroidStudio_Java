@@ -71,7 +71,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setAppoitmentsMainFragment();
+                mainActivity.setAppointmentsMainFragment();
             }
         });
 
