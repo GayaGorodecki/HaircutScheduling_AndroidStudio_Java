@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.FirstEntry;
 import com.example.haircutscheduling.classes.MainCustomAdapter;
 import com.example.haircutscheduling.classes.DataModel;
 import com.example.haircutscheduling.fragments.AdminFragment;
@@ -21,10 +23,6 @@ import com.example.haircutscheduling.fragments.SigninFragment;
 
 import java.util.ArrayList;
 
-import static com.example.haircutscheduling.fragments.LoginFragment.PASSWORD;
-import static com.example.haircutscheduling.fragments.LoginFragment.SHARED_PREFS;
-import static com.example.haircutscheduling.fragments.LoginFragment.USERNAME;
-
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
@@ -35,20 +33,35 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<DataModel> hairstyleData;
     private static MainCustomAdapter adapter;
 
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String USERNAME = "userName";
+    public static final String PASSWORD = "password";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //        TODO:: 1. save last fragment on screen orientation change
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //  TODO:: save all last fragment data - with room \ SharedPreferences
+
         fragmentManager = getSupportFragmentManager();
 
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String userName = prefs.getString(USERNAME,"");
-        String password = prefs.getString(PASSWORD,"");
+        if (FirstEntry.flag == true)
+        {
+            FirstEntry.flag = false;
 
-        //Login(userName,password);
-        setLoginFragment();
+            SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            String userName = prefs.getString(USERNAME, "");
+            String password = prefs.getString(PASSWORD, "");
+
+            if (userName.equals("") || password.equals(""))
+            {
+                setLoginFragment();
+            }
+            else {
+                Login(userName, password);
+            }
+        }
     }
 
     public void setLoginFragment() {
@@ -63,26 +76,39 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, signinFragment).addToBackStack(null).commit();
     }
 
-    public void Login(String userName,String password) {
+    public void Login(String userName, String password) {
 
           //TODO:: if(... check if user email & password is in DB...)
           if (userName.equals("admin") && password.equals("admin")) {
-              //setAdminFragment();
+              setAdminFragment();
           }
-          //if(insideDB)
-          // setMainFragment();
-          else{
+//          else if(user exists in DB)
+//          {
+          else { // TODO:: delete line
+              SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).edit();
+
+              editor.putString(USERNAME,userName);
+              editor.putString(PASSWORD,password);
+              editor.apply();
+
               setMainFragment();
-          }
-          //else
-        //setLoginFragment again
-
-
+          } // TODO:: delete line
+//          else {
+              // toast error
+//              setLoginFragment();
+//          }
     }
 
-    public void Register() {
+    public void Register(String name, String email, String password, String phone) {
 //        TODO:: register to DB
+        //if success:
         setLoginFragment();
+        //toast "please login"
+//        else
+//        {
+        //     toast "please try again with 6-chars password and correct data"
+        //      setSigninFragment()
+//
     }
 
     public void setMainFragment() {

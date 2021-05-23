@@ -31,9 +31,6 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String USERNAME = "userName";
-    public static final String PASSWORD = "password";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -72,9 +69,6 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        TextView userNameTextView = view.findViewById(R.id.editTextTextEmailAddressLogin);
-        TextView passwordTextView = view.findViewById(R.id.editTextTextPasswordLogin);
-
 
         Button signin = view.findViewById(R.id.buttonSignin);
         signin.setOnClickListener(new View.OnClickListener() {
@@ -89,13 +83,13 @@ public class LoginFragment extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = v.getContext().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).edit();
+
+                TextView userNameTextView = view.findViewById(R.id.editTextTextEmailAddressLogin);
+                TextView passwordTextView = view.findViewById(R.id.editTextTextPasswordLogin);
+
                 String userName = userNameTextView.getText().toString();
                 String password = passwordTextView.getText().toString();
-                editor.putString(USERNAME,userName);
-                editor.putString(PASSWORD,password);
-                editor.apply();
-                
+
                 mainActivity = (MainActivity) getActivity();
                 mainActivity.Login(userName,password);
             }

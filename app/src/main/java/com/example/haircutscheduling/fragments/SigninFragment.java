@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
@@ -70,8 +72,19 @@ public class SigninFragment extends Fragment {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                EditText nameTextView = view.findViewById(R.id.editTextPersonName);
+                EditText emailTextView = view.findViewById(R.id.editTextTextEmailAddressSignin);
+                EditText passwordTextView = view.findViewById(R.id.editTextTextPasswordSignin);
+                EditText phoneTextView = view.findViewById(R.id.editTextPhone);
+
+                String name = nameTextView.getText().toString();
+                String email = emailTextView.getText().toString();
+                String password = passwordTextView.getText().toString();
+                String phone = phoneTextView.getText().toString();
+
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.Register();
+                mainActivity.Register(name, email, password, phone);
             }
         });
 
