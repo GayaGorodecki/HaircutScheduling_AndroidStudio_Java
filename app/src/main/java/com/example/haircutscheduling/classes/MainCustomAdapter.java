@@ -34,7 +34,7 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.My
             super(itemView);
             this.cardView = (CardView) itemView.findViewById(R.id.available_card_view);
             this.textViewHairStyle = (TextView) itemView.findViewById(R.id.textViewHairStyle);
-            this.textViewPrice = (TextView) itemView.findViewById(R.id.textViewPrice);
+            this.textViewPrice = (TextView) itemView.findViewById(R.id.textViewHour);
             this.imageViewIcon = (ImageView) itemView.findViewById(R.id.imageViewHairStyle);
         }
     }
