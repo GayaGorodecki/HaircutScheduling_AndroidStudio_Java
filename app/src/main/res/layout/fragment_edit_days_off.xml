@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    tools:context=".fragments.EditDaysOffFragment">
+
+    <TextView
+        android:id="@+id/textViewChooseDayOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="בחר יום:"
+        android:textColor="#5CA7B1"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <CalendarView
+        android:id="@+id/calendarViewDaysOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:background="#D4E1E0"
+        android:padding="7dp" />
+
+    <Button
+        android:id="@+id/buttonAddDayOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/buttoms_design"
+        android:padding="15dp"
+        android:text="הגדר כיום חופש"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/buttonCancelDayOff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/buttoms_design"
+        android:padding="15dp"
+        android:text="בטל יום חופש"
+        android:textSize="18sp" />
+
+</LinearLayout>

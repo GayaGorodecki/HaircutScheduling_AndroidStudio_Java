@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.FirstEntry;
@@ -13,10 +14,12 @@ import com.example.haircutscheduling.classes.User;
 import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
+import com.example.haircutscheduling.fragments.EditDaysOffFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
+import com.example.haircutscheduling.fragments.UserHistoryFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,13 +87,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void Login(String userName, String password) {
 
-          //TODO:: if(... check if user email & password is in DB...)
           if (userName.equals("admin") && password.equals("admin")) {
               setAdminFragment();
           }
-//          else if(user exists in DB)
-//          {
-          else { // TODO:: delete line
+          else // TODO: switch to -> else if(user exists in DB)
+          {
+              // TODO:: Login to DB...
+
               SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).edit();
 
               editor.putString(USERNAME,userName);
@@ -98,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
               editor.apply();
 
               setMainFragment();
-          } // TODO:: delete line
-//          else {
-              // toast error
+          }
+//          else { TODO: add this
+//               toast error
 //              setLoginFragment();
 //          }
     }
@@ -158,5 +161,33 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         AdminFragment adminFragment = new AdminFragment();
         fragmentTransaction.replace(R.id.fragmentcon, adminFragment).addToBackStack(null).commit();
+    }
+
+    public void setUserHistoryFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, userHistoryFragment).addToBackStack(null).commit();
+    }
+
+    public void setEditDaysOffFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        EditDaysOffFragment editDaysOffFragment = new EditDaysOffFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, editDaysOffFragment).addToBackStack(null).commit();
+    }
+
+    public void addDayOff(String day, String month, String year)
+    {
+        String dayOff = day + "/" + month + "/" + year;
+        Toast.makeText(this,"dayOff updated successfuly on " + dayOff,Toast.LENGTH_LONG).show();
+        // TODO:: update day not available on 'selectAppointment'
+    }
+
+    public void cancelDayOff(String day, String month, String year)
+    {
+        String dayOff = day + "/" + month + "/" + year;
+        Toast.makeText(this,"dayOff canceled successfuly on " + dayOff,Toast.LENGTH_LONG).show();
+        // TODO:: update day available on 'selectAppointment'
     }
 }

@@ -60,10 +60,8 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         CardView cardViewBooked = holder.cardViewBooked;
 
         textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
-        textViewDescriptionBooked.setText(dataSet.get(position).getDescription());
+        textViewDescriptionBooked.setText(dataSet.get(position).getPrice());
         imageViewBooked.setImageResource(dataSet.get(position).getImage());
-
-
     }
 
     @Override

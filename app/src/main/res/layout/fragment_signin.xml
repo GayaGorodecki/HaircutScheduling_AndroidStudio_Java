@@ -137,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:background="@drawable/connection_buttoms_design"
+                android:background="@drawable/buttoms_design"
                 android:text="הרשמה"
                 app:backgroundTint="#5CA7B1"
                 app:iconSize="10sp" />

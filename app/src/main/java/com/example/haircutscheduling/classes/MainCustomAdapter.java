@@ -16,6 +16,7 @@ import com.example.haircutscheduling.activities.MainActivity;
 import java.util.ArrayList;
 
 public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.MyViewHolder>{
+
     MainActivity mainActivity;
     private final ArrayList<DataModel> dataSet;
     public MainCustomAdapter(ArrayList<DataModel> data,MainActivity Activity)
@@ -60,7 +61,7 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.My
         CardView cardView = holder.cardView;
 
         textViewHairStyle.setText(dataSet.get(position).getHairStyle());
-        textViewDescription.setText(dataSet.get(position).getDescription());
+        textViewDescription.setText(dataSet.get(position).getPrice());
         imageView.setImageResource(dataSet.get(position).getImage());
 
         cardView.setOnClickListener(new View.OnClickListener() {

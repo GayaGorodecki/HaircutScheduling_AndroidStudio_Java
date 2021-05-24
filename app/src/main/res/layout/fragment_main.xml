@@ -94,7 +94,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/connection_buttoms_design"
+                    android:background="@drawable/buttoms_design"
                     android:text="תורים שנקבעו"
                     android:textSize="30sp"
                     app:backgroundTint="#5CA7B1" />
@@ -109,7 +109,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/connection_buttoms_design"
+                    android:background="@drawable/buttoms_design"
                     android:text="קבע תור"
                     android:textSize="30sp"
                     app:backgroundTint="#5CA7B1" />
@@ -136,7 +136,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/connection_buttoms_design"
+                    android:background="@drawable/buttoms_design"
                     android:text="עדכונים"
                     android:textSize="30sp"
                     app:backgroundTint="#5CA7B1" />
@@ -151,7 +151,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/connection_buttoms_design"
+                    android:background="@drawable/buttoms_design"
                     android:text="תורים קודמים"
                     android:textSize="30sp"
                     app:backgroundTint="#5CA7B1" />
@@ -178,7 +178,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/connection_buttoms_design"
+                    android:background="@drawable/buttoms_design"
                     android:text="צור קשר"
                     android:textSize="30sp"
                     app:backgroundTint="#5CA7B1" />
@@ -193,7 +193,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/connection_buttoms_design"
+                    android:background="@drawable/buttoms_design"
                     android:text="החלף משתמש"
                     android:textSize="30sp"
                     app:backgroundTint="#5CA7B1" />
