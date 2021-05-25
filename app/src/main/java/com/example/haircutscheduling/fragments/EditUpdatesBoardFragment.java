@@ -71,6 +71,7 @@ public class EditUpdatesBoardFragment extends Fragment {
 
         EditText updateInput = view.findViewById(R.id.editTextTextMultiLineUpdateInput);
         String update = updateInput.getText().toString();
+        // TODO:: check how to get text
 
         Button addUpdate = view.findViewById(R.id.buttonAddUpdate);
         addUpdate.setOnClickListener(new View.OnClickListener() {

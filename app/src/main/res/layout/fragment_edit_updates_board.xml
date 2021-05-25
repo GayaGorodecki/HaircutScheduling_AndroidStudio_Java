@@ -47,5 +47,7 @@
         android:layout_gravity="center"
         android:layout_margin="30dp"
         android:background="@drawable/buttoms_design"
-        android:text="הוסף ללוח" />
+        android:padding="20dp"
+        android:text="הוסף ללוח"
+        android:textSize="18sp" />
 </LinearLayout>

@@ -28,6 +28,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="0.5"
                 android:background="#D4E1E0"
+                android:gravity="center"
                 android:paddingRight="10dp"
                 android:text="סוג תספורת"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -40,6 +41,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.6"
+                android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="שעה"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -52,6 +54,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="0.6"
+                android:gravity="right"
                 android:paddingRight="10dp"
                 android:text="תאריך"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
