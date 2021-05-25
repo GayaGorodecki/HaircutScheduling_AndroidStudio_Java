@@ -169,7 +169,7 @@
                 android:paddingBottom="10dp">
 
                 <Button
-                    android:id="@+id/buttonAddToUpdateBoard"
+                    android:id="@+id/buttonAddToUpdatesBoard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

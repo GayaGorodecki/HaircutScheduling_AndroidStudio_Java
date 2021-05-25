@@ -12,18 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.BookedCustomAdapter;
-import com.example.haircutscheduling.classes.HairStyleDataModel;
 import com.example.haircutscheduling.classes.HairStylesData;
+import com.example.haircutscheduling.classes.UpdateDataModel;
+import com.example.haircutscheduling.classes.UpdatesBoardCustomAdapter;
+import com.example.haircutscheduling.classes.UpdatesData;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BookedAppoitmentsFragment#newInstance} factory method to
+ * Use the {@link UpdatesBoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookedAppoitmentsFragment extends Fragment {
+public class UpdatesBoardFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,10 +37,10 @@ public class BookedAppoitmentsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<HairStyleDataModel> bookedAppointmentData;
-    private static BookedCustomAdapter adapter;
+    private static ArrayList<UpdateDataModel> updatesData;
+    private static UpdatesBoardCustomAdapter adapter;
 
-    public BookedAppoitmentsFragment() {
+    public UpdatesBoardFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +50,11 @@ public class BookedAppoitmentsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BookedAppoitmentsFragment.
+     * @return A new instance of fragment UpdatesBoardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BookedAppoitmentsFragment newInstance(String param1, String param2) {
-        BookedAppoitmentsFragment fragment = new BookedAppoitmentsFragment();
+    public static UpdatesBoardFragment newInstance(String param1, String param2) {
+        UpdatesBoardFragment fragment = new UpdatesBoardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,9 +75,9 @@ public class BookedAppoitmentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_booked_appoitments, container, false);
+        View view = inflater.inflate(R.layout.fragment_updates_board, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerBooked);
+        recyclerView = (RecyclerView) view.findViewById(R.id.updatesRecycleView);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getActivity());
@@ -84,18 +85,17 @@ public class BookedAppoitmentsFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        TODO:: get data from db (booked appoitments) and delete this:
-        bookedAppointmentData = new ArrayList<HairStyleDataModel>();
-        for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
-            bookedAppointmentData.add(new HairStyleDataModel(
-                    HairStylesData.hairStyleArray[i],
-                    HairStylesData.descriptationArray[i],
-                    HairStylesData.id[i],
-                    HairStylesData.drawableArray[i]
+//        TODO:: get data from db (Updates)
+        updatesData = new ArrayList<UpdateDataModel>();
+        for (int i = 0; i < UpdatesData.updatesArray.length; i++) {
+            updatesData.add(new UpdateDataModel(
+                    UpdatesData.updatesArray[i],
+                    UpdatesData.datesArray[i],
+                    UpdatesData.id[i]
             ));
         }
 
-        adapter = new BookedCustomAdapter(bookedAppointmentData);
+        adapter = new UpdatesBoardCustomAdapter(updatesData);
         recyclerView.setAdapter(adapter);
 
         return view;

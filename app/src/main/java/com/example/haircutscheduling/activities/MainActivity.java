@@ -15,10 +15,12 @@ import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
 import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
 import com.example.haircutscheduling.fragments.EditDaysOffFragment;
+import com.example.haircutscheduling.fragments.EditUpdatesBoardFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.example.haircutscheduling.fragments.SigninFragment;
+import com.example.haircutscheduling.fragments.UpdatesBoardFragment;
 import com.example.haircutscheduling.fragments.UserHistoryFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        if (fragmentManager.findFragmentById(R.id.fragmentcon).getClass() == MainFragment.class)
+        if (fragmentManager.findFragmentById(R.id.fragmentcon).getClass() == MainFragment.class ||
+                fragmentManager.findFragmentById(R.id.fragmentcon).getClass() == AdminFragment.class)
         {
             FirstEntry.flag = true;
         }
@@ -103,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
               setMainFragment();
           }
 //          else { TODO: add this
-//               toast error
-//              setLoginFragment();
+//               Toast.makeText(this, "Wrong email or password!\nPlease try again.", Toast.LENGTH_LONG).show();
 //          }
     }
 
@@ -149,8 +151,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, bookedAppoitmentsFragment).addToBackStack(null).commit();
     }
 
-    public void setSelectAppointmentsFragment()
+    public void setSelectAppointmentsFragment(String hairStyle)
     {
+        // TODO:: use parameter hairStyle for appointment
         fragmentTransaction = fragmentManager.beginTransaction();
         SelectAppointmentsFragment selectAppointmentsFragment = new SelectAppointmentsFragment();
         fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
@@ -189,5 +192,31 @@ public class MainActivity extends AppCompatActivity {
         String dayOff = day + "/" + month + "/" + year;
         Toast.makeText(this,"dayOff canceled successfuly on " + dayOff,Toast.LENGTH_LONG).show();
         // TODO:: update day available on 'selectAppointment'
+    }
+
+    public void setEditUpdatesBoardFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        EditUpdatesBoardFragment editUpdatesBoardFragment = new EditUpdatesBoardFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, editUpdatesBoardFragment).addToBackStack(null).commit();
+    }
+
+    public void addToUpdatesBoard(String update)
+    {
+        if (update.isEmpty())
+        {
+            Toast.makeText(this, "Please write your update", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            // TODO:: add update to DB -> update + the date
+            Toast.makeText(this, "Update added to board", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void setUpdatesBoardFragment()
+    {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        UpdatesBoardFragment updatesBoardFragment = new UpdatesBoardFragment();
+        fragmentTransaction.replace(R.id.fragmentcon, updatesBoardFragment).addToBackStack(null).commit();
     }
 }

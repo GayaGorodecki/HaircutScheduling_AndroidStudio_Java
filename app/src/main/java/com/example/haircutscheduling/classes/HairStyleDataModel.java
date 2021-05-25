@@ -1,6 +1,6 @@
 package com.example.haircutscheduling.classes;
 
-public class DataModel {
+public class HairStyleDataModel {
 
     String hairStyle;
     String price;
@@ -9,7 +9,7 @@ public class DataModel {
     int id_;
     int image;
 
-    public DataModel(String hairStyle, String date, String hour, int id)
+    public HairStyleDataModel(String hairStyle, String date, String hour, int id)
     {
         this.hairStyle = hairStyle;
         this.date = price;
@@ -17,7 +17,7 @@ public class DataModel {
         this.id_ = id_;
     }
 
-    public DataModel(String hairStyle, String price, int id_, int image)
+    public HairStyleDataModel(String hairStyle, String price, int id_, int image)
     {
         this.hairStyle = hairStyle;
         this.price = price;

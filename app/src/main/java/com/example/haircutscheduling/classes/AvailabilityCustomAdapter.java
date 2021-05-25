@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class AvailabilityCustomAdapter extends RecyclerView.Adapter<AvailabilityCustomAdapter.MyViewHolder>  {
 
-    private final ArrayList<DataModel> dataSet;
+    private final ArrayList<HairStyleDataModel> dataSet;
 
-    public AvailabilityCustomAdapter(ArrayList<DataModel> data) {
+    public AvailabilityCustomAdapter(ArrayList<HairStyleDataModel> data) {
         this.dataSet = data;
     }
 

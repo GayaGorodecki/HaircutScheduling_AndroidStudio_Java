@@ -18,8 +18,8 @@ import java.util.ArrayList;
 public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.MyViewHolder>{
 
     MainActivity mainActivity;
-    private final ArrayList<DataModel> dataSet;
-    public MainCustomAdapter(ArrayList<DataModel> data,MainActivity Activity)
+    private final ArrayList<HairStyleDataModel> dataSet;
+    public MainCustomAdapter(ArrayList<HairStyleDataModel> data, MainActivity Activity)
     {
         this.dataSet = data;
         mainActivity = Activity;
@@ -67,7 +67,7 @@ public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.My
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.setSelectAppointmentsFragment();
+                mainActivity.setSelectAppointmentsFragment(textViewHairStyle.toString());
             }
         });
     }

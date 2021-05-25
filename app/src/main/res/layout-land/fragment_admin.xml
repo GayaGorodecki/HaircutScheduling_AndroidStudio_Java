@@ -158,7 +158,7 @@
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
-                    android:id="@+id/buttonAddToUpdateBoard"
+                    android:id="@+id/buttonAddToUpdatesBoard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

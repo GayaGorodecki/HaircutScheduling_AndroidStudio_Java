@@ -12,12 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.AvailabilityCustomAdapter;
-import com.example.haircutscheduling.classes.BookedCustomAdapter;
-import com.example.haircutscheduling.classes.DataModel;
+import com.example.haircutscheduling.classes.HairStyleDataModel;
 import com.example.haircutscheduling.classes.HairStylesData;
-import com.example.haircutscheduling.classes.MainCustomAdapter;
 
 import java.util.ArrayList;
 
@@ -30,7 +27,7 @@ public class SelectAppointmentsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<DataModel> bookedAppointmentData;
+    private static ArrayList<HairStyleDataModel> bookedAppointmentData;
     private static AvailabilityCustomAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -87,9 +84,9 @@ public class SelectAppointmentsFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        bookedAppointmentData = new ArrayList<DataModel>();
+        bookedAppointmentData = new ArrayList<HairStyleDataModel>();
         for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
-            bookedAppointmentData.add(new DataModel(
+            bookedAppointmentData.add(new HairStyleDataModel(
                     HairStylesData.hairStyleArray[i],
                     HairStylesData.descriptationArray[i],
                     HairStylesData.id[i],

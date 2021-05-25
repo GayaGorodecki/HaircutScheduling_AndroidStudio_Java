@@ -3,7 +3,6 @@ package com.example.haircutscheduling.classes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,9 +17,9 @@ public class HistoryCustomAdapter extends RecyclerView.Adapter<HistoryCustomAdap
 
     // TODO: change to history dataModel...
 
-    private final ArrayList<DataModel> dataSet;
+    private final ArrayList<HairStyleDataModel> dataSet;
 
-    public HistoryCustomAdapter(ArrayList<DataModel> data) {
+    public HistoryCustomAdapter(ArrayList<HairStyleDataModel> data) {
         this.dataSet = data;
     }
 

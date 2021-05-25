@@ -102,6 +102,15 @@ public class MainFragment extends Fragment {
             }
         });
 
+        Button seeUpdatesBoard = view.findViewById(R.id.buttonUpdateBoard);
+        seeUpdatesBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity = (MainActivity) getActivity();
+                mainActivity.setUpdatesBoardFragment();
+            }
+        });
+
         return view;
     }
 }

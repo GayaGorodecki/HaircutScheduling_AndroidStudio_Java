@@ -16,9 +16,9 @@ import java.util.ArrayList;
 
 public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapter.MyViewHolder> {
 
-    private final ArrayList<DataModel> dataSet;
+    private final ArrayList<HairStyleDataModel> dataSet;
 
-    public BookedCustomAdapter(ArrayList<DataModel> data) {
+    public BookedCustomAdapter(ArrayList<HairStyleDataModel> data) {
         this.dataSet = data;
     }
 
