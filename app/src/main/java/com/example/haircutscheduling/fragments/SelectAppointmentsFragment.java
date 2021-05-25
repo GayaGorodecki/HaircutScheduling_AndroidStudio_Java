@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.AvailabilityCustomAdapter;
-import com.example.haircutscheduling.classes.HairStyleDataModel;
-import com.example.haircutscheduling.classes.HairStylesData;
+import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
+import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesData;
 
 import java.util.ArrayList;
 

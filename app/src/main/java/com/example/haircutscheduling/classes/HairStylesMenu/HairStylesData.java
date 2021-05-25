@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes;
+package com.example.haircutscheduling.classes.HairStylesMenu;
 
 import com.example.haircutscheduling.R;
 

@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
-import com.example.haircutscheduling.classes.MainCustomAdapter;
-import com.example.haircutscheduling.classes.HairStyleDataModel;
-import com.example.haircutscheduling.classes.HairStylesData;
+import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesMenuCustomAdapter;
+import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
+import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesData;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class AppointmentsMainFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<HairStyleDataModel> hairstyleData;
-    private static MainCustomAdapter adapter;
+    private static HairStylesMenuCustomAdapter adapter;
 
     public AppointmentsMainFragment() {
         // Required empty public constructor
@@ -97,7 +97,7 @@ public class AppointmentsMainFragment extends Fragment {
         }
         
         mainActivity = (MainActivity) getActivity();
-        adapter = new MainCustomAdapter(hairstyleData,mainActivity);
+        adapter = new HairStylesMenuCustomAdapter(hairstyleData,mainActivity);
         recyclerView.setAdapter(adapter);
 
         return view;

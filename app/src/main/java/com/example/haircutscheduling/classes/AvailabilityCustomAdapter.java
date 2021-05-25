@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
 
 import java.util.ArrayList;
 

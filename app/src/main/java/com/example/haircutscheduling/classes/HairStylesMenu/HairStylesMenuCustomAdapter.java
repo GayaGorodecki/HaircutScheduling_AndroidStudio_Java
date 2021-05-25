@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes;
+package com.example.haircutscheduling.classes.HairStylesMenu;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +15,11 @@ import com.example.haircutscheduling.activities.MainActivity;
 
 import java.util.ArrayList;
 
-public class MainCustomAdapter extends RecyclerView.Adapter<MainCustomAdapter.MyViewHolder>{
+public class HairStylesMenuCustomAdapter extends RecyclerView.Adapter<HairStylesMenuCustomAdapter.MyViewHolder>{
 
     MainActivity mainActivity;
     private final ArrayList<HairStyleDataModel> dataSet;
-    public MainCustomAdapter(ArrayList<HairStyleDataModel> data, MainActivity Activity)
+    public HairStylesMenuCustomAdapter(ArrayList<HairStyleDataModel> data, MainActivity Activity)
     {
         this.dataSet = data;
         mainActivity = Activity;

@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes;
+package com.example.haircutscheduling.classes.UpdatesBoard;
 
 import android.view.LayoutInflater;
 import android.view.View;
