@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.BookedCustomAdapter;
+import com.example.haircutscheduling.classes.BookedAppointments.BookedCustomAdapter;
+import com.example.haircutscheduling.classes.BookedAppointments.BookedData;
+import com.example.haircutscheduling.classes.BookedAppointments.BookedDataModel;
 import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
 import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesData;
 
@@ -36,7 +38,7 @@ public class BookedAppoitmentsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<HairStyleDataModel> bookedAppointmentData;
+    private static ArrayList<BookedDataModel> bookedAppointmentData;
     private static BookedCustomAdapter adapter;
 
     public BookedAppoitmentsFragment() {
@@ -84,14 +86,16 @@ public class BookedAppoitmentsFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        TODO:: get data from db (booked appoitments) and delete this:
-        bookedAppointmentData = new ArrayList<HairStyleDataModel>();
-        for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
-            bookedAppointmentData.add(new HairStyleDataModel(
-                    HairStylesData.hairStyleArray[i],
-                    HairStylesData.descriptationArray[i],
-                    HairStylesData.id[i],
-                    HairStylesData.drawableArray[i]
+//        TODO:: get data from db (booked appoitments)
+        bookedAppointmentData = new ArrayList<BookedDataModel>();
+        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
+            bookedAppointmentData.add(new BookedDataModel(
+                    BookedData.hairStyleArray[i],
+                    BookedData.priceArray[i],
+                    BookedData.dateArray[i],
+                    BookedData.hourArray[i],
+                    BookedData.id[i],
+                    BookedData.drawableArray[i]
             ));
         }
 
