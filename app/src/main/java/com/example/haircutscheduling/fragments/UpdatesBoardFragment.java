@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.UpdatesBoard.UpdateDataModel;
-import com.example.haircutscheduling.classes.UpdatesBoard.UpdatesBoardCustomAdapter;
-import com.example.haircutscheduling.classes.UpdatesBoard.UpdatesData;
+import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
+import com.example.haircutscheduling.classes.CustomAdapters.UpdatesBoardCustomAdapter;
+import com.example.haircutscheduling.classes.Data.UpdatesData;
 
 import java.util.ArrayList;
 

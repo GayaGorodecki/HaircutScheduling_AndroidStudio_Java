@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes.BookedAppointments;
+package com.example.haircutscheduling.classes.CustomAdapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +11,15 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
+import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
 
 public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapter.MyViewHolder> {
 
-    private final ArrayList<BookedDataModel> dataSet;
+    private final ArrayList<HairStyleDataModel> dataSet;
 
-    public BookedCustomAdapter(ArrayList<BookedDataModel> data) {
+    public BookedCustomAdapter(ArrayList<HairStyleDataModel> data) {
         this.dataSet = data;
     }
 

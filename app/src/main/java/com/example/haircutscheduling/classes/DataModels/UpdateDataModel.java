@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes.UpdatesBoard;
+package com.example.haircutscheduling.classes.DataModels;
 
 public class UpdateDataModel {
 

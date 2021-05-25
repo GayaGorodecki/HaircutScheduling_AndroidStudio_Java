@@ -12,11 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.BookedAppointments.BookedCustomAdapter;
-import com.example.haircutscheduling.classes.BookedAppointments.BookedData;
-import com.example.haircutscheduling.classes.BookedAppointments.BookedDataModel;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesData;
+import com.example.haircutscheduling.classes.CustomAdapters.BookedCustomAdapter;
+import com.example.haircutscheduling.classes.Data.BookedData;
+import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
 
@@ -38,7 +36,7 @@ public class BookedAppoitmentsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<BookedDataModel> bookedAppointmentData;
+    private static ArrayList<HairStyleDataModel> bookedAppointmentData;
     private static BookedCustomAdapter adapter;
 
     public BookedAppoitmentsFragment() {
@@ -87,9 +85,10 @@ public class BookedAppoitmentsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 //        TODO:: get data from db (booked appoitments)
-        bookedAppointmentData = new ArrayList<BookedDataModel>();
+        // TODO:: take from user list and delete 'bookedData' ?
+        bookedAppointmentData = new ArrayList<HairStyleDataModel>();
         for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
-            bookedAppointmentData.add(new BookedDataModel(
+            bookedAppointmentData.add(new HairStyleDataModel(
                     BookedData.hairStyleArray[i],
                     BookedData.priceArray[i],
                     BookedData.dateArray[i],

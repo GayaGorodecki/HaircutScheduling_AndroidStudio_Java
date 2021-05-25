@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesMenuCustomAdapter;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesData;
+import com.example.haircutscheduling.classes.CustomAdapters.HairStylesMenuCustomAdapter;
+import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
+import com.example.haircutscheduling.classes.Data.HairStylesMenuData;
 
 import java.util.ArrayList;
 
@@ -87,12 +87,12 @@ public class AppointmentsMainFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         hairstyleData = new ArrayList<HairStyleDataModel>();
-        for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
+        for (int i = 0; i < HairStylesMenuData.hairStyleArray.length; i++) {
             hairstyleData.add(new HairStyleDataModel(
-                    HairStylesData.hairStyleArray[i],
-                    HairStylesData.descriptationArray[i],
-                    HairStylesData.id[i],
-                    HairStylesData.drawableArray[i]
+                    HairStylesMenuData.hairStyleArray[i],
+                    HairStylesMenuData.priceArray[i],
+                    HairStylesMenuData.id[i],
+                    HairStylesMenuData.drawableArray[i]
             ));
         }
         

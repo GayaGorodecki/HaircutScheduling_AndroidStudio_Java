@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes.HairStylesMenu;
+package com.example.haircutscheduling.classes.DataModels;
 
 public class HairStyleDataModel {
 
@@ -9,12 +9,22 @@ public class HairStyleDataModel {
     int id_;
     int image;
 
+    public HairStyleDataModel(String hairStyle, String price, String date, String hour, int id,int image)
+    {
+        this.hairStyle = hairStyle;
+        this.price = price;
+        this.date = date;
+        this.hour = hour;
+        this.id_ = id;
+        this.image = image;
+    }
+
     public HairStyleDataModel(String hairStyle, String date, String hour, int id)
     {
         this.hairStyle = hairStyle;
-        this.date = price;
+        this.date = date;
         this.hour = hour;
-        this.id_ = id_;
+        this.id_ = id;
     }
 
     public HairStyleDataModel(String hairStyle, String price, int id_, int image)

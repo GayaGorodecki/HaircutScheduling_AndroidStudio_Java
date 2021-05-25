@@ -7,7 +7,8 @@ public class User
     private String password;
     private String phone;
 
-    // TODO:: List bookedAppointment
+    // TODO:: List bookedAppointment ?
+    // TODO:: List History ?
 
     public User(String name, String email, String password, String phone) {
 

@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes.UpdatesBoard;
+package com.example.haircutscheduling.classes.CustomAdapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.haircutscheduling.classes;
+package com.example.haircutscheduling.classes.CustomAdapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
+import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
 
@@ -60,6 +60,7 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
         ImageView imageViewBooked = holder.imageViewIconBooked;
         CardView cardViewBooked = holder.cardViewBooked;
 
+        // TODO::
         /*textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
         textViewDescriptionBooked.setText(dataSet.get(position).getDescription());
         imageViewBooked.setImageResource(dataSet.get(position).getImage());*/
