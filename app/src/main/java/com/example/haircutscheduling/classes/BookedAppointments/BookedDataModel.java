@@ -19,6 +19,14 @@ public class BookedDataModel
         this.image = image;
     }
 
+    public BookedDataModel(String hairStyle, String date, String hour, int id)
+    {
+        this.hairStyle = hairStyle;
+        this.date = date;
+        this.hour = hour;
+        this.id_ = id;
+    }
+
     public int getId_() {
         return id_;
     }

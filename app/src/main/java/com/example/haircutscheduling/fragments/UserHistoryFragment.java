@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.BookedAppointments.BookedData;
+import com.example.haircutscheduling.classes.BookedAppointments.BookedDataModel;
 import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
 import com.example.haircutscheduling.classes.HairStylesMenu.HairStylesData;
 import com.example.haircutscheduling.classes.HistoryCustomAdapter;
@@ -36,7 +38,7 @@ public class UserHistoryFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<HairStyleDataModel> userHistoryAppointmentData;
+    private static ArrayList<BookedDataModel> bookedData;
     private static HistoryCustomAdapter adapter;
 
     public UserHistoryFragment() {
@@ -84,18 +86,18 @@ public class UserHistoryFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        TODO:: get data from db (user history appoitments) and delete this:
-        userHistoryAppointmentData = new ArrayList<HairStyleDataModel>();
-        for (int i = 0; i < HairStylesData.hairStyleArray.length; i++) {
-            userHistoryAppointmentData.add(new HairStyleDataModel(
-                    HairStylesData.hairStyleArray[i],
-                    HairStylesData.dateArray[i],
-                    HairStylesData.hourArray[i],
-                    HairStylesData.id[i]
+//        TODO:: get data from db (user history appoitments)
+        bookedData = new ArrayList<BookedDataModel>();
+        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
+            bookedData.add(new BookedDataModel(
+                    BookedData.hairStyleArray[i],
+                    BookedData.dateArray[i],
+                    BookedData.hourArray[i],
+                    BookedData.id[i]
             ));
         }
 
-        adapter = new HistoryCustomAdapter(userHistoryAppointmentData);
+        adapter = new HistoryCustomAdapter(bookedData);
         recyclerView.setAdapter(adapter);
 
         return view;

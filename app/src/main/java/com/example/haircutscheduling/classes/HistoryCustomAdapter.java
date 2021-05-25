@@ -10,17 +10,16 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.BookedAppointments.BookedDataModel;
 import com.example.haircutscheduling.classes.HairStylesMenu.HairStyleDataModel;
 
 import java.util.ArrayList;
 
 public class HistoryCustomAdapter extends RecyclerView.Adapter<HistoryCustomAdapter.MyViewHolder> {
 
-    // TODO: change to history dataModel...
+    private final ArrayList<BookedDataModel> dataSet;
 
-    private final ArrayList<HairStyleDataModel> dataSet;
-
-    public HistoryCustomAdapter(ArrayList<HairStyleDataModel> data) {
+    public HistoryCustomAdapter(ArrayList<BookedDataModel> data) {
         this.dataSet = data;
     }
 
@@ -37,7 +36,7 @@ public class HistoryCustomAdapter extends RecyclerView.Adapter<HistoryCustomAdap
             this.cardViewHistory = (CardView) itemView.findViewById(R.id.card_view_history);
             this.textViewHairStyleHistory = (TextView) itemView.findViewById(R.id.textViewHairStyleHistory);
             this.textViewDateHistory = (TextView) itemView.findViewById(R.id.textViewHistoryDate);
-            this.textViewHourHistory = (TextView) itemView.findViewById(R.id.textViewHour);
+            this.textViewHourHistory = (TextView) itemView.findViewById(R.id.textViewHistoryHour);
         }
     }
 
@@ -62,9 +61,8 @@ public class HistoryCustomAdapter extends RecyclerView.Adapter<HistoryCustomAdap
         CardView cardViewHistory = holder.cardViewHistory;
 
         textViewHairStyleHistory.setText(dataSet.get(position).getHairStyle());
-        //TODO:
-//        textViewDateHistory.setText(dataSet.get(position).getDate());
-//        textViewHourHistory.setText(dataSet.get(position).getHour());
+        textViewDateHistory.setText(dataSet.get(position).getDate());
+        textViewHourHistory.setText(dataSet.get(position).getHour());
     }
 
     @Override
