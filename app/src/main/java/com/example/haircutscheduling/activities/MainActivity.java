@@ -1,6 +1,7 @@
 package com.example.haircutscheduling.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -78,20 +79,13 @@ public class MainActivity extends AppCompatActivity {
     public void setLoginFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         LoginFragment loginFragment = new LoginFragment();
-
         fragmentTransaction.replace(R.id.fragmentcon, loginFragment).commit();
-    }
-
-    public void setSigninFragment() {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        SigninFragment signinFragment = new SigninFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, signinFragment).addToBackStack(null).commit();
     }
 
     public void Login(String userName, String password) {
 
           if (userName.equals("admin") && password.equals("admin")) {
-              setAdminFragment();
+              setFragment(new AdminFragment());
           }
           else // TODO: switch to -> else if(user exists in DB)
           {
@@ -138,17 +132,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setAppointmentsMainFragment() {
+    public void setFragment(Fragment fragment) {
         fragmentTransaction = fragmentManager.beginTransaction();
-        AppointmentsMainFragment appointmentsMainFragment = new AppointmentsMainFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, appointmentsMainFragment).addToBackStack(null).commit();
-    }
-
-    public void setBookedAppoitmentsFragment()
-    {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        BookedAppoitmentsFragment bookedAppoitmentsFragment = new BookedAppoitmentsFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, bookedAppoitmentsFragment).addToBackStack(null).commit();
+        fragmentTransaction.replace(R.id.fragmentcon, fragment).addToBackStack(null).commit();
     }
 
     public void setSelectAppointmentsFragment(String hairStyle)
@@ -157,27 +143,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         SelectAppointmentsFragment selectAppointmentsFragment = new SelectAppointmentsFragment();
         fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
-    }
-
-    public void setAdminFragment()
-    {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        AdminFragment adminFragment = new AdminFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, adminFragment).addToBackStack(null).commit();
-    }
-
-    public void setUserHistoryFragment()
-    {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        UserHistoryFragment userHistoryFragment = new UserHistoryFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, userHistoryFragment).addToBackStack(null).commit();
-    }
-
-    public void setEditDaysOffFragment()
-    {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        EditDaysOffFragment editDaysOffFragment = new EditDaysOffFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, editDaysOffFragment).addToBackStack(null).commit();
     }
 
     public void addDayOff(String day, String month, String year)
@@ -194,13 +159,6 @@ public class MainActivity extends AppCompatActivity {
         // TODO:: update day available on 'selectAppointment'
     }
 
-    public void setEditUpdatesBoardFragment()
-    {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        EditUpdatesBoardFragment editUpdatesBoardFragment = new EditUpdatesBoardFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, editUpdatesBoardFragment).addToBackStack(null).commit();
-    }
-
     public void addToUpdatesBoard(String update)
     {
         if (update.isEmpty())
@@ -211,12 +169,5 @@ public class MainActivity extends AppCompatActivity {
             // TODO:: add update to DB -> update + the date
             Toast.makeText(this, "Update added to board", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void setUpdatesBoardFragment()
-    {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        UpdatesBoardFragment updatesBoardFragment = new UpdatesBoardFragment();
-        fragmentTransaction.replace(R.id.fragmentcon, updatesBoardFragment).addToBackStack(null).commit();
     }
 }

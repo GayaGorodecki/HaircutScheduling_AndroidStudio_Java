@@ -75,7 +75,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setSigninFragment();
+                mainActivity.setFragment(new SigninFragment());
             }
         });
 

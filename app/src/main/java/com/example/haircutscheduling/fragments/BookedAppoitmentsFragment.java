@@ -17,6 +17,8 @@ import com.example.haircutscheduling.classes.Data.BookedData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

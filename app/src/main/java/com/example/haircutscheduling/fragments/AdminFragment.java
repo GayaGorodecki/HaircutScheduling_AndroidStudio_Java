@@ -71,7 +71,7 @@ public class AdminFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setEditDaysOffFragment();
+                mainActivity.setFragment(new EditDaysOffFragment());
             }
         });
 
@@ -80,7 +80,7 @@ public class AdminFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setEditUpdatesBoardFragment();
+                mainActivity.setFragment(new EditUpdatesBoardFragment());
             }
         });
 

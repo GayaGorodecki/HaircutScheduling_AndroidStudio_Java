@@ -71,7 +71,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setAppointmentsMainFragment();
+                mainActivity.setFragment(new AppointmentsMainFragment());
             }
         });
 
@@ -80,7 +80,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setBookedAppoitmentsFragment();
+                mainActivity.setFragment(new BookedAppoitmentsFragment());
             }
         });
 
@@ -98,7 +98,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setUserHistoryFragment();
+                mainActivity.setFragment(new UserHistoryFragment());
             }
         });
 
@@ -107,7 +107,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.setUpdatesBoardFragment();
+                mainActivity.setFragment(new UpdatesBoardFragment());
             }
         });
 
