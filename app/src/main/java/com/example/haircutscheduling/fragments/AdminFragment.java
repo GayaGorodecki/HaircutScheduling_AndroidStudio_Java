@@ -84,6 +84,15 @@ public class AdminFragment extends Fragment {
             }
         });
 
+        Button editContactDetails = view.findViewById(R.id.buttonUpdateContactDetails);
+        editContactDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity = (MainActivity) getActivity();
+                mainActivity.setFragment(new EditAdminContactDetailsFragment());
+            }
+        });
+
         return view;
     }
 }

@@ -111,6 +111,15 @@ public class MainFragment extends Fragment {
             }
         });
 
+        Button contactUs = view.findViewById(R.id.buttonContactUs);
+        contactUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity = (MainActivity) getActivity();
+                mainActivity.setFragment(new ContactUsFragment());
+            }
+        });
+
         return view;
     }
 }
