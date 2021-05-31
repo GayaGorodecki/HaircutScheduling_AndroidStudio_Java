@@ -80,13 +80,19 @@ public class EditAdminContactDetailsFragment extends Fragment {
             {
                 EditText newPhone = view.findViewById(R.id.editTextAdminPhone);
                 String phone = newPhone.getText().toString();
-
                 mainActivity = (MainActivity) getActivity();
-                SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
-                editor.putString(mainActivity.PHONE,phone);
-                editor.apply();
 
-                Toast.makeText(mainActivity, "Phone updated!",Toast.LENGTH_SHORT).show();
+                if (phone.isEmpty())
+                {
+                    Toast.makeText(mainActivity, "Please enter new phone number.",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
+                    editor.putString(mainActivity.PHONE, phone);
+                    editor.apply();
+
+                    Toast.makeText(mainActivity, "Phone updated!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -99,11 +105,18 @@ public class EditAdminContactDetailsFragment extends Fragment {
                 String email = newEmail.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
-                SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
-                editor.putString(mainActivity.EMAIL,email);
-                editor.apply();
 
-                Toast.makeText(mainActivity, "Email updated!",Toast.LENGTH_SHORT).show();
+                if (email.isEmpty())
+                {
+                    Toast.makeText(mainActivity, "Please enter new email address.",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
+                    editor.putString(mainActivity.EMAIL, email);
+                    editor.apply();
+
+                    Toast.makeText(mainActivity, "Email updated!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -116,11 +129,18 @@ public class EditAdminContactDetailsFragment extends Fragment {
                 String address = newAddress.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
-                SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
-                editor.putString(mainActivity.ADDRESS,address);
-                editor.apply();
 
-                Toast.makeText(mainActivity, "Address updated!",Toast.LENGTH_SHORT).show();
+                if (address.isEmpty())
+                {
+                    Toast.makeText(mainActivity, "Please enter new address.",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
+                    editor.putString(mainActivity.ADDRESS, address);
+                    editor.apply();
+
+                    Toast.makeText(mainActivity, "Address updated!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
