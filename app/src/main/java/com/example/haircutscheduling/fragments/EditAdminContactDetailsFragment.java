@@ -1,5 +1,7 @@
 package com.example.haircutscheduling.fragments;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,9 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,48 +73,56 @@ public class EditAdminContactDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_admin_contact_details, container, false);
 
-        // TODO:: fix this
-//        mainActivity = (MainActivity) getActivity();
-//
-//        Button updatePhone = view.findViewById(R.id.buttonUpdateAdminPhone);
-//        updatePhone.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                EditText phone = mainActivity.findViewById(R.id.editTextContactPhone);
-//                EditText newPhone = view.findViewById(R.id.editTextAdminPhone);
-//                if (!newPhone.getText().equals("")) {
-//                    phone.setText(newPhone.getText().toString());
-//                }
-//            }
-//        });
-//
-//        Button updateEmail = view.findViewById(R.id.buttonUpdateAdminEmail);
-//        updateEmail.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                EditText email = mainActivity.findViewById(R.id.editTextContactEmailAddress);
-//                EditText newEmail = view.findViewById(R.id.editTextAdminEmailAddress);
-//                if (!newEmail.getText().equals("")) {
-//                    email.setText(newEmail.getText().toString());
-//                }
-//            }
-//        });
-//
-//        Button updateAddress = view.findViewById(R.id.buttonUpdateAdminAddress);
-//        updateAddress.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                EditText address = mainActivity.findViewById(R.id.editTextContactAddress);
-//                EditText newAddress = view.findViewById(R.id.editTextAdminAddress);
-//                if (!newAddress.getText().equals(""))
-//                {
-//                    address.setText(newAddress.getText().toString());
-//                }
-//            }
-//        });
+        Button updatePhone = view.findViewById(R.id.buttonUpdateAdminPhone);
+        updatePhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                EditText newPhone = view.findViewById(R.id.editTextAdminPhone);
+                String phone = newPhone.getText().toString();
+
+                mainActivity = (MainActivity) getActivity();
+                SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
+                editor.putString(mainActivity.PHONE,phone);
+                editor.apply();
+
+                Toast.makeText(mainActivity, "Phone updated!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button updateEmail = view.findViewById(R.id.buttonUpdateAdminEmail);
+        updateEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                EditText newEmail = view.findViewById(R.id.editTextAdminEmailAddress);
+                String email = newEmail.getText().toString();
+
+                mainActivity = (MainActivity) getActivity();
+                SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
+                editor.putString(mainActivity.EMAIL,email);
+                editor.apply();
+
+                Toast.makeText(mainActivity, "Email updated!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button updateAddress = view.findViewById(R.id.buttonUpdateAdminAddress);
+        updateAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText newAddress = view.findViewById(R.id.editTextAdminAddress);
+                String address = newAddress.getText().toString();
+
+                mainActivity = (MainActivity) getActivity();
+                SharedPreferences.Editor editor = mainActivity.getSharedPreferences(mainActivity.SHARED_PREFS_CONTACT, MODE_PRIVATE).edit();
+                editor.putString(mainActivity.ADDRESS,address);
+                editor.apply();
+
+                Toast.makeText(mainActivity, "Address updated!",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }

@@ -13,16 +13,9 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.FirstEntry;
 import com.example.haircutscheduling.classes.User;
 import com.example.haircutscheduling.fragments.AdminFragment;
-import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
-import com.example.haircutscheduling.fragments.BookedAppoitmentsFragment;
-import com.example.haircutscheduling.fragments.EditDaysOffFragment;
-import com.example.haircutscheduling.fragments.EditUpdatesBoardFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
-import com.example.haircutscheduling.fragments.SigninFragment;
-import com.example.haircutscheduling.fragments.UpdatesBoardFragment;
-import com.example.haircutscheduling.fragments.UserHistoryFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,9 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean savedUserFlag;
 
-    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String SHARED_PREFS_LOGIN = "loginSharedPrefs";
     public static final String USERNAME = "userName";
     public static final String PASSWORD = "password";
+
+    public static final String SHARED_PREFS_CONTACT = "contactSharedPrefs";
+    public static final String PHONE = "phone";
+    public static final String EMAIL = "email";
+    public static final String ADDRESS = "address";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         {
             FirstEntry.flag = false;
 
-            SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE);
             String userName = prefs.getString(USERNAME, "");
             String password = prefs.getString(PASSWORD, "");
 
@@ -91,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
           {
               // TODO:: Login to DB...
 
-              SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).edit();
+              SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE).edit();
 
               editor.putString(USERNAME,userName);
               editor.putString(PASSWORD,password);
