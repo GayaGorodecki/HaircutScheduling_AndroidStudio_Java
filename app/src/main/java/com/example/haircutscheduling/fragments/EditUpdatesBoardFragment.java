@@ -67,16 +67,14 @@ public class EditUpdatesBoardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_updates_board, container, false);
 
-        // TODO:: suppot hebrew input? or change all app to english
-
-        EditText updateInput = view.findViewById(R.id.editTextTextMultiLineUpdateInput);
-        String update = updateInput.getText().toString();
-        // TODO:: check how to get text
-
         Button addUpdate = view.findViewById(R.id.buttonAddUpdate);
         addUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText updateInput = view.findViewById(R.id.editTextTextMultiLineUpdateInput);
+                String update = updateInput.getText().toString();
+                // TODO:: suppot hebrew input? or change all app to english
+
                 mainActivity = (MainActivity) getActivity();
                 mainActivity.addToUpdatesBoard(update);
             }

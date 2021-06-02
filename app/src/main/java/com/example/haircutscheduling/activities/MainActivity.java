@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             // TODO:: add update to DB -> update + the date
-            Toast.makeText(this, "Update added to board", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "The update added to board", Toast.LENGTH_SHORT).show();
         }
     }
 }
