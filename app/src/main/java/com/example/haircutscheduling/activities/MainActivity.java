@@ -1,5 +1,6 @@
 package com.example.haircutscheduling.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
@@ -16,11 +18,16 @@ import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    private FirebaseAuth mAuth;
 
     private boolean savedUserFlag;
 
@@ -37,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
 
         //  TODO:: save all last fragment data - with room \ SharedPreferences
 
@@ -80,7 +88,28 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, loginFragment).commit();
     }
 
-    public void Login(String userName, String password) {
+    public void Login(String userName, String oldPassword) {
+
+        EditText emailEditText = findViewById(R.id.editTextTextEmailAddressLogin);
+        EditText passwordEditText = findViewById(R.id.editTextTextPasswordLogin);
+
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Toast.makeText(MainActivity.this,"Successful",Toast.LENGTH_LONG).show();
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(MainActivity.this,"Fails",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
           if (userName.equals("admin") && password.equals("admin")) {
               setFragment(new AdminFragment());
@@ -102,8 +131,25 @@ public class MainActivity extends AppCompatActivity {
 //          }
     }
 
-    public void Register(String name, String email, String password, String phone) {
+    public void Register(String name, String oldEmail, String oldPassword, String phone) {
 
+        EditText emailEditText = findViewById(R.id.editTextTextEmailAddressSignin);
+        EditText passwordEditText = findViewById(R.id.editTextTextPasswordSignin);
+
+        String email = emailEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                }
+                            }
+                        });
         // TODO:: register to DB
 
         User user = new User(name, email, password, phone);
