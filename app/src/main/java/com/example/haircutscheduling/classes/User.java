@@ -11,7 +11,6 @@ public class User
     // TODO:: List History ?
 
     public User(String name, String email, String password, String phone) {
-
         setName(name);
         setEmail(email);
         setPassword(password);

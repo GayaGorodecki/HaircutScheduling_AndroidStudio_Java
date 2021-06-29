@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+import com.example.haircutscheduling.classes.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,8 +84,10 @@ public class SigninFragment extends Fragment {
                 String password = passwordTextView.getText().toString();
                 String phone = phoneTextView.getText().toString();
 
+                User user = new User(name,email,password,phone);
+
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.Register(name, email, password, phone);
+                mainActivity.Register(user);
             }
         });
 

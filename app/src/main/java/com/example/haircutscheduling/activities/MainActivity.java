@@ -18,10 +18,13 @@ import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
 import com.example.haircutscheduling.fragments.MainFragment;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
+import com.example.haircutscheduling.fragments.SigninFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         if (FirstEntry.flag)
         {
             FirstEntry.flag = false;
-
             SharedPreferences prefs = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE);
             String userName = prefs.getString(USERNAME, "");
             String password = prefs.getString(PASSWORD, "");
@@ -88,80 +90,54 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, loginFragment).commit();
     }
 
-    public void Login(String userName, String oldPassword) {
-
-        EditText emailEditText = findViewById(R.id.editTextTextEmailAddressLogin);
-        EditText passwordEditText = findViewById(R.id.editTextTextPasswordLogin);
-
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, password)
+    public void Login(String userName, String password) {
+        mAuth.signInWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE).edit();
+                            editor.putString(USERNAME, userName);
+                            editor.putString(PASSWORD, password);
+                            editor.apply();
+                            setMainFragment();
                             // Sign in success, update UI with the signed-in user's information
-                            Toast.makeText(MainActivity.this,"Successful",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"Successful Login",Toast.LENGTH_LONG).show();
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(MainActivity.this,"Fails",Toast.LENGTH_LONG).show();
+                            if (userName.equals("admin") && password.equals("admin")) {
+                                setFragment(new AdminFragment());
+                                Toast.makeText(MainActivity.this, "Connect as Admin", Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                // If sign in fails, display a message to the user.
+                                setLoginFragment();
+                                Toast.makeText(MainActivity.this, "Failed to Connect", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                 });
-
-          if (userName.equals("admin") && password.equals("admin")) {
-              setFragment(new AdminFragment());
-          }
-          else // TODO: switch to -> else if(user exists in DB)
-          {
-              // TODO:: Login to DB...
-
-              SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE).edit();
-
-              editor.putString(USERNAME,userName);
-              editor.putString(PASSWORD,password);
-              editor.apply();
-
-              setMainFragment();
-          }
-//          else { TODO: add this
-//               Toast.makeText(this, "Wrong email or password!\nPlease try again.", Toast.LENGTH_LONG).show();
-//          }
     }
 
-    public void Register(String name, String oldEmail, String oldPassword, String phone) {
-
-        EditText emailEditText = findViewById(R.id.editTextTextEmailAddressSignin);
-        EditText passwordEditText = findViewById(R.id.editTextTextPasswordSignin);
-
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(email, password)
+    public void Register(User user) {
+        String userName = user.getEmail();
+        String password = user.getPassword();
+        mAuth.createUserWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference("users").child(user.getPhone());
+                                    myRef.setValue(user);
+                                    Login(userName,password);
                                 } else {
                                     // If sign in fails, display a message to the user.
+                                    setFragment(new SigninFragment());
+                                    Toast.makeText(MainActivity.this, "Something goes wrong, Please try again", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
-        // TODO:: register to DB
-
-        User user = new User(name, email, password, phone);
-
-        //if success:
-        setLoginFragment();
-        //toast "please login"
-//        else
-//        {
-        //     toast "please try again with 6-chars password and correct data"
-        //      setSigninFragment()
-//
     }
 
     public void setMainFragment() {
@@ -192,14 +168,14 @@ public class MainActivity extends AppCompatActivity {
     public void addDayOff(String day, String month, String year)
     {
         String dayOff = day + "/" + month + "/" + year;
-        Toast.makeText(this,"dayOff updated successfuly on " + dayOff,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"dayOff updated successfully on " + dayOff,Toast.LENGTH_LONG).show();
         // TODO:: update day not available on 'selectAppointment'
     }
 
     public void cancelDayOff(String day, String month, String year)
     {
         String dayOff = day + "/" + month + "/" + year;
-        Toast.makeText(this,"dayOff canceled successfuly on " + dayOff,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"dayOff canceled successfully on " + dayOff,Toast.LENGTH_LONG).show();
         // TODO:: update day available on 'selectAppointment'
     }
 
