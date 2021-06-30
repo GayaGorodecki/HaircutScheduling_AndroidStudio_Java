@@ -2,6 +2,7 @@ package com.example.haircutscheduling.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.ScaleAnimation;
+import android.widget.CalendarView;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.CustomAdapters.AvailabilityCustomAdapter;
@@ -17,6 +20,8 @@ import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.classes.Data.HairStylesMenuData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +43,7 @@ public class SelectAppointmentsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    String dayString, monthString, yearString;
 
     public SelectAppointmentsFragment() {
         // Required empty public constructor
@@ -75,6 +81,21 @@ public class SelectAppointmentsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_select_appointments, container, false);
+
+        // TODO:: start day + end date?
+        CalendarView dayOffCalender = view.findViewById(R.id.calendarViewSelectAppointment);
+        dayOffCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                dayString = String.valueOf(dayOfMonth);
+                monthString = String.valueOf(month);
+                yearString = String.valueOf(year);
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            }
+        });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerAvailbility);
         recyclerView.setHasFixedSize(true);

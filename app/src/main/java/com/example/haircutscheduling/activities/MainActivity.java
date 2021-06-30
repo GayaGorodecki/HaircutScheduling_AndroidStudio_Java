@@ -12,7 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.Day;
 import com.example.haircutscheduling.classes.FirstEntry;
+import com.example.haircutscheduling.classes.Settings;
 import com.example.haircutscheduling.classes.User;
 import com.example.haircutscheduling.fragments.AdminFragment;
 import com.example.haircutscheduling.fragments.LoginFragment;
@@ -23,14 +25,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
 
     private boolean savedUserFlag;
 
@@ -48,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+
 
         //  TODO:: save all last fragment data - with room \ SharedPreferences
 
@@ -127,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     DatabaseReference myRef = database.getReference("users").child(user.getPhone());
                                     myRef.setValue(user);
                                     Login(userName,password);
@@ -165,17 +175,33 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
     }
 
-    public void addDayOff(String day, String month, String year)
+    public void addDayOff(String date)
     {
-        String dayOff = day + "/" + month + "/" + year;
-        Toast.makeText(this,"dayOff updated successfully on " + dayOff,Toast.LENGTH_LONG).show();
-        // TODO:: update day not available on 'selectAppointment'
+        Settings setting = new Settings();
+        setting.AddDayOff(date);
+        setting.AddDay(new Day("sunday","8","17"));
+        DatabaseReference myRef = database.getReference("setting");
+        myRef.setValue(setting).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful())
+                {
+                    Toast.makeText(getApplicationContext(),"dayOff updated successfully on" + date,Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),"dayOff updated failed" + date,Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        Toast.makeText(this,"dayOff updated successfully on " + date,Toast.LENGTH_LONG).show();
     }
 
-    public void cancelDayOff(String day, String month, String year)
+    public void cancelDayOff(String date)
     {
-        String dayOff = day + "/" + month + "/" + year;
-        Toast.makeText(this,"dayOff canceled successfully on " + dayOff,Toast.LENGTH_LONG).show();
+        DatabaseReference myRef = database.getReference("setting").child("DayOffList");
+        myRef.push().setValue(date);
+        Toast.makeText(this,"dayOff updated successfully on " + date,Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"dayOff canceled successfully on " + date,Toast.LENGTH_LONG).show();
         // TODO:: update day available on 'selectAppointment'
     }
 
@@ -189,5 +215,12 @@ public class MainActivity extends AppCompatActivity {
             // TODO:: add update to DB -> update + the date
             Toast.makeText(this, "The update added to board", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void logOut() {
+        SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE).edit();
+        editor.putString(USERNAME, "");
+        editor.putString(PASSWORD, "");
+        editor.apply();
     }
 }

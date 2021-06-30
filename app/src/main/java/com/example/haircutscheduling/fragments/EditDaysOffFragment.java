@@ -15,6 +15,10 @@ import android.widget.Toast;
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EditDaysOffFragment#newInstance} factory method to
@@ -31,7 +35,7 @@ public class EditDaysOffFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
-    String dayString, monthString, yearString;
+    String dayString, monthString, yearString,currentDate;
 
     public EditDaysOffFragment() {
         // Required empty public constructor
@@ -69,16 +73,12 @@ public class EditDaysOffFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_days_off, container, false);
-
-        // TODO:: start day + end date?
         CalendarView dayOffCalender = view.findViewById(R.id.calendarViewDaysOff);
         dayOffCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
-                dayString = String.valueOf(dayOfMonth);
-                monthString = String.valueOf(month);
-                yearString = String.valueOf(year);
+                Calendar calendar = Calendar.getInstance();
+                currentDate  = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date(year,month,dayOfMonth));
             }
         });
 
@@ -87,13 +87,13 @@ public class EditDaysOffFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                if (dayString == null || monthString == null || yearString == null)
+                if (currentDate == null)
                 {
-                    Toast.makeText(mainActivity, "Please choose day", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity, "Please choose Date", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    mainActivity.addDayOff(dayString, monthString, yearString);
+                    mainActivity.addDayOff(currentDate);
                 }
             }
         });
@@ -103,13 +103,13 @@ public class EditDaysOffFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mainActivity = (MainActivity) getActivity();
-                if (dayString == null || monthString == null || yearString == null)
+                if (currentDate == null)
                 {
-                    Toast.makeText(mainActivity, "Please choose day", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mainActivity, "Please choose Date", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    mainActivity.cancelDayOff(dayString, monthString, yearString);
+                    mainActivity.addDayOff(currentDate);
                 }
             }
         });
