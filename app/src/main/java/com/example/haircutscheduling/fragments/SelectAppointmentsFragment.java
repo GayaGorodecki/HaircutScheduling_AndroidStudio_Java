@@ -117,7 +117,7 @@ public class SelectAppointmentsFragment extends Fragment {
 
         adapter = new AvailabilityCustomAdapter(bookedAppointmentData);
         recyclerView.setAdapter(adapter);
-        // Inflate the layout for this fragment
+
         return view;
     }
 }

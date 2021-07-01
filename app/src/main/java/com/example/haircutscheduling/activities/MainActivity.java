@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
 
-        //  TODO:: save all last fragment data - with room \ SharedPreferences
+        //  TODO:: save all last fragment data - with room \ SharedPreferences?
 
         fragmentManager = getSupportFragmentManager();
 
@@ -198,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
     {
         DatabaseReference myRef = database.getReference("setting").child("DayOffList");
         myRef.push().setValue(date);
-        Toast.makeText(this,"dayOff updated successfully on " + date,Toast.LENGTH_LONG).show();
         Toast.makeText(this,"dayOff canceled successfully on " + date,Toast.LENGTH_LONG).show();
         // TODO:: update day available on 'selectAppointment'
     }
@@ -236,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             myRef.removeValue();
             Toast.makeText(this,"User Deleted!", Toast.LENGTH_SHORT).show();
 
-            // TODO:: delete from authentication
+            // TODO:: delete from authentication!
         }
         else {
             Toast.makeText(this,"User not found", Toast.LENGTH_SHORT).show();
@@ -263,7 +262,6 @@ public class MainActivity extends AppCompatActivity {
 
 //    public boolean checkIfUserIsBlock(String userName) {
 //
-//        // TODO:: check how to read from db
 //        // TODO:: check if user found in 'blockusers'
 ////        DatabaseReference myRef = database.getReference("blockUsers");
 ////
