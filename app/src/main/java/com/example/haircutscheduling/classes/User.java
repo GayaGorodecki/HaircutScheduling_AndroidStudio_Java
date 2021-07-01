@@ -14,7 +14,7 @@ public class User
         setPhone(phone);
     }
 
-    public User(String email, String phone) {
+    public User(String phone) {
         setEmail(email);
         setPhone(phone);
     }

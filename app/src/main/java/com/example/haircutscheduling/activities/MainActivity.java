@@ -1,13 +1,17 @@
 package com.example.haircutscheduling.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.DownloadManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
@@ -25,12 +29,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.security.cert.PolicyQualifierInfo;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
 
     private boolean savedUserFlag;
-
+    private static boolean blockFlag;
     public static final String SHARED_PREFS_LOGIN = "loginSharedPrefs";
     public static final String USERNAME = "userName";
     public static final String PASSWORD = "password";
@@ -226,31 +240,32 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void deleteUser(String phone, String email) {
+    public void deleteUser(String phone) {
 
-        DatabaseReference myRef = database.getReference("users");
+        DatabaseReference myRef = database.getReference("users").child(phone);
 
-        if (myRef.child(phone) != null)
+        if (myRef.getKey() != null)
         {
             myRef.removeValue();
-            Toast.makeText(this,"User Deleted!", Toast.LENGTH_SHORT).show();
 
             // TODO:: delete from authentication!
+            //  or do something like 'block user'
+
+            Toast.makeText(this,"User Deleted!", Toast.LENGTH_SHORT).show();
         }
         else {
             Toast.makeText(this,"User not found", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void blockUser(String phone, String email) {
+    public void blockUser(String phone) {
 
-        DatabaseReference myRef = database.getReference("blockUsers");
+        DatabaseReference myRef = database.getReference("blockUsers").child(phone);
 
-        if (myRef.child(phone) != null) {
+        if (myRef.getKey() != null) { // TODO:: change 'getKey'
 
-            deleteUser(phone, email);
-
-            User user = new User(email, phone);
+            deleteUser(phone);
+            User user = new User(phone);
             myRef.setValue(user);
 
             Toast.makeText(this, "User Blocked!", Toast.LENGTH_SHORT).show();
@@ -260,23 +275,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public boolean checkIfUserIsBlock(String userName) {
+    public boolean checkIfUserIsBlock(String phone) {
+
+        DatabaseReference myRef = database.getReference("blockUsers/");
+        // TODO:: check if user found in 'blockUsers'
+//        if (myRef.orderByChild("phone").get().getResult().hasChild(phone))
+//        {
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+
+        return false;
+    }
+
+    //TODO::
+//    public interface DataStatus {
+//        void DataIsLoaded(List<UpdateDataModel> u, List<String> k);
+//        void DataIsInserted();
+//        void DataIsUpdated();
+//        void DataIsDeleted();
+//    }
+//    List<UpdateDataModel> updates = new ArrayList<>();
+//    public void readUpdates(final DataStatus dataStatus)
+//    {
+//        DatabaseReference myRef = database.getReference("updates");
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                updates.clear();
+//                List<String> keys = new ArrayList<>();
+//                for(DataSnapshot key: snapshot.getChildren())
+//                {
+//                    keys.add(key.getKey());
+//                    UpdateDataModel update = key.getValue(UpdateDataModel.class);
+//                    updates.add(update);
+//                }
+//                dataStatus.DataIsLoaded(updates,keys);
+//            }
 //
-//        // TODO:: check if user found in 'blockusers'
-////        DatabaseReference myRef = database.getReference("blockUsers");
-////
-////        while (myRef.getKey() != userName)
-////        {
-////            myRef = myRef.getParent();
-////        }
-////
-////        if (myRef.getKey() == userName)
-////        {
-////            return true;
-////        }
-////        else {
-////            return false;
-////        }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
 //
+//            }
+//        });
 //    }
 }

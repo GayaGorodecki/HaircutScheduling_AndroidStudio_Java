@@ -1,5 +1,6 @@
 package com.example.haircutscheduling.fragments;
 
+import android.graphics.ImageDecoder;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 import com.example.haircutscheduling.classes.CustomAdapters.UpdatesBoardCustomAdapter;
 import com.example.haircutscheduling.classes.Data.UpdatesData;
@@ -33,6 +35,7 @@ public class UpdatesBoardFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    MainActivity mainActivity;
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
@@ -83,6 +86,8 @@ public class UpdatesBoardFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mainActivity = (MainActivity) getActivity();
 
 //        TODO:: get data from db (Updates)
         updatesData = new ArrayList<UpdateDataModel>();

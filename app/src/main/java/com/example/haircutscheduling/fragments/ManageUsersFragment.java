@@ -69,7 +69,6 @@ public class ManageUsersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_manage_users, container, false);
 
         EditText phoneT = view.findViewById(R.id.editTextPhoneToManage);
-        EditText emailT = view.findViewById(R.id.editTextEmailToManage);
 
         Button deleteUser = view.findViewById(R.id.buttonDeleteUser);
         deleteUser.setOnClickListener(new View.OnClickListener() {
@@ -77,16 +76,15 @@ public class ManageUsersFragment extends Fragment {
             public void onClick(View v) {
 
                 String phone = phoneT.getText().toString();
-                String email = emailT.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
 
-                if (phone.isEmpty() || email.isEmpty())
+                if (phone.isEmpty())
                 {
-                    Toast.makeText(mainActivity, "Please enter user's phone and email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mainActivity, "Please enter user's phone", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    mainActivity.deleteUser(phone, email);
+                    mainActivity.deleteUser(phone);
                 }
             }
         });
@@ -97,16 +95,15 @@ public class ManageUsersFragment extends Fragment {
             public void onClick(View v) {
 
                 String phone = phoneT.getText().toString();
-                String email = emailT.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
 
-                if (phone.isEmpty() || email.isEmpty())
+                if (phone.isEmpty())
                 {
-                    Toast.makeText(mainActivity, "Please enter user's phone and email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mainActivity, "Please enter user's phone", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    mainActivity.blockUser(phone, email);
+                    mainActivity.blockUser(phone);
                 }
 
             }

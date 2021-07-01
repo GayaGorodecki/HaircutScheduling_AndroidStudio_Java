@@ -87,9 +87,11 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
 
                 TextView userNameTextView = view.findViewById(R.id.editTextTextEmailAddressLogin);
+                TextView phoneTextView = view.findViewById((R.id.editTextPhoneLogin));
                 TextView passwordTextView = view.findViewById(R.id.editTextTextPasswordLogin);
 
                 String userName = userNameTextView.getText().toString();
+                String phone = phoneTextView.getText().toString();
                 String password = passwordTextView.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
@@ -97,10 +99,10 @@ public class LoginFragment extends Fragment {
                 if(userName.isEmpty() || password.isEmpty()) {
                     Toast.makeText(mainActivity, "Please enter user name and password", Toast.LENGTH_LONG).show();
                 }
-//               TODO:: else if (mainActivity.checkIfUserIsBlock(userName))
-//                {
-//                    Toast.makeText(mainActivity, "Cannot login.", Toast.LENGTH_LONG).show();
-//                }
+                else if (mainActivity.checkIfUserIsBlock(phone))
+                {
+                    Toast.makeText(mainActivity, "User is blocked. Cannot login.", Toast.LENGTH_LONG).show();
+                }
                 else {
                     mainActivity.Login(userName,password);
                 }
