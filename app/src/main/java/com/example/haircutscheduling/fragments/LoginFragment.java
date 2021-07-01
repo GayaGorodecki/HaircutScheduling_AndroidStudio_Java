@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+import com.google.firebase.database.DatabaseReference;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -91,7 +93,17 @@ public class LoginFragment extends Fragment {
                 String password = passwordTextView.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.Login(userName,password);
+
+                if(userName.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(mainActivity, "Please enter user name and password", Toast.LENGTH_LONG).show();
+                }
+//               TODO:: else if (mainActivity.checkIfUserIsBlock(userName))
+//                {
+//                    Toast.makeText(mainActivity, "Cannot login.", Toast.LENGTH_LONG).show();
+//                }
+                else {
+                    mainActivity.Login(userName,password);
+                }
             }
         });
 

@@ -27,14 +27,14 @@ public class UpdatesBoardCustomAdapter extends RecyclerView.Adapter<UpdatesBoard
 
         CardView cardViewUpdates;
         EditText editTextUpdate;
-        TextView textViewUpdateDAte;
+        TextView textViewUpdateDate;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             this.cardViewUpdates = (CardView) itemView.findViewById(R.id.card_view_updates);
             this.editTextUpdate = (EditText) itemView.findViewById(R.id.editTextTextMultiLineUpdate);
-            this.textViewUpdateDAte = (TextView) itemView.findViewById(R.id.textViewUpdateDate);
+            this.textViewUpdateDate = (TextView) itemView.findViewById(R.id.textViewUpdateDate);
         }
     }
 
@@ -55,7 +55,7 @@ public class UpdatesBoardCustomAdapter extends RecyclerView.Adapter<UpdatesBoard
 
 
             EditText editTextUpdate = holder.editTextUpdate;
-            TextView textViewUpdateDate = holder.textViewUpdateDAte;
+            TextView textViewUpdateDate = holder.textViewUpdateDate;
 
             editTextUpdate.setText(dataSet.get(position).getUpdate());
             textViewUpdateDate.setText(dataSet.get(position).getDate());

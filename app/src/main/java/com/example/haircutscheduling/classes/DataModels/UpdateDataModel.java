@@ -3,14 +3,15 @@ package com.example.haircutscheduling.classes.DataModels;
 public class UpdateDataModel {
 
     String update;
-    String date; // TODO: change to Date?
-    int id_;
+    String date;
+    //TODO:: add id?
+//    int id_;
 
-    public UpdateDataModel(String update, String date, int id)
+    public UpdateDataModel(String update, String date/*, int id*/)
     {
         this.update = update;
         this.date = date;
-        this.id_ = id;
+//        this.id_ = id;
     }
 
     public String getUpdate() {
@@ -21,7 +22,7 @@ public class UpdateDataModel {
         return date;
     }
 
-    public int getId_() {
-        return id_;
-    }
+//    public int getId_() {
+//        return id_;
+//    }
 }

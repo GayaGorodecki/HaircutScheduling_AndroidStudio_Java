@@ -14,6 +14,11 @@ public class User
         setPhone(phone);
     }
 
+    public User(String email, String phone) {
+        setEmail(email);
+        setPhone(phone);
+    }
+
     public String getPhone() {
         return phone;
     }

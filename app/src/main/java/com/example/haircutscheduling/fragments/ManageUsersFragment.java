@@ -9,19 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
-import com.example.haircutscheduling.classes.User;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SigninFragment#newInstance} factory method to
+ * Use the {@link ManageUsersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SigninFragment extends Fragment {
+public class ManageUsersFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +31,7 @@ public class SigninFragment extends Fragment {
     private String mParam2;
     MainActivity mainActivity;
 
-    public SigninFragment() {
+    public ManageUsersFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +41,11 @@ public class SigninFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SigninFragment.
+     * @return A new instance of fragment ManageUsersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SigninFragment newInstance(String param1, String param2) {
-        SigninFragment fragment = new SigninFragment();
+    public static ManageUsersFragment newInstance(String param1, String param2) {
+        ManageUsersFragment fragment = new ManageUsersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,33 +66,49 @@ public class SigninFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_signin, container, false);
+        View view = inflater.inflate(R.layout.fragment_manage_users, container, false);
 
-        Button register = view.findViewById(R.id.buttonRegister);
-        register.setOnClickListener(new View.OnClickListener() {
+        EditText phoneT = view.findViewById(R.id.editTextPhoneToManage);
+        EditText emailT = view.findViewById(R.id.editTextEmailToManage);
+
+        Button deleteUser = view.findViewById(R.id.buttonDeleteUser);
+        deleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                EditText nameTextView = view.findViewById(R.id.editTextPersonName);
-                EditText emailTextView = view.findViewById(R.id.editTextTextEmailAddressSignin);
-                EditText passwordTextView = view.findViewById(R.id.editTextTextPasswordSignin);
-                EditText phoneTextView = view.findViewById(R.id.editTextPhone);
-
-                String name = nameTextView.getText().toString();
-                String email = emailTextView.getText().toString();
-                String password = passwordTextView.getText().toString();
-                String phone = phoneTextView.getText().toString();
+                String phone = phoneT.getText().toString();
+                String email = emailT.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
 
-                if (name.isEmpty() || email.isEmpty() || password.isEmpty() || phone.isEmpty())
+                if (phone.isEmpty() || email.isEmpty())
                 {
-                    Toast.makeText(mainActivity, "Please fill in all the required information", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mainActivity, "Please enter user's phone and email", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    User user = new User(name, email, password, phone);
-                    mainActivity.Register(user);
+                    mainActivity.deleteUser(phone, email);
                 }
+            }
+        });
+
+        Button blockUser = view.findViewById(R.id.buttonBlockUser);
+        blockUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String phone = phoneT.getText().toString();
+                String email = emailT.getText().toString();
+
+                mainActivity = (MainActivity) getActivity();
+
+                if (phone.isEmpty() || email.isEmpty())
+                {
+                    Toast.makeText(mainActivity, "Please enter user's phone and email", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    mainActivity.blockUser(phone, email);
+                }
+
             }
         });
 

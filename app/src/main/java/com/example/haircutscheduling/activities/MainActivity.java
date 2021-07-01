@@ -8,10 +8,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 import com.example.haircutscheduling.classes.Day;
 import com.example.haircutscheduling.classes.FirstEntry;
 import com.example.haircutscheduling.classes.Settings;
@@ -25,14 +25,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -144,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     setFragment(new SigninFragment());
-                                    Toast.makeText(MainActivity.this, "Something goes wrong, Please try again", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, "Something goes wrong, Please try again.\nNote: A valid email and password with at least 6-characters are required.", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });
@@ -212,8 +210,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please write your update", Toast.LENGTH_SHORT).show();
         }
         else {
-            // TODO:: add update to DB -> update + the date
-            Toast.makeText(this, "The update added to board", Toast.LENGTH_SHORT).show();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String currentDate = sdf.format(new Date());
+            UpdateDataModel adminUpdate = new UpdateDataModel(update, currentDate);
+            DatabaseReference myRef = database.getReference("updates").child(adminUpdate.getDate());
+            myRef.setValue(adminUpdate);
+
+            Toast.makeText(this, "Update added to board", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -223,4 +226,59 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(PASSWORD, "");
         editor.apply();
     }
+
+    public void deleteUser(String phone, String email) {
+
+        DatabaseReference myRef = database.getReference("users");
+
+        if (myRef.child(phone) != null)
+        {
+            myRef.removeValue();
+            Toast.makeText(this,"User Deleted!", Toast.LENGTH_SHORT).show();
+
+            // TODO:: delete from authentication
+        }
+        else {
+            Toast.makeText(this,"User not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void blockUser(String phone, String email) {
+
+        DatabaseReference myRef = database.getReference("blockUsers");
+
+        if (myRef.child(phone) != null) {
+
+            deleteUser(phone, email);
+
+            User user = new User(email, phone);
+            myRef.setValue(user);
+
+            Toast.makeText(this, "User Blocked!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this,"User not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    public boolean checkIfUserIsBlock(String userName) {
+//
+//        // TODO:: check how to read from db
+//        // TODO:: check if user found in 'blockusers'
+////        DatabaseReference myRef = database.getReference("blockUsers");
+////
+////        while (myRef.getKey() != userName)
+////        {
+////            myRef = myRef.getParent();
+////        }
+////
+////        if (myRef.getKey() == userName)
+////        {
+////            return true;
+////        }
+////        else {
+////            return false;
+////        }
+//
+//    }
 }

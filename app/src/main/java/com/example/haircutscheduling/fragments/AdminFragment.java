@@ -93,6 +93,15 @@ public class AdminFragment extends Fragment {
             }
         });
 
+        Button manageUsers = view.findViewById(R.id.buttonManageUsers);
+        manageUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity = (MainActivity) getActivity();
+                mainActivity.setFragment(new ManageUsersFragment());
+            }
+        });
+
         return view;
     }
 }

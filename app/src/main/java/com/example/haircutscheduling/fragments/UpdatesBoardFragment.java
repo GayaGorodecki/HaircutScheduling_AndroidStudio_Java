@@ -89,8 +89,8 @@ public class UpdatesBoardFragment extends Fragment {
         for (int i = 0; i < UpdatesData.updatesArray.length; i++) {
             updatesData.add(new UpdateDataModel(
                     UpdatesData.updatesArray[i],
-                    UpdatesData.datesArray[i],
-                    UpdatesData.id[i]
+                    UpdatesData.datesArray[i]
+//                    UpdatesData.id[i]
             ));
         }
 
