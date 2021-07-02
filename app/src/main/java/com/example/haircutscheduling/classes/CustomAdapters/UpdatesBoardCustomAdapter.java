@@ -1,5 +1,6 @@
 package com.example.haircutscheduling.classes.CustomAdapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +58,9 @@ public class UpdatesBoardCustomAdapter extends RecyclerView.Adapter<UpdatesBoard
             EditText editTextUpdate = holder.editTextUpdate;
             TextView textViewUpdateDate = holder.textViewUpdateDate;
 
-            editTextUpdate.setText(dataSet.get(position).getUpdate());
-            textViewUpdateDate.setText(dataSet.get(position).getDate());
+            UpdateDataModel upd = dataSet.get(position);
+            editTextUpdate.setText(upd.getUpdate());
+            textViewUpdateDate.setText(upd.getDate());
         }
 
         @Override

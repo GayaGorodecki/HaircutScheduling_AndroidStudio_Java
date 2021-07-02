@@ -3,6 +3,7 @@ package com.example.haircutscheduling.fragments;
 import android.graphics.ImageDecoder;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,11 @@ import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 import com.example.haircutscheduling.classes.CustomAdapters.UpdatesBoardCustomAdapter;
 import com.example.haircutscheduling.classes.Data.UpdatesData;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -89,18 +95,41 @@ public class UpdatesBoardFragment extends Fragment {
 
         mainActivity = (MainActivity) getActivity();
 
-//        TODO:: get data from db (Updates)
         updatesData = new ArrayList<UpdateDataModel>();
-        for (int i = 0; i < UpdatesData.updatesArray.length; i++) {
-            updatesData.add(new UpdateDataModel(
-                    UpdatesData.updatesArray[i],
-                    UpdatesData.datesArray[i]
-//                    UpdatesData.id[i]
-            ));
-        }
 
         adapter = new UpdatesBoardCustomAdapter(updatesData);
         recyclerView.setAdapter(adapter);
+
+        // TODO:: get data from db (Updates)
+
+        DatabaseReference root = mainActivity.database.getReference().child("updates");
+
+        root.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    UpdateDataModel update = dataSnapshot.getValue(UpdateDataModel.class);
+                    updatesData.add(update);
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        TODO:: change this
+//        updatesData = new ArrayList<UpdateDataModel>();
+//        for (int i = 0; i < UpdatesData.updatesArray.length; i++) {
+//            updatesData.add(new UpdateDataModel(
+//                    UpdatesData.updatesArray[i],
+//                    UpdatesData.datesArray[i]
+////                    UpdatesData.id[i]
+//            ));
+//        }
 
         return view;
     }
