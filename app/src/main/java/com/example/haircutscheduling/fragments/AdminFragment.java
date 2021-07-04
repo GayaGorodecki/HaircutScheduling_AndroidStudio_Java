@@ -84,6 +84,15 @@ public class AdminFragment extends Fragment {
             }
         });
 
+        Button editOpeningHour = view.findViewById(R.id.buttonOpeningHour);
+        editOpeningHour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity = (MainActivity) getActivity();
+                mainActivity.setFragment(new EditOpeningHour());
+            }
+        });
+
         Button editContactDetails = view.findViewById(R.id.buttonUpdateContactDetails);
         editContactDetails.setOnClickListener(new View.OnClickListener() {
             @Override

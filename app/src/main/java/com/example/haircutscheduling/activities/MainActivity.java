@@ -38,10 +38,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.security.cert.PolicyQualifierInfo;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -181,28 +185,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addDayOff(String date) {
-        Settings setting = new Settings();
-        setting.AddDayOff(date);
-        setting.AddDay(new Day("sunday", "8", "17"));
-        DatabaseReference myRef = database.getReference("setting");
-        myRef.setValue(setting).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DatabaseReference myRef = database.getReference("settings");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "dayOff updated successfully on" + date, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "dayOff updated failed" + date, Toast.LENGTH_LONG).show();
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    Settings settings = task.getResult().getValue(Settings.class);
+                    if(!settings.DayOffList.containsValue(date)) {
+                        Toast.makeText(MainActivity.this, "dayOff updated successfully on " + date, Toast.LENGTH_LONG).show();
+                        myRef.child("DayOffList").push().setValue(date);
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "This is already DayOff " + date, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
-        Toast.makeText(this, "dayOff updated successfully on " + date, Toast.LENGTH_LONG).show();
     }
 
     public void cancelDayOff(String date) {
-        DatabaseReference myRef = database.getReference("setting").child("DayOffList");
-        myRef.push().setValue(date);
-        Toast.makeText(this, "dayOff canceled successfully on " + date, Toast.LENGTH_LONG).show();
-        // TODO:: update day available on 'selectAppointment'
+        DatabaseReference myRef = database.getReference("settings");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    Settings settings = task.getResult().getValue(Settings.class);
+                    if(!settings.DayOffList.containsValue(date)) {
+                        Toast.makeText(MainActivity.this, "This is not Day Off " + date, Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        String keyToRemove = "";
+                        for (String key: settings.DayOffList.keySet())
+                        {
+                            if (date.equals(settings.DayOffList.get(key))) {
+                                keyToRemove = key;
+                                break;
+                            }
+                        }
+                        myRef.child("DayOffList").child(keyToRemove).removeValue();
+                        Toast.makeText(MainActivity.this, "Day Off "+date +" Removed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 
     public void addToUpdatesBoard(String update) {
@@ -273,4 +302,35 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    public void UpdateOpeningHour() {
+        DatabaseReference myRef = database.getReference("settings");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+
+                }
+                else {
+                    Settings settings = task.getResult().getValue(Settings.class);
+                    Day sunday = new Day("Sunday","09:00","17:00");
+                    Day monday = new Day("Monday","09:00","17:00");
+                    Day tuesday = new Day("tuesday","09:00","17:00");
+                    Day wednesday = new Day("wednesday","09:00","17:00");
+                    Day thursday = new Day("thursday","09:00","17:00");
+                    Day friday = new Day("friday","09:00","17:00");
+                    Day saturday = new Day("saturday","09:00","17:00");
+
+                    myRef.child("OperationTime").push().setValue(sunday);
+                    myRef.child("OperationTime").push().setValue(monday);
+                    myRef.child("OperationTime").push().setValue(tuesday);
+                    myRef.child("OperationTime").push().setValue(wednesday);
+                    myRef.child("OperationTime").push().setValue(thursday);
+                    myRef.child("OperationTime").push().setValue(friday);
+                    myRef.child("OperationTime").push().setValue(saturday);
+                    Toast.makeText(MainActivity.this, "Operation time updated successfully on ", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+    }
 }

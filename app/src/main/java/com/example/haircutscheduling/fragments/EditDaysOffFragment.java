@@ -109,7 +109,7 @@ public class EditDaysOffFragment extends Fragment {
                 }
                 else
                 {
-                    mainActivity.addDayOff(currentDate);
+                    mainActivity.cancelDayOff(currentDate);
                 }
             }
         });

@@ -6,6 +6,9 @@ public class Day {
     private String StartHour;
     private String EndHour;
 
+    public Day() {
+    }
+
     public Day(String name, String startHour, String endHour) {
         setName(name);
         setStartHour(startHour);
