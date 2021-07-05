@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-
         //  TODO:: save all last fragment data - with room \ SharedPreferences?
 
         fragmentManager = getSupportFragmentManager();
@@ -96,7 +95,52 @@ public class MainActivity extends AppCompatActivity {
                 Login(userName, password);
             }
         }
+//
+//        DatabaseReference myRef = database.getReference("settings");
+//        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful())
+//                {
+//                    DatabaseReference myRefChild = myRef.child("OperationTime");
+//
+//                    initDaysHours(myRefChild);
+//                }
+//                else {
+//                    DatabaseReference myRefChild = myRef.child("OperationTime");
+//                    myRefChild.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                            if (!task.isSuccessful())
+//                            {
+//                                initDaysHours(myRefChild);
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//        });
+
     }
+
+//    private void initDaysHours(DatabaseReference myRefChild)
+//    {
+//        Day sunday = new Day("sunday","9:00", "17:00");
+//        Day monday = new Day("monday","9:00", "17:00");
+//        Day tuesday = new Day("tuesday","9:00", "17:00");
+//        Day wednesday = new Day("wednesday","9:00", "17:00");
+//        Day thursday = new Day("thursday","9:00", "17:00");
+//        Day friday = new Day("friday","9:00", "17:00");
+//        Day saturday = new Day("saturday","9:00", "17:00");
+//
+//        myRefChild.child(sunday.getName()).push().setValue(sunday);
+//        myRefChild.child(monday.getName()).push().setValue(monday);
+//        myRefChild.child(tuesday.getName()).push().setValue(tuesday);
+//        myRefChild.child(wednesday.getName()).push().setValue(wednesday);
+//        myRefChild.child(thursday.getName()).push().setValue(thursday);
+//        myRefChild.child(friday.getName()).push().setValue(friday);
+//        myRefChild.child(saturday.getName()).push().setValue(saturday);
+//    }
 
     @Override
     public void onBackPressed() {

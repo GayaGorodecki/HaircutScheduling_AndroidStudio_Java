@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 import com.example.haircutscheduling.classes.CustomAdapters.UpdatesBoardCustomAdapter;
 import com.example.haircutscheduling.classes.Data.UpdatesData;
+import com.example.haircutscheduling.classes.Settings;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -97,29 +101,26 @@ public class UpdatesBoardFragment extends Fragment {
 
         updatesData = new ArrayList<UpdateDataModel>();
 
-        adapter = new UpdatesBoardCustomAdapter(updatesData);
-        recyclerView.setAdapter(adapter);
-
         // TODO:: get data from db (Updates)
 
         DatabaseReference root = mainActivity.database.getReference().child("updates");
 
-        root.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot: snapshot.getChildren()) {
-                    UpdateDataModel update = dataSnapshot.getValue(UpdateDataModel.class);
-                    updatesData.add(update);
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        root.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful()) {
+//
+//                }
+//                else {
+//                    UpdateDataModel updates = task.getResult().getValue(UpdateDataModel.class);
+//
+//                    for (UpdateDataModel key : )) {
+//                        UpdateDataModel update = snapshot.getValue(UpdateDataModel.class);
+//                        updatesData.add(update);
+//                    }
+//                }
+//            }
+//        });
 
 //        TODO:: change this
 //        updatesData = new ArrayList<UpdateDataModel>();
@@ -130,6 +131,9 @@ public class UpdatesBoardFragment extends Fragment {
 ////                    UpdatesData.id[i]
 //            ));
 //        }
+
+        adapter = new UpdatesBoardCustomAdapter(updatesData);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }

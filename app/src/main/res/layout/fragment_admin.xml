@@ -62,7 +62,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="תפריט מנהל"
+            android:text="Admin Menu"
             android:textColor="#5CA7B1"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -96,8 +96,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="ערוך ימי חופשה"
-                    android:textSize="24sp"
+                    android:text="Edit day Off"
+                    android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
@@ -111,8 +111,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="ערוך זמני פעילות"
-                    android:textSize="24sp"
+                    android:text="Edit Opening hours"
+                    android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
             </LinearLayout>
@@ -138,8 +138,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="פירוט תורי היום"
-                    android:textSize="24sp"
+                    android:text="Today's appointments"
+                    android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
@@ -153,8 +153,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="ניהול משתמשים"
-                    android:textSize="24sp"
+                    android:text="Users management"
+                    android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
             </LinearLayout>
 
@@ -179,8 +179,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="הוסף ללוח עדכונים"
-                    android:textSize="24sp"
+                    android:text="Add Update"
+                    android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
@@ -194,8 +194,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="עדכן פרטי התקשרות"
-                    android:textSize="24sp"
+                    android:text="Edit contact details"
+                    android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
             </LinearLayout>
 
