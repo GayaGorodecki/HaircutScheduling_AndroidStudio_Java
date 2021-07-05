@@ -2,6 +2,7 @@ package com.example.haircutscheduling.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,6 +20,12 @@ import android.widget.Toast;
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.Day;
+import com.example.haircutscheduling.classes.Settings;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.Time;
 
@@ -37,6 +45,7 @@ public class EditOpeningHour extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+    public FirebaseDatabase database;
     private String chosenDay;
     private boolean dayIsSelected;
     private final String[] days = {"sunday","monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
@@ -66,6 +75,7 @@ public class EditOpeningHour extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -98,15 +108,15 @@ public class EditOpeningHour extends Fragment {
 
         EditText startTime = view.findViewById(R.id.editTextTimeStart);
         EditText endTime = view.findViewById(R.id.editTextTimeEnd);
+        CheckBox dayOffCheckBox = view.findViewById(R.id.checkBoxDayOff);
 
         Button initOpeningHours = view.findViewById(R.id.buttonInitDaysHour);
         initOpeningHours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity = (MainActivity) getActivity();
-
                 String startHour = startTime.getText().toString();
                 String endHour = endTime.getText().toString();
+                Boolean dayOff = dayOffCheckBox.isChecked();
 
                 if (!dayIsSelected)
                 {
@@ -121,10 +131,27 @@ public class EditOpeningHour extends Fragment {
                     Toast.makeText(mainActivity, "Please Choose end hour!", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    mainActivity.UpdateOpeningHour(chosenDay, startHour, endHour);
+                    Day day = new Day(chosenDay,startHour,endHour,dayOff);
+                    UpdateOpeningHour(day);
                 }
             }
         });
         return view;
+    }
+    public void UpdateOpeningHour(Day day) {
+        DatabaseReference myRef = database.getReference("settings");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    Settings settings = task.getResult().getValue(Settings.class);
+                    myRef.child("OperationTime").child(day.getName()).setValue(day);
+                    Toast.makeText(mainActivity, "Operation time updated successfully on ", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
     }
 }

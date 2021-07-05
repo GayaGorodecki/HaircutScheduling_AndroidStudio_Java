@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -33,6 +34,7 @@ public class LoginFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+    public FirebaseDatabase database;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -60,6 +62,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -99,7 +102,7 @@ public class LoginFragment extends Fragment {
                 if(userName.isEmpty() || password.isEmpty()) {
                     Toast.makeText(mainActivity, "Please enter user name and password", Toast.LENGTH_LONG).show();
                 }
-                else if (mainActivity.checkIfUserIsBlock(phone))
+                else if (checkIfUserIsBlock(phone))
                 {
                     Toast.makeText(mainActivity, "User is blocked. Cannot login.", Toast.LENGTH_LONG).show();
                 }
@@ -110,5 +113,19 @@ public class LoginFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public boolean checkIfUserIsBlock(String phone) {
+        DatabaseReference myRef = database.getReference("blockUsers");
+        // TODO:: check if user found in 'blockUsers'
+//        if (myRef.orderByChild("phone").get().getResult().hasChild(phone))
+//        {
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+
+        return false;
     }
 }

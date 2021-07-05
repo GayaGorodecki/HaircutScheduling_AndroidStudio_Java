@@ -138,8 +138,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="Today's appointments"
-                    android:textSize="18sp"
+                    android:text="Today's Queues"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button

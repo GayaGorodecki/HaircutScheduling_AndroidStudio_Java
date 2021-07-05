@@ -23,7 +23,7 @@
             android:layout_margin="10dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="לוח עדכונים"
+            android:text="Updates Board"
             android:textColor="#5CA7B1"
             android:textSize="24sp"
             android:textStyle="bold" />

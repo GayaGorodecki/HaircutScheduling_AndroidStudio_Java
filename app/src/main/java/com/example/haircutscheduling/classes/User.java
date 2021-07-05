@@ -2,45 +2,53 @@ package com.example.haircutscheduling.classes;
 
 public class User
 {
-    private String name;
-    private String email;
-    private String password;
-    private String phone;
+    private String Name;
+    private String Email;
+    private String Password;
+    private String Phone;
+    private Boolean IsBlocked;
 
-    public User(String name, String email, String password, String phone) {
+    public User() {
+    }
+
+
+    public User(String name, String email, String password, String phone, Boolean isBlocked) {
         setName(name);
         setEmail(email);
         setPassword(password);
         setPhone(phone);
+        setBlocked(isBlocked);
     }
 
     public User(String phone) {
-        setEmail(email);
+        setEmail(Email);
         setPhone(phone);
     }
 
+    public Boolean getBlocked() { return IsBlocked; }
+    public void setBlocked(Boolean blocked) { IsBlocked = blocked; }
     public String getPhone() {
-        return phone;
+        return Phone;
     }
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.Phone = phone;
     }
     public String getPassword() {
-        return password;
+        return Password;
     }
     public void setPassword(String password) {
-        this.password = password;
+        this.Password = password;
     }
     public String getEmail() {
-        return email;
+        return Email;
     }
     public void setEmail(String email) {
-        this.email = email;
+        this.Email = email;
     }
     public String getName() {
-        return name;
+        return Name;
     }
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 }

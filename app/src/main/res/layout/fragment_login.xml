@@ -57,7 +57,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:text="התחבר לחשבון"
+                android:text="Sign In"
                 android:textColor="#5CA7B1"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -78,8 +78,8 @@
                 android:drawableLeft="@drawable/email_design"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:gravity="right"
-                android:hint="אימייל"
+                android:gravity="left"
+                android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:padding="10dp" />
 
@@ -99,8 +99,8 @@
                 android:drawableLeft="@drawable/email_design"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:gravity="right"
-                android:hint="מס' נייד"
+                android:gravity="left"
+                android:hint="Phone"
                 android:inputType="phone"
                 android:padding="10dp" />
 
@@ -120,8 +120,8 @@
                 android:drawableLeft="@drawable/password_design"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:gravity="right"
-                android:hint="סיסמה"
+                android:gravity="left"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="10dp" />
 
@@ -132,7 +132,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:background="@drawable/buttoms_design"
-                android:text="כניסה"
+                android:text="Login"
                 app:backgroundTint="#5CA7B1"
                 app:iconSize="10sp" />
         </LinearLayout>
@@ -153,7 +153,7 @@
                 android:layout_gravity="bottom"
                 android:gravity="center"
                 android:paddingBottom="10dp"
-                android:text="עדיין לא רשום?" />
+                android:text="Still not Registered?" />
 
             <Button
                 android:id="@+id/buttonSignin"
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:background="@drawable/buttoms_design"
-                android:text="פתח חשבון"
+                android:text="Create Account"
                 android:textAllCaps="false"
                 app:backgroundTint="#5CA7B1" />
 

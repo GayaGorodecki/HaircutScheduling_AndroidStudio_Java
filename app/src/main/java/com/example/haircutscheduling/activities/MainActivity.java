@@ -95,52 +95,36 @@ public class MainActivity extends AppCompatActivity {
                 Login(userName, password);
             }
         }
-//
-//        DatabaseReference myRef = database.getReference("settings");
-//        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful())
-//                {
-//                    DatabaseReference myRefChild = myRef.child("OperationTime");
-//
-//                    initDaysHours(myRefChild);
-//                }
-//                else {
-//                    DatabaseReference myRefChild = myRef.child("OperationTime");
-//                    myRefChild.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                            if (!task.isSuccessful())
-//                            {
-//                                initDaysHours(myRefChild);
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        });
 
+        DatabaseReference myRef = database.getReference("settings").child("OperationTime");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                   initDaysHours(myRef);
+                }
+           }
+        });
     }
 
-//    private void initDaysHours(DatabaseReference myRefChild)
-//    {
-//        Day sunday = new Day("sunday","9:00", "17:00");
-//        Day monday = new Day("monday","9:00", "17:00");
-//        Day tuesday = new Day("tuesday","9:00", "17:00");
-//        Day wednesday = new Day("wednesday","9:00", "17:00");
-//        Day thursday = new Day("thursday","9:00", "17:00");
-//        Day friday = new Day("friday","9:00", "17:00");
-//        Day saturday = new Day("saturday","9:00", "17:00");
-//
-//        myRefChild.child(sunday.getName()).push().setValue(sunday);
-//        myRefChild.child(monday.getName()).push().setValue(monday);
-//        myRefChild.child(tuesday.getName()).push().setValue(tuesday);
-//        myRefChild.child(wednesday.getName()).push().setValue(wednesday);
-//        myRefChild.child(thursday.getName()).push().setValue(thursday);
-//        myRefChild.child(friday.getName()).push().setValue(friday);
-//        myRefChild.child(saturday.getName()).push().setValue(saturday);
-//    }
+    private void initDaysHours(DatabaseReference myRefChild)
+    {
+        Day sunday = new Day("sunday","9:00", "17:00",false);
+        Day monday = new Day("monday","9:00", "17:00",false);
+        Day tuesday = new Day("tuesday","9:00", "17:00",false);
+        Day wednesday = new Day("wednesday","9:00", "17:00",false);
+        Day thursday = new Day("thursday","9:00", "17:00",false);
+        Day friday = new Day("friday","00:00", "00:00",true);
+        Day saturday = new Day("saturday","00:00", "00:00",true);
+
+        myRefChild.child(sunday.getName()).push().setValue(sunday);
+        myRefChild.child(monday.getName()).push().setValue(monday);
+        myRefChild.child(wednesday.getName()).push().setValue(wednesday);
+        myRefChild.child(tuesday.getName()).push().setValue(tuesday);
+        myRefChild.child(thursday.getName()).push().setValue(thursday);
+        myRefChild.child(friday.getName()).push().setValue(friday);
+        myRefChild.child(saturday.getName()).push().setValue(saturday);
+    }
 
     @Override
     public void onBackPressed() {
@@ -186,25 +170,7 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    public void Register(User user) {
-        String userName = user.getEmail();
-        String password = user.getPassword();
-        mAuth.createUserWithEmailAndPassword(userName, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            DatabaseReference myRef = database.getReference("users").child(user.getPhone());
-                            myRef.setValue(user);
-                            Login(userName, password);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            setFragment(new SigninFragment());
-                            Toast.makeText(MainActivity.this, "Something goes wrong, Please try again.\nNote: A valid email and password with at least 6-characters are required.", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
+
 
     public void setMainFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -229,70 +195,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
     }
 
-    public void addDayOff(String date) {
-        DatabaseReference myRef = database.getReference("settings");
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                }
-                else {
-                    Settings settings = task.getResult().getValue(Settings.class);
-                    if(!settings.DayOffList.containsValue(date)) {
-                        Toast.makeText(MainActivity.this, "dayOff updated successfully on " + date, Toast.LENGTH_LONG).show();
-                        myRef.child("DayOffList").push().setValue(date);
-                    }
-                    else{
-                        Toast.makeText(MainActivity.this, "This is already DayOff " + date, Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
-    }
-
-    public void cancelDayOff(String date) {
-        DatabaseReference myRef = database.getReference("settings");
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                }
-                else {
-                    Settings settings = task.getResult().getValue(Settings.class);
-                    if(!settings.DayOffList.containsValue(date)) {
-                        Toast.makeText(MainActivity.this, "This is not Day Off " + date, Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        String keyToRemove = "";
-                        for (String key: settings.DayOffList.keySet())
-                        {
-                            if (date.equals(settings.DayOffList.get(key))) {
-                                keyToRemove = key;
-                                break;
-                            }
-                        }
-                        myRef.child("DayOffList").child(keyToRemove).removeValue();
-                        Toast.makeText(MainActivity.this, "Day Off "+date +" Removed", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        });
-    }
-
-    public void addToUpdatesBoard(String update) {
-        if (update.isEmpty()) {
-            Toast.makeText(this, "Please write your update", Toast.LENGTH_SHORT).show();
-        } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String currentDate = sdf.format(new Date());
-            UpdateDataModel adminUpdate = new UpdateDataModel(update, currentDate);
-            DatabaseReference myRef = database.getReference("updates").child(adminUpdate.getDate());
-            myRef.setValue(adminUpdate);
-
-            Toast.makeText(this, "Update added to board", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void logOut() {
         SharedPreferences.Editor editor = getSharedPreferences(SHARED_PREFS_LOGIN, MODE_PRIVATE).edit();
         editor.putString(USERNAME, "");
@@ -300,71 +202,6 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void deleteUser(String phone) {
 
-        DatabaseReference myRef = database.getReference("users").child(phone);
 
-        if (myRef.getKey() != null) {
-            myRef.removeValue();
-
-            // TODO:: delete from authentication!
-            //  or do something like 'block user'
-
-            Toast.makeText(this, "User Deleted!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void blockUser(String phone) {
-
-        DatabaseReference myRef = database.getReference("blockUsers").child(phone);
-
-        if (myRef.getKey() != null) { // TODO:: change 'getKey' / check if user found in block list already
-
-            deleteUser(phone);
-            User user = new User(phone);
-            myRef.setValue(user);
-
-            Toast.makeText(this, "User Blocked!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public boolean checkIfUserIsBlock(String phone) {
-
-        DatabaseReference myRef = database.getReference("blockUsers");
-        // TODO:: check if user found in 'blockUsers'
-//        if (myRef.orderByChild("phone").get().getResult().hasChild(phone))
-//        {
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-
-        return false;
-    }
-
-    public void UpdateOpeningHour(String chosenDay, String startHour, String endHour) {
-        DatabaseReference myRef = database.getReference("settings");
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-
-                }
-                else {
-                    Settings settings = task.getResult().getValue(Settings.class);
-                    Day day = new Day(chosenDay,startHour,endHour);
-
-                    myRef.child("OperationTime").child(day.getName()).setValue(day);
-
-                    Toast.makeText(MainActivity.this, "Operation time updated successfully on ", Toast.LENGTH_LONG).show();
-
-                }
-            }
-        });
-    }
 }

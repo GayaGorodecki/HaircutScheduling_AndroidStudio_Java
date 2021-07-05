@@ -14,6 +14,12 @@ import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+import com.example.haircutscheduling.classes.Settings;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -35,7 +41,9 @@ public class EditDaysOffFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
-    String dayString, monthString, yearString,currentDate;
+    public FirebaseDatabase database;
+
+    String currentDate;
 
     public EditDaysOffFragment() {
         // Required empty public constructor
@@ -53,6 +61,7 @@ public class EditDaysOffFragment extends Fragment {
     public static EditDaysOffFragment newInstance(String param1, String param2) {
         EditDaysOffFragment fragment = new EditDaysOffFragment();
         Bundle args = new Bundle();
+
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
@@ -62,6 +71,8 @@ public class EditDaysOffFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -93,7 +104,7 @@ public class EditDaysOffFragment extends Fragment {
                 }
                 else
                 {
-                    mainActivity.addDayOff(currentDate);
+                    addDayOff(currentDate);
                 }
             }
         });
@@ -109,11 +120,61 @@ public class EditDaysOffFragment extends Fragment {
                 }
                 else
                 {
-                    mainActivity.cancelDayOff(currentDate);
+                    cancelDayOff(currentDate);
                 }
             }
         });
 
         return view;
+    }
+
+    public void addDayOff(String date) {
+        DatabaseReference myRef = database.getReference("settings");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    Settings settings = task.getResult().getValue(Settings.class);
+                    if(!settings.DayOffList.containsValue(date)) {
+                        Toast.makeText(mainActivity, "Day Off updated successfully on " + date, Toast.LENGTH_LONG).show();
+                        myRef.child("DayOffList").push().setValue(date);
+                    }
+                    else{
+                        Toast.makeText(mainActivity, "This is already Day Off " + date, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+    }
+
+    public void cancelDayOff(String date) {
+        DatabaseReference myRef = database.getReference("settings");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    Settings settings = task.getResult().getValue(Settings.class);
+                    if(!settings.DayOffList.containsValue(date)) {
+                        Toast.makeText(mainActivity, "This is not Day Off " + date, Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        String keyToRemove = "";
+                        for (String key: settings.DayOffList.keySet())
+                        {
+                            if (date.equals(settings.DayOffList.get(key))) {
+                                keyToRemove = key;
+                                break;
+                            }
+                        }
+                        myRef.child("DayOffList").child(keyToRemove).removeValue();
+                        Toast.makeText(mainActivity, "Day Off "+date +" Removed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
     }
 }

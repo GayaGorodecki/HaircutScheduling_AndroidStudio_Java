@@ -62,7 +62,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:text="תפריט ראשי"
+            android:text="Main Menu"
             android:textColor="#5CA7B1"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -95,8 +95,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="תורים שנקבעו"
-                    android:textSize="30sp"
+                    android:text="Booked Queue"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
@@ -110,8 +110,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="קבע תור"
-                    android:textSize="30sp"
+                    android:text="Choose Queue"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
             </LinearLayout>
@@ -137,8 +137,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="עדכונים"
-                    android:textSize="30sp"
+                    android:text="Updates Board"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
@@ -152,8 +152,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="תורים קודמים"
-                    android:textSize="30sp"
+                    android:text="Previous Queue"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
             </LinearLayout>
@@ -179,8 +179,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="צור קשר"
-                    android:textSize="30sp"
+                    android:text="Contact Details"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
                 <Button
@@ -194,8 +194,8 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="החלף משתמש"
-                    android:textSize="30sp"
+                    android:text="Log Out"
+                    android:textSize="20sp"
                     app:backgroundTint="#5CA7B1" />
 
             </LinearLayout>

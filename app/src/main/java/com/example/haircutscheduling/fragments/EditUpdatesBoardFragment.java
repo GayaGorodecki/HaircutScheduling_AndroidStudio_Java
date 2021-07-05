@@ -9,9 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,7 @@ public class EditUpdatesBoardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+    public FirebaseDatabase database;
 
     public EditUpdatesBoardFragment() {
         // Required empty public constructor
@@ -55,6 +64,7 @@ public class EditUpdatesBoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -73,13 +83,26 @@ public class EditUpdatesBoardFragment extends Fragment {
             public void onClick(View v) {
                 EditText updateInput = view.findViewById(R.id.editTextTextMultiLineUpdateInput);
                 String update = updateInput.getText().toString();
-                // TODO:: suppot hebrew input? or change all app to english
 
                 mainActivity = (MainActivity) getActivity();
-                mainActivity.addToUpdatesBoard(update);
+                addToUpdatesBoard(update);
             }
         });
 
         return view;
+    }
+
+    public void addToUpdatesBoard(String update) {
+        if (update.isEmpty()) {
+            Toast.makeText(mainActivity, "Please write your update", Toast.LENGTH_SHORT).show();
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String currentDate = sdf.format(new Date());
+            UpdateDataModel adminUpdate = new UpdateDataModel(update, currentDate);
+            DatabaseReference myRef = database.getReference("updates").child(adminUpdate.getDate());
+            myRef.setValue(adminUpdate);
+
+            Toast.makeText(mainActivity, "Update added to board", Toast.LENGTH_SHORT).show();
+        }
     }
 }

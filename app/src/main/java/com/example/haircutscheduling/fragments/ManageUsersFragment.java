@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+import com.example.haircutscheduling.classes.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +33,7 @@ public class ManageUsersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+    public FirebaseDatabase database;
 
     public ManageUsersFragment() {
         // Required empty public constructor
@@ -56,6 +60,7 @@ public class ManageUsersFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        database = FirebaseDatabase.getInstance();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -69,22 +74,18 @@ public class ManageUsersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_manage_users, container, false);
 
         EditText phoneT = view.findViewById(R.id.editTextPhoneToManage);
-
         Button deleteUser = view.findViewById(R.id.buttonDeleteUser);
         deleteUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String phone = phoneT.getText().toString();
-
                 mainActivity = (MainActivity) getActivity();
-
                 if (phone.isEmpty())
                 {
                     Toast.makeText(mainActivity, "Please enter user's phone", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    mainActivity.deleteUser(phone);
+                    deleteUser(phone);
                 }
             }
         });
@@ -93,22 +94,47 @@ public class ManageUsersFragment extends Fragment {
         blockUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String phone = phoneT.getText().toString();
-
                 mainActivity = (MainActivity) getActivity();
-
                 if (phone.isEmpty())
                 {
                     Toast.makeText(mainActivity, "Please enter user's phone", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    mainActivity.blockUser(phone);
+                    blockUser(phone);
                 }
 
             }
         });
 
         return view;
+    }
+
+    public void deleteUser(String phone) {
+        DatabaseReference myRef = database.getReference("users").child(phone);
+        if (myRef.getKey() != null) {
+            myRef.removeValue();
+
+            // TODO:: delete from authentication!
+            //  or do something like 'block user'
+
+            Toast.makeText(mainActivity, "User Deleted!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mainActivity, "User not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void blockUser(String phone) {
+        DatabaseReference myRef = database.getReference("users").child(phone);
+        if (myRef.getKey() != null) { // TODO:: change 'getKey' / check if user found in block list already
+
+            deleteUser(phone);
+            User user = new User(phone);
+            myRef.setValue(user);
+
+            Toast.makeText(mainActivity, "User Blocked!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mainActivity, "User not found", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -18,7 +18,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
-        android:text="בחר יום:"
+        android:text="Chosse Day"
         android:textColor="#5CA7B1"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -46,7 +46,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="@drawable/buttoms_design"
-            android:text="בטל יום חופש"
+            android:text="Cancle Day Off"
             android:textSize="18sp" />
 
         <Button
@@ -60,7 +60,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:background="@drawable/buttoms_design"
-            android:text="הגדר כיום חופש"
+            android:text="Define Day Off"
             android:textSize="18sp" />
     </LinearLayout>
 
