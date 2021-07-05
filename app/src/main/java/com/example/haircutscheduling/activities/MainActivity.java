@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
@@ -302,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public void UpdateOpeningHour() {
+    public void UpdateOpeningHour(String chosenDay, String startHour, String endHour) {
         DatabaseReference myRef = database.getReference("settings");
         myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -312,21 +313,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     Settings settings = task.getResult().getValue(Settings.class);
-                    Day sunday = new Day("Sunday","09:00","17:00");
-                    Day monday = new Day("Monday","09:00","17:00");
-                    Day tuesday = new Day("tuesday","09:00","17:00");
-                    Day wednesday = new Day("wednesday","09:00","17:00");
-                    Day thursday = new Day("thursday","09:00","17:00");
-                    Day friday = new Day("friday","09:00","17:00");
-                    Day saturday = new Day("saturday","09:00","17:00");
+                    Day day = new Day(chosenDay,startHour,endHour);
 
-                    myRef.child("OperationTime").push().setValue(sunday);
-                    myRef.child("OperationTime").push().setValue(monday);
-                    myRef.child("OperationTime").push().setValue(tuesday);
-                    myRef.child("OperationTime").push().setValue(wednesday);
-                    myRef.child("OperationTime").push().setValue(thursday);
-                    myRef.child("OperationTime").push().setValue(friday);
-                    myRef.child("OperationTime").push().setValue(saturday);
+                    myRef.child("OperationTime").child(day.getName()).setValue(day);
+
                     Toast.makeText(MainActivity.this, "Operation time updated successfully on ", Toast.LENGTH_LONG).show();
 
                 }
