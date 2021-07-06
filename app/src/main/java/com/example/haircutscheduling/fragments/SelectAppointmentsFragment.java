@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,15 +108,11 @@ public class SelectAppointmentsFragment extends Fragment {
         dayOffCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-
-//                String date  = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date(year,month,dayOfMonth));
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
+                String date  = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(new Date(year,month,dayOfMonth));
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(calendar.DAY_OF_WEEK);
 
-                String date = dateFormat.format(view.getDate());
 
                 hairStyleAppointment.setDate(date);
 

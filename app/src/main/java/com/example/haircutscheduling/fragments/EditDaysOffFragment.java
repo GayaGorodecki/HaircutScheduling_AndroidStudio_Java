@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,8 +89,7 @@ public class EditDaysOffFragment extends Fragment {
         dayOffCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar calendar = Calendar.getInstance();
-                currentDate  = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date(year,month,dayOfMonth));
+                currentDate  = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(new Date(year,month,dayOfMonth));
             }
         });
 

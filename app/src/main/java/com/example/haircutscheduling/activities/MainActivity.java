@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         myRefChild.child("5").setValue(thursday);
         myRefChild.child("6").setValue(friday);
         myRefChild.child("7").setValue(saturday);
+        myRefChild.child(sunday.getName()).setValue(sunday);
     }
 
     @Override
