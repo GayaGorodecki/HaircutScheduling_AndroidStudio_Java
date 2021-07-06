@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
     private FirebaseAuth mAuth;
-    public FirebaseDatabase database;
+    private FirebaseDatabase database;
 
     private boolean savedUserFlag;
     private static boolean blockFlag;
@@ -79,6 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
         //  TODO:: save all last fragment data - with room \ SharedPreferences?
 
+        DatabaseReference myRef = database.getReference("settings").child("OperationTime");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    initDaysHours(myRef); // TODO:: verify only one time (first entry)
+                }
+            }
+        });
+
         fragmentManager = getSupportFragmentManager();
 
         if (FirstEntry.flag) {
@@ -95,16 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 Login(userName, password);
             }
         }
-
-        DatabaseReference myRef = database.getReference("settings").child("OperationTime");
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                   initDaysHours(myRef);
-                }
-           }
-        });
     }
 
     private void initDaysHours(DatabaseReference myRefChild)
@@ -117,13 +117,13 @@ public class MainActivity extends AppCompatActivity {
         Day friday = new Day("friday","00:00", "00:00",true);
         Day saturday = new Day("saturday","00:00", "00:00",true);
 
-        myRefChild.child(sunday.getName()).push().setValue(sunday);
-        myRefChild.child(monday.getName()).push().setValue(monday);
-        myRefChild.child(wednesday.getName()).push().setValue(wednesday);
-        myRefChild.child(tuesday.getName()).push().setValue(tuesday);
-        myRefChild.child(thursday.getName()).push().setValue(thursday);
-        myRefChild.child(friday.getName()).push().setValue(friday);
-        myRefChild.child(saturday.getName()).push().setValue(saturday);
+        myRefChild.child("1").setValue(sunday);
+        myRefChild.child("2").setValue(monday);
+        myRefChild.child("3").setValue(wednesday);
+        myRefChild.child("4").setValue(tuesday);
+        myRefChild.child("5").setValue(thursday);
+        myRefChild.child("6").setValue(friday);
+        myRefChild.child("7").setValue(saturday);
     }
 
     @Override
@@ -170,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
-
     public void setMainFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
         MainFragment mainFragment = new MainFragment();
@@ -201,7 +199,4 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(PASSWORD, "");
         editor.apply();
     }
-
-
-
 }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -147,11 +148,34 @@ public class EditOpeningHour extends Fragment {
                 }
                 else {
                     Settings settings = task.getResult().getValue(Settings.class);
-                    myRef.child("OperationTime").child(day.getName()).setValue(day);
+                    myRef.child("OperationTime").child(convertDayStrToNum(day.getName())).setValue(day);
                     Toast.makeText(mainActivity, "Operation time updated successfully on ", Toast.LENGTH_LONG).show();
 
                 }
             }
         });
+    }
+
+    private String convertDayStrToNum(String day)
+    {
+        switch (day)
+        {
+            case "sunday":
+                return "1";
+            case "monday":
+                return "2";
+            case "tuesday":
+                return "3";
+            case "wednesday":
+                return "4";
+            case "thursday":
+                return "5";
+            case "friday":
+                return "6";
+            case "saturday":
+                return "7";
+            default:
+                return "0";
+        }
     }
 }

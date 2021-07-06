@@ -4,11 +4,13 @@ import android.graphics.ImageDecoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +24,19 @@ import com.example.haircutscheduling.classes.Data.UpdatesData;
 import com.example.haircutscheduling.classes.Settings;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +54,7 @@ public class UpdatesBoardFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     MainActivity mainActivity;
+    private FirebaseDatabase database;
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
@@ -81,6 +90,7 @@ public class UpdatesBoardFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        database = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -99,41 +109,32 @@ public class UpdatesBoardFragment extends Fragment {
 
         mainActivity = (MainActivity) getActivity();
 
-        updatesData = new ArrayList<UpdateDataModel>();
+        DatabaseReference myRef = database.getReference().child("updates");
 
-        // TODO:: get data from db (Updates)
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                updatesData = new ArrayList<UpdateDataModel>();
 
-        DatabaseReference root = mainActivity.database.getReference().child("updates");
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    if (task.getResult().hasChildren()) {
+                        UpdatesData updates = task.getResult().getValue(UpdatesData.class);
+                        for (String key : updates.updatesList.keySet()) {
+                            UpdateDataModel update = updates.updatesList.get(key);
+                            updatesData.add(update);
+                        }
+                    }
+                    else {
+                        Toast.makeText(mainActivity,"No updates",Toast.LENGTH_LONG).show();
+                    }
+                }
 
-//        root.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-//
-//                }
-//                else {
-//                    UpdateDataModel updates = task.getResult().getValue(UpdateDataModel.class);
-//
-//                    for (UpdateDataModel key : )) {
-//                        UpdateDataModel update = snapshot.getValue(UpdateDataModel.class);
-//                        updatesData.add(update);
-//                    }
-//                }
-//            }
-//        });
-
-//        TODO:: change this
-//        updatesData = new ArrayList<UpdateDataModel>();
-//        for (int i = 0; i < UpdatesData.updatesArray.length; i++) {
-//            updatesData.add(new UpdateDataModel(
-//                    UpdatesData.updatesArray[i],
-//                    UpdatesData.datesArray[i]
-////                    UpdatesData.id[i]
-//            ));
-//        }
-
-        adapter = new UpdatesBoardCustomAdapter(updatesData);
-        recyclerView.setAdapter(adapter);
+                adapter = new UpdatesBoardCustomAdapter(updatesData);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
         return view;
     }

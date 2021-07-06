@@ -4,14 +4,13 @@ public class UpdateDataModel {
 
     String update;
     String date;
-    //TODO:: add id?
-//    int id_;
 
-    public UpdateDataModel(String update, String date/*, int id*/)
+    public UpdateDataModel() {}
+
+    public UpdateDataModel(String update, String date)
     {
         this.update = update;
         this.date = date;
-//        this.id_ = id;
     }
 
     public String getUpdate() {
@@ -21,8 +20,4 @@ public class UpdateDataModel {
     public String getDate() {
         return date;
     }
-
-//    public int getId_() {
-//        return id_;
-//    }
 }

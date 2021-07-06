@@ -15,6 +15,8 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class UpdatesBoardCustomAdapter extends RecyclerView.Adapter<UpdatesBoardCustomAdapter.MyViewHolder> {
 
@@ -53,7 +55,6 @@ public class UpdatesBoardCustomAdapter extends RecyclerView.Adapter<UpdatesBoard
 
         @Override
         public void onBindViewHolder(@NonNull UpdatesBoardCustomAdapter.MyViewHolder holder, int position) {
-
 
             EditText editTextUpdate = holder.editTextUpdate;
             TextView textViewUpdateDate = holder.textViewUpdateDate;

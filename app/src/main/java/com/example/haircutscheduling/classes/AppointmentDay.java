@@ -1,31 +1,34 @@
 package com.example.haircutscheduling.classes;
 
+import com.example.haircutscheduling.classes.Data.AppointmentsData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AppointmentDay {
     private Day day;
-    private Boolean DayOff;
-    private List<HairStyleDataModel> AppointList;
+    private ArrayList<HairStyleDataModel> AppointList;
 
-    public AppointmentDay(Day day, Boolean dayOff, List<HairStyleDataModel> appointList) {
-        setDay(day);
-        setDayOff(dayOff);
-        setAppointList(appointList);
+    public AppointmentDay()
+    {
+        AppointList = new ArrayList<>();
     }
 
-    public AppointmentDay(Day day, Boolean dayOff) {
+    public AppointmentDay(Day day)
+    {
         setDay(day);
-        setDayOff(dayOff);
-        setAppointList(new LinkedList<HairStyleDataModel>());
+        AppointList = new ArrayList<>();
+    }
+
+    public AppointmentDay(Day day, ArrayList<HairStyleDataModel> appointList) {
+        setDay(day);
+        setAppointList(appointList);
     }
 
     public Day getDay() { return day; }
     public void setDay(Day day) { this.day = day; }
-    public Boolean getDayOff() { return DayOff; }
-    public void setDayOff(Boolean dayOff) { DayOff = dayOff; }
-    public List<HairStyleDataModel> getAppointList() { return AppointList; }
-    public void setAppointList(List<HairStyleDataModel> appointList) { AppointList = appointList; }
+    public ArrayList<HairStyleDataModel> getAppointList() { return AppointList; }
+    public void setAppointList(ArrayList<HairStyleDataModel> appointList) { AppointList = appointList; }
 }

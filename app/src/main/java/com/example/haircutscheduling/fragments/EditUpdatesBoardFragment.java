@@ -17,7 +17,9 @@ import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -96,11 +98,11 @@ public class EditUpdatesBoardFragment extends Fragment {
         if (update.isEmpty()) {
             Toast.makeText(mainActivity, "Please write your update", Toast.LENGTH_SHORT).show();
         } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String currentDate = sdf.format(new Date());
+            String currentDate  = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date());
+
             UpdateDataModel adminUpdate = new UpdateDataModel(update, currentDate);
-            DatabaseReference myRef = database.getReference("updates").child(adminUpdate.getDate());
-            myRef.setValue(adminUpdate);
+            DatabaseReference myRef = database.getReference("updates");
+            myRef.child("updatesList").push().setValue(adminUpdate);
 
             Toast.makeText(mainActivity, "Update added to board", Toast.LENGTH_SHORT).show();
         }

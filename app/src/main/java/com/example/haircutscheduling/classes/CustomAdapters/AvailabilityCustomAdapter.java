@@ -14,29 +14,26 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AvailabilityCustomAdapter extends RecyclerView.Adapter<AvailabilityCustomAdapter.MyViewHolder>  {
 
-    private final ArrayList<HairStyleDataModel> dataSet;
+    private final ArrayList<String> dataSet;
 
-    public AvailabilityCustomAdapter(ArrayList<HairStyleDataModel> data) {
+    public AvailabilityCustomAdapter(ArrayList<String> data) {
         this.dataSet = data;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        CardView cardViewBooked;
-        TextView textViewHairStyleBooked;
-        TextView textViewPriceBooked;
-        ImageView imageViewIconBooked;
+        CardView cardViewAvailable;
+        TextView textViewHour;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            this.cardViewBooked = (CardView) itemView.findViewById(R.id.available_card_view);
-            this.textViewHairStyleBooked = (TextView) itemView.findViewById(R.id.textViewHairStyleBooked);
-            this.textViewPriceBooked = (TextView) itemView.findViewById(R.id.textViewPriceBooked);
-            this.imageViewIconBooked = (ImageView) itemView.findViewById(R.id.imageViewHairStyleBooked);
+            this.cardViewAvailable = (CardView) itemView.findViewById(R.id.available_card_view);
+            this.textViewHour = (TextView) itemView.findViewById(R.id.textViewHour);
         }
     }
 
@@ -55,15 +52,10 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
     @Override
     public void onBindViewHolder(@NonNull AvailabilityCustomAdapter.MyViewHolder holder, int position) {
 
-        TextView textViewHairStyleBooked = holder.textViewHairStyleBooked;
-        TextView textViewDescriptionBooked = holder.textViewPriceBooked;
-        ImageView imageViewBooked = holder.imageViewIconBooked;
-        CardView cardViewBooked = holder.cardViewBooked;
+        TextView textViewHour = holder.textViewHour;
+        CardView cardViewAvailable = holder.cardViewAvailable;
 
-        // TODO::
-        /*textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
-        textViewDescriptionBooked.setText(dataSet.get(position).getDescription());
-        imageViewBooked.setImageResource(dataSet.get(position).getImage());*/
+        textViewHour.setText(dataSet.get(position).toString());
     }
 
     @Override
