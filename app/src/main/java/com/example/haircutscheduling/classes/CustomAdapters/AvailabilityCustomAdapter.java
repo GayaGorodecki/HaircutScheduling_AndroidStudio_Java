@@ -3,7 +3,6 @@ package com.example.haircutscheduling.classes.CustomAdapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,16 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
+import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AvailabilityCustomAdapter extends RecyclerView.Adapter<AvailabilityCustomAdapter.MyViewHolder>  {
 
     private final ArrayList<String> dataSet;
+    private HairStyleDataModel hairStyleDataModel;
+    private FirebaseDatabase database;
 
-    public AvailabilityCustomAdapter(ArrayList<String> data) {
+    public AvailabilityCustomAdapter(ArrayList<String> data, HairStyleDataModel hairStyleAppointment) {
         this.dataSet = data;
+        this.hairStyleDataModel = hairStyleAppointment;
+        database = FirebaseDatabase.getInstance();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -55,7 +60,18 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
         TextView textViewHour = holder.textViewHour;
         CardView cardViewAvailable = holder.cardViewAvailable;
 
-        textViewHour.setText(dataSet.get(position).toString());
+        String hour = dataSet.get(position).toString();
+        textViewHour.setText(hour);
+
+        cardViewAvailable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hairStyleDataModel.setHour(hour);
+
+                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
+                myRef.child(hairStyleDataModel.getDate()).child(hairStyleDataModel.getHour()).push().setValue(hairStyleDataModel);
+            }
+        });
     }
 
     @Override

@@ -61,14 +61,20 @@ public class HairStylesMenuCustomAdapter extends RecyclerView.Adapter<HairStyles
         ImageView imageView = holder.imageViewIcon;
         CardView cardView = holder.cardView;
 
-        textViewHairStyle.setText(dataSet.get(position).getHairStyle());
-        textViewDescription.setText(dataSet.get(position).getPrice());
-        imageView.setImageResource(dataSet.get(position).getImage());
+        String hairStyle = dataSet.get(position).getHairStyle();
+        textViewHairStyle.setText(hairStyle);
 
+        String price = dataSet.get(position).getPrice();
+        textViewDescription.setText(price);
+
+        int img = dataSet.get(position).getImage();
+        imageView.setImageResource(img);
+
+        HairStyleDataModel hairStyleDataModel = new HairStyleDataModel(hairStyle, price, img);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.setSelectAppointmentsFragment(textViewHairStyle.toString());
+                mainActivity.setSelectAppointmentsFragment(hairStyleDataModel);
             }
         });
     }

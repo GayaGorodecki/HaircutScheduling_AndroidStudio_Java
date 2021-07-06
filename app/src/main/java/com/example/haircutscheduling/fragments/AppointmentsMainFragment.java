@@ -91,7 +91,6 @@ public class AppointmentsMainFragment extends Fragment {
             hairstyleData.add(new HairStyleDataModel(
                     HairStylesMenuData.hairStyleArray[i],
                     HairStylesMenuData.priceArray[i],
-                    HairStylesMenuData.id[i],
                     HairStylesMenuData.drawableArray[i]
             ));
         }

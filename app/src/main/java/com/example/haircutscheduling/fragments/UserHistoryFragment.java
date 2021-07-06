@@ -87,14 +87,14 @@ public class UserHistoryFragment extends Fragment {
         // TODO:: get data from db (user history appoitments)
         // TODO:: create & change to 'history data'? or take from user list..
         bookedData = new ArrayList<HairStyleDataModel>();
-        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
-            bookedData.add(new HairStyleDataModel(
-                    BookedData.hairStyleArray[i],
-                    BookedData.dateArray[i],
-                    BookedData.hourArray[i],
-                    BookedData.id[i]
-            ));
-        }
+//        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
+//            bookedData.add(new HairStyleDataModel(
+//                    BookedData.hairStyleArray[i],
+//                    BookedData.dateArray[i],
+//                    BookedData.hourArray[i],
+//                    BookedData.id[i]
+//            ));
+//        }
 
         adapter = new HistoryCustomAdapter(bookedData);
         recyclerView.setAdapter(adapter);

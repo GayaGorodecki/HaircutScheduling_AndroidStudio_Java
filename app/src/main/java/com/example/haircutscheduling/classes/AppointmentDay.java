@@ -4,31 +4,32 @@ import com.example.haircutscheduling.classes.Data.AppointmentsData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AppointmentDay {
     private Day day;
-    private ArrayList<HairStyleDataModel> AppointList;
+    private HashMap<String, HairStyleDataModel> AppointList;
 
     public AppointmentDay()
     {
-        AppointList = new ArrayList<>();
+        AppointList = new HashMap<>();
     }
 
     public AppointmentDay(Day day)
     {
         setDay(day);
-        AppointList = new ArrayList<>();
+        AppointList = new HashMap<>();
     }
 
-    public AppointmentDay(Day day, ArrayList<HairStyleDataModel> appointList) {
+    public AppointmentDay(Day day, HashMap<String, HairStyleDataModel> appointList) {
         setDay(day);
         setAppointList(appointList);
     }
 
     public Day getDay() { return day; }
     public void setDay(Day day) { this.day = day; }
-    public ArrayList<HairStyleDataModel> getAppointList() { return AppointList; }
-    public void setAppointList(ArrayList<HairStyleDataModel> appointList) { AppointList = appointList; }
+    public HashMap<String, HairStyleDataModel> getAppointList() { return AppointList; }
+    public void setAppointList(HashMap<String, HairStyleDataModel> appointList) { AppointList = appointList; }
 }

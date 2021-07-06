@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.CustomAdapters.UpdatesBoardCustomAdapter;
+import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.classes.DataModels.UpdateDataModel;
 import com.example.haircutscheduling.classes.Day;
 import com.example.haircutscheduling.classes.FirstEntry;
@@ -186,10 +187,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragmentcon, fragment).addToBackStack(null).commit();
     }
 
-    public void setSelectAppointmentsFragment(String hairStyle) {
-        // TODO:: use parameter hairStyle for appointment
+    public void setSelectAppointmentsFragment(HairStyleDataModel hairStyleDataModel) {
         fragmentTransaction = fragmentManager.beginTransaction();
-        SelectAppointmentsFragment selectAppointmentsFragment = new SelectAppointmentsFragment();
+        SelectAppointmentsFragment selectAppointmentsFragment = new SelectAppointmentsFragment(hairStyleDataModel);
         fragmentTransaction.replace(R.id.fragmentcon, selectAppointmentsFragment).addToBackStack(null).commit();
     }
 
