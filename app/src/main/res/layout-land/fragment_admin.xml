@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/imageViewLogoAdmin"
-                android:layout_width="80dp"
-                android:layout_height="60dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -36,21 +36,8 @@
                 android:src="@drawable/logo" />
 
             <TextView
-                android:id="@+id/textViewAdminTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:fontFamily="sans-serif-condensed-light"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Get A Haircut!"
-                android:textColor="@color/design_default_color_on_secondary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
                 android:id="@+id/textViewAdmin"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_marginStart="10dp"
@@ -59,8 +46,8 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:gravity="center|right"
-                android:text="תפריט מנהל"
+                android:gravity="center|left"
+                android:text="Admin Menu"
                 android:textColor="#5CA7B1"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -96,7 +83,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="פירוט תורי היום"
+                    android:text="Today's Queues"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
@@ -111,7 +98,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="ערוך ימי חופשה"
+                    android:text="Edit day Off"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
@@ -126,7 +113,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="ערוך זמני פעילות"
+                    android:text="Edit Opening hours"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
@@ -153,7 +140,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="עדכן פרטי התקשרות"
+                    android:text="Edit contact details"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
@@ -168,7 +155,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="הוסף ללוח עדכונים"
+                    android:text="Add Update"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
 
@@ -183,7 +170,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttoms_design"
-                    android:text="ניהול משתמשים"
+                    android:text="Manage users"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
             </LinearLayout>

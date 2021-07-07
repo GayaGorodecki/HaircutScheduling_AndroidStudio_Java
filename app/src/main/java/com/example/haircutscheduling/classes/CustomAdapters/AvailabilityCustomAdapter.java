@@ -3,6 +3,7 @@ package com.example.haircutscheduling.classes.CustomAdapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,10 +34,12 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
 
         CardView cardViewAvailable;
         TextView textViewHour;
+        Button set;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            this.set = (Button) itemView.findViewById(R.id.buttonSet);
             this.cardViewAvailable = (CardView) itemView.findViewById(R.id.available_card_view);
             this.textViewHour = (TextView) itemView.findViewById(R.id.textViewHour);
         }
@@ -60,16 +63,18 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
         TextView textViewHour = holder.textViewHour;
         CardView cardViewAvailable = holder.cardViewAvailable;
 
+        Button btnSet = holder.set;
+
         String hour = dataSet.get(position).toString();
         textViewHour.setText(hour);
 
-        cardViewAvailable.setOnClickListener(new View.OnClickListener() {
+        btnSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 hairStyleDataModel.setHour(hour);
 
                 DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
-                myRef.child(hairStyleDataModel.getDate()).child(hairStyleDataModel.getHour()).push().setValue(hairStyleDataModel);
+                myRef.child(hairStyleDataModel.getDate()).child(hairStyleDataModel.getHour()).setValue(hairStyleDataModel);
             }
         });
     }

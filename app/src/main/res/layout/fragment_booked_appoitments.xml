@@ -19,7 +19,7 @@
             android:layout_margin="10dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Booked"
+            android:text="Booked Appointments"
             android:textColor="#5CA7B1"
             android:textSize="24sp"
             android:textStyle="bold" />

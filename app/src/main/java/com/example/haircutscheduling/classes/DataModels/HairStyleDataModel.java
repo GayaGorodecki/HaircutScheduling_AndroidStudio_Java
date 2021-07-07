@@ -1,5 +1,7 @@
 package com.example.haircutscheduling.classes.DataModels;
 
+import com.example.haircutscheduling.classes.Day;
+
 public class HairStyleDataModel {
 
     public void setHairStyle(String hairStyle) {
@@ -27,6 +29,18 @@ public class HairStyleDataModel {
     String date;
     String hour;
     int image;
+
+//    todo :: add user
+
+    public Day getDay() {
+        return day;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
+    }
+
+    Day day;
 
     public int get_id() {
         return _id;

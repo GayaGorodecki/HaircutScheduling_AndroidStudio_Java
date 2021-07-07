@@ -8,10 +8,18 @@ import java.util.HashMap;
 
 public class AppointmentsData {
 
+    public void setAppointmentList(HashMap<String, AppointmentDay> appointmentList) {
+        this.appointmentList = appointmentList;
+    }
+
+    public HashMap<String, AppointmentDay> getAppointmentList() {
+        return appointmentList;
+    }
+
     public HashMap<String, AppointmentDay> appointmentList;
 
     public AppointmentsData()
     {
-        appointmentList = new HashMap();
+        appointmentList = new HashMap<String, AppointmentDay>();
     }
 }

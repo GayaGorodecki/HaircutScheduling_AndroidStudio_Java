@@ -15,17 +15,15 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:gravity="center"
-        android:text="Choose date"
+        android:text="Choose date and hour"
         android:textColor="#5CA7B1"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <CalendarView
         android:id="@+id/calendarViewSelectAppointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="7dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     </CalendarView>
 

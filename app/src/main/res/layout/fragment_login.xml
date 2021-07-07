@@ -13,27 +13,12 @@
         android:layout_gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewLoginTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:layout_margin="10dp"
-            android:fontFamily="sans-serif-condensed-light"
-            android:gravity="center|top"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
-            android:text="Get A Haircut!"
-            android:textColor="@color/design_default_color_on_secondary"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
         <ImageView
             android:id="@+id/imageViewLogoLogin"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/logo" />
 
@@ -57,7 +42,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:gravity="center"
-                android:text="Sign In"
+                android:text="Log In"
                 android:textColor="#5CA7B1"
                 android:textSize="24sp"
                 android:textStyle="bold" />

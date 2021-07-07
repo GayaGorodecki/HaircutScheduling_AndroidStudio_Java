@@ -89,16 +89,16 @@ public class BookedAppoitmentsFragment extends Fragment {
 //        TODO:: get data from db (booked appoitments)
         // TODO:: take from user list and delete 'bookedData' ?
         bookedAppointmentData = new ArrayList<HairStyleDataModel>();
-        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
-            bookedAppointmentData.add(new HairStyleDataModel(
-                    BookedData.hairStyleArray[i],
-                    BookedData.priceArray[i],
-                    BookedData.dateArray[i],
-                    BookedData.hourArray[i],
-                    BookedData.id[i],
-                    BookedData.drawableArray[i]
-            ));
-        }
+//        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
+//            bookedAppointmentData.add(new HairStyleDataModel(
+//                    BookedData.hairStyleArray[i],
+//                    BookedData.priceArray[i],
+//                    BookedData.dateArray[i],
+//                    BookedData.hourArray[i],
+//                    BookedData.id[i],
+//                    BookedData.drawableArray[i]
+//            ));
+//        }
 
         adapter = new BookedCustomAdapter(bookedAppointmentData);
         recyclerView.setAdapter(adapter);

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,6 +62,7 @@ public class SelectAppointmentsFragment extends Fragment {
     private FirebaseDatabase database;
     MainActivity mainActivity;
     HairStyleDataModel hairStyleAppointment;
+    private String date;
 
     public SelectAppointmentsFragment() {}
 
@@ -108,61 +113,62 @@ public class SelectAppointmentsFragment extends Fragment {
         dayOffCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String date  = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(new Date(year,month,dayOfMonth));
+
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
+                date = format.format(new Date(year,month,dayOfMonth));
+
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(calendar.DAY_OF_WEEK);
-
 
                 hairStyleAppointment.setDate(date);
 
                 DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
                 myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        ArrayList<String> hours = new ArrayList<>();
+                    public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
 
-                        if (!task.isSuccessful()) {
+                        if (!appointmentTask.isSuccessful()) {
                         }
                         else {
-                            if (task.getResult().hasChildren()) {
-                                AppointmentsData appointmentsData = task.getResult().getValue(AppointmentsData.class);
-                                if (appointmentsData.appointmentList.containsValue(date)) {
-                                    // TODO::  chage key - not date or change format
-                                    hours = getAvailableHours(appointmentsData.appointmentList.get(date));
+                            DatabaseReference settingRef = database.getReference("settings");
+                            settingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> settingTtask) {
+                                    if(!settingTtask.isSuccessful()) {
+                                    }
+                                    else {
+                                        if (settingTtask.getResult().hasChildren()) {
+                                            Settings settings = settingTtask.getResult().getValue(Settings.class);
+                                            ArrayList<String> hours = new ArrayList<>();
 
-                                    adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment);
-                                    recyclerView.setAdapter(adapter);
-                                }
-                            }
-                            else {
-                                DatabaseReference settingRef = database.getReference("settings");
-                                settingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                        if (!task.isSuccessful()) {
-                                        }
-                                        else {
-                                            if (task.getResult().hasChildren()) {
-                                                ArrayList<String> hours = new ArrayList<>();
-                                                Settings settings = task.getResult().getValue(Settings.class);
-                                                if (settings.DayOffList.containsValue(date)) {
-                                                    // TODO:: write 'not available day'...
-                                                    mainActivity = (MainActivity) getActivity();
-                                                    Toast.makeText(mainActivity, "Not available day", Toast.LENGTH_LONG).show();
-                                                } else {
+                                            if (appointmentTask.getResult().hasChildren()) {
+                                                AppointmentsData appointmentsData = appointmentTask.getResult().getValue(AppointmentsData.class);
+                                                if (appointmentsData.appointmentList.containsKey(date)) { //TODO:: solve problem here
+
                                                     Day day = settings.OperationTime.get(String.valueOf(dayOfWeek));
-                                                    AppointmentDay appointmentDay = new AppointmentDay(day);
-                                                    hours = getAvailableHours(appointmentDay);
+                                                    appointmentsData.appointmentList.get(date).setDay(day);
+                                                    hours = getAvailableHours(appointmentsData.appointmentList.get(date));
 
                                                     adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment);
                                                     recyclerView.setAdapter(adapter);
                                                 }
+                                            } else if (settings.DayOffList.containsValue(date)) {
+                                                // TODO:: write 'not available day'...
+                                                mainActivity = (MainActivity) getActivity();
+                                                Toast.makeText(mainActivity, "Not available day", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Day day = settings.OperationTime.get(String.valueOf(dayOfWeek));
+                                                AppointmentDay appointmentDay = new AppointmentDay(day);
+                                                hours = getAvailableHours(appointmentDay);
+
+                                                adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment);
+                                                recyclerView.setAdapter(adapter);
                                             }
                                         }
                                     }
-                                });
-                            }
+                                }
+                            });
                         }
                     }
                 });
@@ -182,6 +188,7 @@ public class SelectAppointmentsFragment extends Fragment {
 
             String startHour = appointmentDay.getDay().getStartHour();
             String endHour = appointmentDay.getDay().getEndHour();
+
             HashMap<String, HairStyleDataModel> booked = appointmentDay.getAppointList();
 
             Date start = null;
@@ -198,9 +205,10 @@ public class SelectAppointmentsFragment extends Fragment {
 
             while (hour.before(end)) {
                 String hourFormat = dateFormat.format(hour.getTime());
-                if (!booked.containsKey(hourFormat)) {
+                if (!booked.containsKey(hourFormat)) { // todo:: add check by hour
                     availableHours.add(hourFormat);
                 }
+
                 hour.setMinutes(hour.getMinutes() + 30);
             }
         }

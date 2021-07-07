@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:gravity="center"
-        android:text="בחר תאריך"
+        android:text="Choose date"
         android:textColor="#5CA7B1"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -25,9 +25,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <CalendarView
+            android:id="@+id/calendarViewSelectAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </CalendarView>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#D4E1E0"
             android:layout_weight="1">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -35,13 +44,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
-
-        <CalendarView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </CalendarView>
 
     </LinearLayout>
 

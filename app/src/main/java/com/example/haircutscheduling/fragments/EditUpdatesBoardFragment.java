@@ -98,7 +98,8 @@ public class EditUpdatesBoardFragment extends Fragment {
         if (update.isEmpty()) {
             Toast.makeText(mainActivity, "Please write your update", Toast.LENGTH_SHORT).show();
         } else {
-            String currentDate  = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).format(new Date());
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
+            String currentDate = format.format(new Date());
 
             UpdateDataModel adminUpdate = new UpdateDataModel(update, currentDate);
             DatabaseReference myRef = database.getReference("updates");

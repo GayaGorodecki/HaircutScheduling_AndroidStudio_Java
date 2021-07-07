@@ -23,13 +23,13 @@ public class AppointmentDay {
         AppointList = new HashMap<>();
     }
 
-    public AppointmentDay(Day day, HashMap<String, HairStyleDataModel> appointList) {
+    public AppointmentDay(Day day, HashMap<String,HairStyleDataModel> appointList) {
         setDay(day);
         setAppointList(appointList);
     }
 
     public Day getDay() { return day; }
     public void setDay(Day day) { this.day = day; }
-    public HashMap<String, HairStyleDataModel> getAppointList() { return AppointList; }
-    public void setAppointList(HashMap<String, HairStyleDataModel> appointList) { AppointList = appointList; }
+    public HashMap<String,HairStyleDataModel> getAppointList() { return AppointList; }
+    public void setAppointList(HashMap<String,HairStyleDataModel> appointList) { AppointList = appointList; }
 }
