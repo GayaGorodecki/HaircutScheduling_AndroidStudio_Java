@@ -144,7 +144,8 @@ public class SelectAppointmentsFragment extends Fragment {
 
                                             if (appointmentTask.getResult().hasChildren()) {
                                                 AppointmentsData appointmentsData = appointmentTask.getResult().getValue(AppointmentsData.class);
-                                                if (appointmentsData.appointmentList.containsKey(date)) { //TODO:: solve problem here
+                                                //TODO:: solve problem here
+                                                if (appointmentsData.appointmentList.containsKey(date)) {
 
                                                     Day day = settings.OperationTime.get(String.valueOf(dayOfWeek));
                                                     appointmentsData.appointmentList.get(date).setDay(day);

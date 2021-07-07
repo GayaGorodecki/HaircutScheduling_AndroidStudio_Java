@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.CustomAdapters.BookedCustomAdapter;
+import com.example.haircutscheduling.classes.CustomAdapters.TodayAppointmentsCustomAdapter;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,10 +25,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BookedAppoitmentsFragment#newInstance} factory method to
+ * Use the {@link TodayAppointmentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookedAppoitmentsFragment extends Fragment {
+public class TodayAppointmentsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,11 +41,11 @@ public class BookedAppoitmentsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<HairStyleDataModel> bookedAppointmentData;
-    private static BookedCustomAdapter adapter;
+    private static ArrayList<HairStyleDataModel> todayBooked;
+    private static TodayAppointmentsCustomAdapter adapter;
     private FirebaseDatabase database;
 
-    public BookedAppoitmentsFragment() {
+    public TodayAppointmentsFragment() {
         // Required empty public constructor
     }
 
@@ -55,11 +55,11 @@ public class BookedAppoitmentsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BookedAppoitmentsFragment.
+     * @return A new instance of fragment AllAppointmentsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BookedAppoitmentsFragment newInstance(String param1, String param2) {
-        BookedAppoitmentsFragment fragment = new BookedAppoitmentsFragment();
+    public static TodayAppointmentsFragment newInstance(String param1, String param2) {
+        TodayAppointmentsFragment fragment = new TodayAppointmentsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,9 +81,9 @@ public class BookedAppoitmentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_booked_appoitments, container, false);
+        View view = inflater.inflate(R.layout.fragment_today_appointments, container, false);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerBooked);
+        recyclerView = (RecyclerView) view.findViewById(R.id.todayRecyclerView);
         recyclerView.setHasFixedSize(true);
 
         layoutManager = new LinearLayoutManager(getActivity());
@@ -96,13 +96,12 @@ public class BookedAppoitmentsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                bookedAppointmentData = new ArrayList<HairStyleDataModel>();
+                todayBooked = new ArrayList<HairStyleDataModel>();
 
-                // TODO:: search on myRef for specific user's appointments
-                // TODO:: (if possible - get only future dates)
+                // TODO:: search on myRef for all *today* appointments
                 // TODO:: and add them to the list
 
-                adapter = new BookedCustomAdapter(bookedAppointmentData);
+                adapter = new TodayAppointmentsCustomAdapter(todayBooked);
                 recyclerView.setAdapter(adapter);
             }
         });

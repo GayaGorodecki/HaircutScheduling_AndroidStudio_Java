@@ -2,6 +2,7 @@ package com.example.haircutscheduling.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,9 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.Data.BookedData;
+import com.example.haircutscheduling.classes.CustomAdapters.BookedCustomAdapter;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.classes.CustomAdapters.HistoryCustomAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -38,6 +44,7 @@ public class UserHistoryFragment extends Fragment {
     private static RecyclerView recyclerView;
     private static ArrayList<HairStyleDataModel> bookedData;
     private static HistoryCustomAdapter adapter;
+    private FirebaseDatabase database;
 
     public UserHistoryFragment() {
         // Required empty public constructor
@@ -68,6 +75,7 @@ public class UserHistoryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        database = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -84,20 +92,21 @@ public class UserHistoryFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        // TODO:: get data from db (user history appoitments)
-        // TODO:: create & change to 'history data'? or take from user list..
-        bookedData = new ArrayList<HairStyleDataModel>();
-//        for (int i = 0; i < BookedData.hairStyleArray.length; i++) {
-//            bookedData.add(new HairStyleDataModel(
-//                    BookedData.hairStyleArray[i],
-//                    BookedData.dateArray[i],
-//                    BookedData.hourArray[i],
-//                    BookedData.id[i]
-//            ));
-//        }
+        DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-        adapter = new HistoryCustomAdapter(bookedData);
-        recyclerView.setAdapter(adapter);
+                bookedData = new ArrayList<HairStyleDataModel>();
+
+                // TODO:: search on myRef for specific user's appointments
+                // TODO:: (all or - if possible get only past dates)
+                // TODO:: and add them to the list
+
+                adapter = new HistoryCustomAdapter(bookedData);
+                recyclerView.setAdapter(adapter);
+            }
+        });
 
         return view;
     }
