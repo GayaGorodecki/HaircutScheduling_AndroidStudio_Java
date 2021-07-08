@@ -109,7 +109,12 @@ public class TodayAppointmentsFragment extends Fragment {
 
                     Object objData = task.getResult().getValue(Object.class);
                     HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
-
+                    /*if (appointmentDay != null)
+                    {
+                        for (HairStyleDataModel dataModel :appointmentDay.values()) {
+                            todayBooked.add(dataModel);
+                        }
+                    }*/
                     if (appointmentDay != null)
                     {
                         todayBooked.addAll(appointmentDay.values());

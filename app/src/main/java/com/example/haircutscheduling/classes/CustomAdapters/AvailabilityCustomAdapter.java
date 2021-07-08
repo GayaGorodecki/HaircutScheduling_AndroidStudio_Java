@@ -15,6 +15,7 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,12 +26,14 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
     private final ArrayList<String> dataSet;
     private HairStyleDataModel hairStyleDataModel;
     private FirebaseDatabase database;
+    private FirebaseAuth mAuto;
     private MainActivity mainActivity;
 
     public AvailabilityCustomAdapter(ArrayList<String> data, HairStyleDataModel hairStyleAppointment, MainActivity main) {
         this.dataSet = data;
         this.hairStyleDataModel = hairStyleAppointment;
         database = FirebaseDatabase.getInstance();
+        mAuto = FirebaseAuth.getInstance();
         this.mainActivity = main;
     }
 
@@ -76,10 +79,12 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
             @Override
             public void onClick(View v) {
                 hairStyleDataModel.setHour(hour);
+                hairStyleDataModel.setUserId(mAuto.getCurrentUser().getUid());
+
 
                 DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
                 myRef.child(hairStyleDataModel.getDate()).child(hairStyleDataModel.getHour()).setValue(hairStyleDataModel);
-                Toast.makeText(mainActivity,"Appointment booked successfuly",Toast.LENGTH_LONG).show();
+                Toast.makeText(mainActivity,"Appointment booked successfully",Toast.LENGTH_LONG).show();
                 mainActivity.setMainFragment();
             }
         });

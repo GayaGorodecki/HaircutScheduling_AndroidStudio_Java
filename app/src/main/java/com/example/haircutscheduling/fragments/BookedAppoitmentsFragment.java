@@ -13,15 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.CustomAdapters.AvailabilityCustomAdapter;
 import com.example.haircutscheduling.classes.CustomAdapters.BookedCustomAdapter;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +48,7 @@ public class BookedAppoitmentsFragment extends Fragment {
     private static ArrayList<HairStyleDataModel> bookedAppointmentData;
     private static BookedCustomAdapter adapter;
     private FirebaseDatabase database;
+    private FirebaseAuth mAuto;
 
     public BookedAppoitmentsFragment() {
         // Required empty public constructor
@@ -75,6 +80,7 @@ public class BookedAppoitmentsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = FirebaseDatabase.getInstance();
+        mAuto = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -98,12 +104,35 @@ public class BookedAppoitmentsFragment extends Fragment {
 
                 bookedAppointmentData = new ArrayList<HairStyleDataModel>();
 
+                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
+                myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                                      @Override
+                                                      public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
+                   String currentUserId = mAuto.getCurrentUser().getUid();
+                   if (!appointmentTask.isSuccessful()) {
+
+                   } else {
+                       if (appointmentTask.getResult().hasChildren()) {
+                           Object objData = appointmentTask.getResult().getValue(Object.class);
+                           HashMap<String, HashMap<String,HairStyleDataModel>> appointmentMap = (HashMap<String, HashMap<String,HairStyleDataModel>>) objData;
+                           /*
+                           for (HashMap<String, HairStyleDataModel> map : appointmentMap.values()) {
+                               HashMap<String, HashMap<String, String>> appointmentDay = (HashMap<String, HashMap<String, String>) map;
+                               for (HashMap<String, String> dataModel : appointmentDay.values()) {
+                                   String modelId = dataModel.get("userId");
+                                   if (modelId.equals(currentUserId))
+                                       bookedAppointmentData.add();
+                               }
+                           }*/
+                       }
+                       adapter = new BookedCustomAdapter(bookedAppointmentData);
+                       recyclerView.setAdapter(adapter);
+                   }}
+                });
+
                 // TODO:: search on myRef for specific user's appointments
                 // TODO:: (if possible - get only future dates)
                 // TODO:: and add them to the list
-
-                adapter = new BookedCustomAdapter(bookedAppointmentData);
-                recyclerView.setAdapter(adapter);
             }
         });
 

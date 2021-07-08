@@ -59,6 +59,7 @@ public class SelectAppointmentsFragment extends Fragment {
     private static Settings settings;
     private Day day;
 
+
     public SelectAppointmentsFragment() {
     }
 
@@ -76,7 +77,6 @@ public class SelectAppointmentsFragment extends Fragment {
     public static SelectAppointmentsFragment newInstance(HairStyleDataModel hairStyle) {
         SelectAppointmentsFragment fragment = new SelectAppointmentsFragment(hairStyle);
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, hairStyle);
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,9 +85,9 @@ public class SelectAppointmentsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-//            hairStyle = getArguments().getString(ARG_PARAM1);
         }
         database = FirebaseDatabase.getInstance();
+        mainActivity = (MainActivity) getActivity();
     }
 
     @Override
@@ -110,52 +110,65 @@ public class SelectAppointmentsFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
+
                 date = format.format(new Date(year, month, dayOfMonth));
+                String currentDate = format.format(new Date());
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(calendar.DAY_OF_WEEK);
+                Date selectedDate = null;
+                Date current = null;
 
-                // TODO:: if day past - not available
-                hairStyleAppointment.setDate(date);
+                try {
+                    selectedDate = format.parse(date);
+                    current = format.parse(currentDate);
 
-                DatabaseReference settingRef = database.getReference("settings");
-                settingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> settingTtask) {
-                        if (!settingTtask.isSuccessful()) {
-                        } else {
-                            if (settingTtask.getResult().hasChildren()) {
-                                settings = settingTtask.getResult().getValue(Settings.class);
-                                day = settings.OperationTime.get(String.valueOf(dayOfWeek));
-                            }
-                        }
-                    }
-                });
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-
-                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date);
-                myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
-
-                        if (!appointmentTask.isSuccessful()) {
-                        } else {
-                            ArrayList<String> hours = new ArrayList<>();
-
-                            if (appointmentTask.getResult().hasChildren()) {
-                                Object objData = appointmentTask.getResult().getValue(Object.class);
-                                HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
-                                hours = getAvailableHours(appointmentDay, day);
+                if(selectedDate.before(current)) {
+                    Toast.makeText(mainActivity, "Please select future date", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    hairStyleAppointment.setDate(date);
+                    DatabaseReference settingRef = database.getReference("settings");
+                    settingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> settingTtask) {
+                            if (!settingTtask.isSuccessful()) {
                             } else {
-                                hours = setNewDate();
+                                if (settingTtask.getResult().hasChildren()) {
+                                    settings = settingTtask.getResult().getValue(Settings.class);
+                                    day = settings.OperationTime.get(String.valueOf(dayOfWeek));
+                                }
                             }
-                            mainActivity = (MainActivity) getActivity();
-                            adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment,mainActivity);
-                            recyclerView.setAdapter(adapter);
                         }
-                    }
-                });
+                    });
+
+
+                    DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date);
+                    myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
+
+                            if (!appointmentTask.isSuccessful()) {
+                            } else {
+                                ArrayList<String> hours = new ArrayList<>();
+                                if (appointmentTask.getResult().hasChildren()) {
+                                    Object objData = appointmentTask.getResult().getValue(Object.class);
+                                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
+                                    hours = getAvailableHours(appointmentDay, day);
+                                } else {
+                                    hours = setNewDate();
+                                }
+                                adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment, mainActivity);
+                                recyclerView.setAdapter(adapter);
+                            }
+                        }
+                    });
+                }
             }
         });
 

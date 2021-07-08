@@ -4,53 +4,28 @@ import com.example.haircutscheduling.classes.Day;
 
 public class HairStyleDataModel {
 
-    public void setHairStyle(String hairStyle) {
-        this.hairStyle = hairStyle;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setHour(String hour) {
-        this.hour = hour;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
     String hairStyle;
+    String userId;
     String price;
     String date;
     String hour;
+    Day day;
+    int _id;
     int image;
 
-//    todo :: add user
-
-    public Day getDay() {
-        return day;
+    public HairStyleDataModel(String hairStyle, String price, int image)
+    {
+        this.hairStyle = hairStyle;
+        this.price = price;
+        this.image = image;
     }
 
-    public void setDay(Day day) {
-        this.day = day;
+    public HairStyleDataModel(String hairStyle, String date, String hour)
+    {
+        this.hairStyle = hairStyle;
+        this.date = date;
+        this.hour = hour;
     }
-
-    Day day;
-
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
-    }
-
-    int _id;
 
     public HairStyleDataModel(String hairStyle, String price, String date, String hour, int image)
     {
@@ -71,18 +46,38 @@ public class HairStyleDataModel {
         this._id = id;
     }
 
-    public HairStyleDataModel(String hairStyle, String date, String hour)
-    {
+
+
+
+
+    public void setHairStyle(String hairStyle) {
         this.hairStyle = hairStyle;
+    }
+    public void setPrice(String price) {
+        this.price = price;
+    }
+    public void setDate(String date) {
         this.date = date;
+    }
+    public void setHour(String hour) {
         this.hour = hour;
     }
-
-    public HairStyleDataModel(String hairStyle, String price, int image)
-    {
-        this.hairStyle = hairStyle;
-        this.price = price;
+    public void setImage(int image) {
         this.image = image;
+    }
+    public String getUserId() { return userId; }
+    public void setUserId(String userId) { this.userId = userId; }
+    public Day getDay() {
+        return day;
+    }
+    public void setDay(Day day) {
+        this.day = day;
+    }
+    public int get_id() {
+        return _id;
+    }
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public String getDate() { return date; }

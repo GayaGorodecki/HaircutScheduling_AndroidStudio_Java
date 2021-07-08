@@ -14,6 +14,7 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TodayAppointmentsCustomAdapter extends RecyclerView.Adapter<TodayAppointmentsCustomAdapter.MyViewHolder>{
 
@@ -60,9 +61,13 @@ public class TodayAppointmentsCustomAdapter extends RecyclerView.Adapter<TodayAp
         TextView textViewHourHistory = holder.textViewHourHistory;
         CardView cardViewHistory = holder.cardViewTodaysBooked;
 
-        textViewDateHistory.setText(dataSet.get(position).getDate());
-        textViewHourHistory.setText(dataSet.get(position).getHour());
-        textViewHairStyleHistory.setText(dataSet.get(position).getHairStyle());
+        Object model = dataSet.get(position);
+        HashMap<String,String> hashModel = (HashMap<String, String>) model;
+
+        textViewDateHistory.setText(hashModel.get("date"));
+        textViewHourHistory.setText(hashModel.get("hour"));
+        textViewHairStyleHistory.setText(hashModel.get("hairStyle"));
+
 
     }
 

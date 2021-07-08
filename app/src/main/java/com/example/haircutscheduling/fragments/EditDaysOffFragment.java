@@ -45,6 +45,7 @@ public class EditDaysOffFragment extends Fragment {
     MainActivity mainActivity;
     public FirebaseDatabase database;
 
+
     String currentDate;
 
     public EditDaysOffFragment() {
