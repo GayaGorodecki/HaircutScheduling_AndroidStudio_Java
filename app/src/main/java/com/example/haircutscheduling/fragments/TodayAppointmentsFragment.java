@@ -21,7 +21,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,18 +94,30 @@ public class TodayAppointmentsFragment extends Fragment {
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
+        String currentDate = format.format(new Date());
+
+        DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(currentDate);
         myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                todayBooked = new ArrayList<HairStyleDataModel>();
+                if (!task.isSuccessful()) {
+                }
+                else {
+                    todayBooked = new ArrayList<HairStyleDataModel>();
 
-                // TODO:: search on myRef for all *today* appointments
-                // TODO:: and add them to the list
+                    Object objData = task.getResult().getValue(Object.class);
+                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
 
-                adapter = new TodayAppointmentsCustomAdapter(todayBooked);
-                recyclerView.setAdapter(adapter);
+                    if (appointmentDay != null)
+                    {
+                        todayBooked.addAll(appointmentDay.values());
+                    }
+
+                    adapter = new TodayAppointmentsCustomAdapter(todayBooked);
+                    recyclerView.setAdapter(adapter);
+                }
             }
         });
 

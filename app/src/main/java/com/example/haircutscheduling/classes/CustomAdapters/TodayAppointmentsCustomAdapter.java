@@ -60,9 +60,10 @@ public class TodayAppointmentsCustomAdapter extends RecyclerView.Adapter<TodayAp
         TextView textViewHourHistory = holder.textViewHourHistory;
         CardView cardViewHistory = holder.cardViewTodaysBooked;
 
-        textViewHairStyleHistory.setText(dataSet.get(position).getHairStyle());
         textViewDateHistory.setText(dataSet.get(position).getDate());
         textViewHourHistory.setText(dataSet.get(position).getHour());
+        textViewHairStyleHistory.setText(dataSet.get(position).getHairStyle());
+
     }
 
     @Override

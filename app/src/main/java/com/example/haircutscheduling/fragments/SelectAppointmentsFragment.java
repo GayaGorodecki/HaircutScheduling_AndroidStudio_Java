@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +16,7 @@ import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
-import com.example.haircutscheduling.classes.AppointmentDay;
 import com.example.haircutscheduling.classes.CustomAdapters.AvailabilityCustomAdapter;
-import com.example.haircutscheduling.classes.Data.AppointmentsData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.classes.Day;
 import com.example.haircutscheduling.classes.Settings;
@@ -29,17 +26,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,13 +51,16 @@ public class SelectAppointmentsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    String dayString, monthString, yearString;
+    private String dayString, monthString, yearString;
     private FirebaseDatabase database;
-    MainActivity mainActivity;
-    HairStyleDataModel hairStyleAppointment;
+    private MainActivity mainActivity;
+    private HairStyleDataModel hairStyleAppointment;
     private String date;
+    private static Settings settings;
+    private Day day;
 
-    public SelectAppointmentsFragment() {}
+    public SelectAppointmentsFragment() {
+    }
 
     public SelectAppointmentsFragment(HairStyleDataModel hairStyle) {
         this.hairStyleAppointment = hairStyle;
@@ -74,7 +70,6 @@ public class SelectAppointmentsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-
      * @return A new instance of fragment SelectAppointmentsFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -115,61 +110,49 @@ public class SelectAppointmentsFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                 SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy");
-                date = format.format(new Date(year,month,dayOfMonth));
+                date = format.format(new Date(year, month, dayOfMonth));
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(calendar.DAY_OF_WEEK);
 
+                // TODO:: if day past - not available
                 hairStyleAppointment.setDate(date);
 
-                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
+                DatabaseReference settingRef = database.getReference("settings");
+                settingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> settingTtask) {
+                        if (!settingTtask.isSuccessful()) {
+                        } else {
+                            if (settingTtask.getResult().hasChildren()) {
+                                settings = settingTtask.getResult().getValue(Settings.class);
+                                day = settings.OperationTime.get(String.valueOf(dayOfWeek));
+                            }
+                        }
+                    }
+                });
+
+
+                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date);
                 myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
 
                         if (!appointmentTask.isSuccessful()) {
-                        }
-                        else {
-                            DatabaseReference settingRef = database.getReference("settings");
-                            settingRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> settingTtask) {
-                                    if(!settingTtask.isSuccessful()) {
-                                    }
-                                    else {
-                                        if (settingTtask.getResult().hasChildren()) {
-                                            Settings settings = settingTtask.getResult().getValue(Settings.class);
-                                            ArrayList<String> hours = new ArrayList<>();
+                        } else {
+                            ArrayList<String> hours = new ArrayList<>();
 
-                                            if (appointmentTask.getResult().hasChildren()) {
-                                                AppointmentsData appointmentsData = appointmentTask.getResult().getValue(AppointmentsData.class);
-                                                //TODO:: solve problem here
-                                                if (appointmentsData.appointmentList.containsKey(date)) {
-
-                                                    Day day = settings.OperationTime.get(String.valueOf(dayOfWeek));
-                                                    appointmentsData.appointmentList.get(date).setDay(day);
-                                                    hours = getAvailableHours(appointmentsData.appointmentList.get(date));
-
-                                                    adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment);
-                                                    recyclerView.setAdapter(adapter);
-                                                }
-                                            } else if (settings.DayOffList.containsValue(date)) {
-                                                // TODO:: write 'not available day'...
-                                                mainActivity = (MainActivity) getActivity();
-                                                Toast.makeText(mainActivity, "Not available day", Toast.LENGTH_LONG).show();
-                                            } else {
-                                                Day day = settings.OperationTime.get(String.valueOf(dayOfWeek));
-                                                AppointmentDay appointmentDay = new AppointmentDay(day);
-                                                hours = getAvailableHours(appointmentDay);
-
-                                                adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment);
-                                                recyclerView.setAdapter(adapter);
-                                            }
-                                        }
-                                    }
-                                }
-                            });
+                            if (appointmentTask.getResult().hasChildren()) {
+                                Object objData = appointmentTask.getResult().getValue(Object.class);
+                                HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
+                                hours = getAvailableHours(appointmentDay, day);
+                            } else {
+                                hours = setNewDate();
+                            }
+                            mainActivity = (MainActivity) getActivity();
+                            adapter = new AvailabilityCustomAdapter(hours, hairStyleAppointment,mainActivity);
+                            recyclerView.setAdapter(adapter);
                         }
                     }
                 });
@@ -179,18 +162,30 @@ public class SelectAppointmentsFragment extends Fragment {
         return view;
     }
 
-    private ArrayList<String> getAvailableHours(AppointmentDay appointmentDay)
+    private ArrayList<String> setNewDate()
+    {
+        if (settings.DayOffList.containsValue(date)) {
+            // TODO:: write 'not available day'...
+            mainActivity = (MainActivity) getActivity();
+            Toast.makeText(mainActivity, "Not available appointments", Toast.LENGTH_LONG).show();
+            return new ArrayList<>();
+        } else {
+            return getAvailableHours(new HashMap<>(), day);
+        }
+    }
+
+    private ArrayList<String> getAvailableHours(HashMap<String, HairStyleDataModel> appointmentDay, Day day)
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
 
         ArrayList<String> availableHours = new ArrayList<String>();
 
-        if (!appointmentDay.getDay().getDayOff()) {
+        if (!day.getDayOff()) {
 
-            String startHour = appointmentDay.getDay().getStartHour();
-            String endHour = appointmentDay.getDay().getEndHour();
+            String startHour = day.getStartHour();
+            String endHour = day.getEndHour();
 
-            HashMap<String, HairStyleDataModel> booked = appointmentDay.getAppointList();
+            Set<String> booked = appointmentDay.keySet();
 
             Date start = null;
             Date end = null;
@@ -204,15 +199,22 @@ public class SelectAppointmentsFragment extends Fragment {
 
             Date hour = start;
 
-            while (hour.before(end)) {
+            while (hour.before(end))
+            {
                 String hourFormat = dateFormat.format(hour.getTime());
-                if (!booked.containsKey(hourFormat)) { // todo:: add check by hour
+
+                if (!booked.contains(hourFormat)) {
                     availableHours.add(hourFormat);
                 }
 
                 hour.setMinutes(hour.getMinutes() + 30);
             }
         }
+        else {
+            mainActivity = (MainActivity) getActivity();
+            Toast.makeText(mainActivity, "Close", Toast.LENGTH_LONG).show();
+        }
+
         return availableHours;
     }
 }

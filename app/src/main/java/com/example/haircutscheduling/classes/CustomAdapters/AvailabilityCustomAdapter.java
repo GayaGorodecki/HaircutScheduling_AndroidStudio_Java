@@ -5,12 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.fragments.SelectAppointmentsFragment;
 import com.google.firebase.database.DatabaseReference;
@@ -23,11 +25,13 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
     private final ArrayList<String> dataSet;
     private HairStyleDataModel hairStyleDataModel;
     private FirebaseDatabase database;
+    private MainActivity mainActivity;
 
-    public AvailabilityCustomAdapter(ArrayList<String> data, HairStyleDataModel hairStyleAppointment) {
+    public AvailabilityCustomAdapter(ArrayList<String> data, HairStyleDataModel hairStyleAppointment, MainActivity main) {
         this.dataSet = data;
         this.hairStyleDataModel = hairStyleAppointment;
         database = FirebaseDatabase.getInstance();
+        this.mainActivity = main;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -75,6 +79,8 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
 
                 DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
                 myRef.child(hairStyleDataModel.getDate()).child(hairStyleDataModel.getHour()).setValue(hairStyleDataModel);
+                Toast.makeText(mainActivity,"Appointment booked successfuly",Toast.LENGTH_LONG).show();
+                mainActivity.setMainFragment();
             }
         });
     }
