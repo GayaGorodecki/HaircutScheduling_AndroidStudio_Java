@@ -2,6 +2,7 @@ package com.example.haircutscheduling.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,6 +38,7 @@ public class ManageUsersFragment extends Fragment {
     private String mParam2;
     MainActivity mainActivity;
     public FirebaseDatabase database;
+    private static String userEmail;
 
     public ManageUsersFragment() {
         // Required empty public constructor
@@ -74,21 +79,6 @@ public class ManageUsersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_manage_users, container, false);
 
         EditText phoneT = view.findViewById(R.id.editTextPhoneToManage);
-        Button deleteUser = view.findViewById(R.id.buttonDeleteUser);
-        deleteUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phone = phoneT.getText().toString();
-                mainActivity = (MainActivity) getActivity();
-                if (phone.isEmpty())
-                {
-                    Toast.makeText(mainActivity, "Please enter user's phone", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    deleteUser(phone);
-                }
-            }
-        });
 
         Button blockUser = view.findViewById(R.id.buttonBlockUser);
         blockUser.setOnClickListener(new View.OnClickListener() {
@@ -103,38 +93,29 @@ public class ManageUsersFragment extends Fragment {
                 else {
                     blockUser(phone);
                 }
-
             }
         });
 
         return view;
     }
 
-    public void deleteUser(String phone) {
-        DatabaseReference myRef = database.getReference("users").child(phone);
-        if (myRef.getKey() != null) {
-            myRef.removeValue();
-
-            // TODO:: delete from authentication!
-            //  or do something like 'block user'
-
-            Toast.makeText(mainActivity, "User Deleted!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mainActivity, "User not found", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public void blockUser(String phone) {
+
         DatabaseReference myRef = database.getReference("users").child(phone);
-        if (myRef.getKey() != null) { // TODO:: change 'getKey' / check if user found in block list already
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(!task.isSuccessful()){
+                    Toast.makeText(mainActivity, "User not exist", Toast.LENGTH_SHORT).show();
+                } else {
+                    User user = task.getResult().getValue(User.class);
+                    userEmail = user.getEmail();
 
-            deleteUser(phone);
-            User user = new User(phone);
-            myRef.setValue(user);
-
-            Toast.makeText(mainActivity, "User Blocked!", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(mainActivity, "User not found", Toast.LENGTH_SHORT).show();
-        }
+                    DatabaseReference myRefBlock = database.getReference("blockUsers").child("blockList");
+                    myRefBlock.push().setValue(userEmail);
+                    Toast.makeText(mainActivity, "User Blocked!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

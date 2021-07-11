@@ -105,7 +105,7 @@ public class SigninFragment extends Fragment {
                 {
                     Toast.makeText(mainActivity, "Please fill in all the required information", Toast.LENGTH_LONG).show();
                 }
-                else if (checkIfUserIsBlock(phone))
+                else if (mainActivity.checkIfUserIsBlock(email))
                 {
                     Toast.makeText(mainActivity, "User is blocked! Cannot register.", Toast.LENGTH_LONG).show();
                 }
@@ -123,7 +123,7 @@ public class SigninFragment extends Fragment {
         String userName = user.getEmail();
         String password = user.getPassword();
         mAuth.createUserWithEmailAndPassword(userName, password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(mainActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -137,20 +137,5 @@ public class SigninFragment extends Fragment {
                         }
                     }
                 });
-    }
-
-    public boolean checkIfUserIsBlock(String phone) {
-
-        DatabaseReference myRef = database.getReference("blockUsers");
-        // TODO:: check if user found in 'blockUsers'
-//        if (myRef.orderByChild("phone").get().getResult().hasChild(phone))
-//        {
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-
-        return false;
     }
 }

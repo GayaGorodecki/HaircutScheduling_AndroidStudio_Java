@@ -6,11 +6,9 @@ public class User
     private String Email;
     private String Password;
     private String Phone;
-    private Boolean IsBlocked;
+    private Boolean IsBlocked; // TODO delete?
 
-    public User() {
-    }
-
+    public User() {}
 
     public User(String name, String email, String password, String phone, Boolean isBlocked) {
         setName(name);

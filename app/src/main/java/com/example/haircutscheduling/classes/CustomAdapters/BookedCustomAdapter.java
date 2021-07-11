@@ -3,15 +3,21 @@ package com.example.haircutscheduling.classes.CustomAdapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
+import com.example.haircutscheduling.fragments.AppointmentsMainFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,9 +25,13 @@ import java.util.HashMap;
 public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapter.MyViewHolder> {
 
     private final ArrayList<HashMap<String, String>> dataSet;
+    private FirebaseDatabase database;
+    private MainActivity mainActivity;
 
-    public BookedCustomAdapter(ArrayList<HashMap<String, String>> data) {
+    public BookedCustomAdapter(ArrayList<HashMap<String, String>> data, MainActivity main) {
         this.dataSet = data;
+        database = FirebaseDatabase.getInstance();
+        this.mainActivity = main;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -31,6 +41,8 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         TextView textViewPriceBooked;
         TextView textViewDateBooked;
         TextView textViewHourBooked;
+        Button changeBtn;
+        Button cancelBtn;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -40,6 +52,8 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
             this.textViewPriceBooked = (TextView) itemView.findViewById(R.id.textViewPriceBooked);
             this.textViewDateBooked = (TextView) itemView.findViewById(R.id.textViewBookedDate);
             this.textViewHourBooked = (TextView) itemView.findViewById(R.id.textViewHourBooked);
+            this.cancelBtn = (Button) itemView.findViewById(R.id.buttonCancel);
+            this.changeBtn = (Button) itemView.findViewById(R.id.buttonChange);
         }
     }
 
@@ -69,10 +83,36 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
 //        textViewDateBooked.setText(dataSet.get(position).getDate());
 //        textViewHourBooked.setText(dataSet.get(position).getHour());
 
+        String date = dataSet.get(position).get("date");
+        String hour = dataSet.get(position).get("hour");
         textViewHairStyleBooked.setText(dataSet.get(position).get("hairStyle"));
         textViewPriceBooked.setText(dataSet.get(position).get("price"));
-        textViewDateBooked.setText(dataSet.get(position).get("date"));
-        textViewHourBooked.setText(dataSet.get(position).get("hour"));
+        textViewDateBooked.setText(date);
+        textViewHourBooked.setText(hour);
+        DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
+
+        Button change = holder.changeBtn;
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO:: implement removeValue only after choosing new appointment?
+                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date).child(hour);
+                myRef.removeValue();
+                mainActivity.setFragment(new AppointmentsMainFragment());
+                Toast.makeText(mainActivity, "Appointment removed.\nPlease choose new",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button cancel = holder.cancelBtn;
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date).child(hour);
+                myRef.removeValue();
+                mainActivity.setMainFragment();
+                Toast.makeText(mainActivity, "Appointment Canceled",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

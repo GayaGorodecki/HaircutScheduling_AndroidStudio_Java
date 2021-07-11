@@ -9,12 +9,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -94,7 +100,7 @@ public class LoginFragment extends Fragment {
                 TextView passwordTextView = view.findViewById(R.id.editTextTextPasswordLogin);
 
                 String userName = userNameTextView.getText().toString();
-                String phone = phoneTextView.getText().toString();
+                String email = userNameTextView.getText().toString();
                 String password = passwordTextView.getText().toString();
 
                 mainActivity = (MainActivity) getActivity();
@@ -102,7 +108,7 @@ public class LoginFragment extends Fragment {
                 if(userName.isEmpty() || password.isEmpty()) {
                     Toast.makeText(mainActivity, "Please enter user name and password", Toast.LENGTH_LONG).show();
                 }
-                else if (checkIfUserIsBlock(phone))
+                else if (mainActivity.checkIfUserIsBlock(email))
                 {
                     Toast.makeText(mainActivity, "User is blocked. Cannot login.", Toast.LENGTH_LONG).show();
                 }
@@ -113,19 +119,5 @@ public class LoginFragment extends Fragment {
         });
 
         return view;
-    }
-
-    public boolean checkIfUserIsBlock(String phone) {
-        DatabaseReference myRef = database.getReference("blockUsers");
-        // TODO:: check if user found in 'blockUsers'
-//        if (myRef.orderByChild("phone").get().getResult().hasChild(phone))
-//        {
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-
-        return false;
     }
 }

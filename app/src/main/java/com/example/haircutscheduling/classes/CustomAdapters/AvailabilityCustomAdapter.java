@@ -81,7 +81,6 @@ public class AvailabilityCustomAdapter extends RecyclerView.Adapter<Availability
                 hairStyleDataModel.setHour(hour);
                 hairStyleDataModel.setUserId(mAuto.getCurrentUser().getUid());
 
-
                 DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
                 myRef.child(hairStyleDataModel.getDate()).child(hairStyleDataModel.getHour()).setValue(hairStyleDataModel);
                 Toast.makeText(mainActivity,"Appointment booked successfully",Toast.LENGTH_LONG).show();

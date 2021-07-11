@@ -50,6 +50,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
+    private static Boolean res;
 
     private boolean savedUserFlag;
     private static boolean blockFlag;
@@ -78,14 +80,14 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        //  TODO:: save all last fragment data - with room \ SharedPreferences?
+        //  TODO:: save all last fragment data - with room \ SharedPreferences - ?
 
         DatabaseReference myRef = database.getReference("settings").child("OperationTime");
         myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
-                    initDaysHours(myRef); // TODO:: verify only one time (first entry)
+                    initDaysHours(myRef); // TODO:: only on first time.
                 }
             }
         });
@@ -199,5 +201,29 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(USERNAME, "");
         editor.putString(PASSWORD, "");
         editor.apply();
+    }
+
+    public boolean checkIfUserIsBlock(String email) {
+// TODO:: fix this
+//        DatabaseReference myRef = database.getReference("blockUsers").child("blockList");
+//        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    Map<String,String> blockList = (Map<String, String>) task.getResult().getValue();
+//                    if (blockList.containsValue(email)) {
+//                        res = true;
+//                    }
+//                    else {
+//                        res = false;
+//                    }
+//                }
+//                else {
+//                }
+//            }
+//        });
+//
+//        return res;
+        return false;
     }
 }

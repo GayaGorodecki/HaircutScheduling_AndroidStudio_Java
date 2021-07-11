@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.CustomAdapters.BookedCustomAdapter;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -51,6 +52,7 @@ public class BookedAppoitmentsFragment extends Fragment {
     private static BookedCustomAdapter adapter;
     private FirebaseDatabase database;
     private FirebaseAuth mAuto;
+    MainActivity mainActivity;
 
     public BookedAppoitmentsFragment() {
         // Required empty public constructor
@@ -159,15 +161,15 @@ public class BookedAppoitmentsFragment extends Fragment {
                             }
                         }
                     }
-                    adapter = new BookedCustomAdapter(bookedAppointmentData);
+
+                    mainActivity = (MainActivity) getActivity();
+                    adapter = new BookedCustomAdapter(bookedAppointmentData, mainActivity);
                     recyclerView.setAdapter(adapter);
                 }
             }
         });
 
         // TODO:: sort list by hour\date?
-
-        // TODO:: implement change and delete button
 
         return view;
     }
