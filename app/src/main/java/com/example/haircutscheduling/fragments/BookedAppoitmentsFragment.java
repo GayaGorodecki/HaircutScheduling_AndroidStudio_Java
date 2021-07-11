@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
-import com.example.haircutscheduling.classes.CustomAdapters.AvailabilityCustomAdapter;
 import com.example.haircutscheduling.classes.CustomAdapters.BookedCustomAdapter;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,9 +22,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +47,7 @@ public class BookedAppoitmentsFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<HairStyleDataModel> bookedAppointmentData;
+    private static ArrayList<HashMap<String, String>> bookedAppointmentData;
     private static BookedCustomAdapter adapter;
     private FirebaseDatabase database;
     private FirebaseAuth mAuto;
@@ -102,39 +104,70 @@ public class BookedAppoitmentsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                bookedAppointmentData = new ArrayList<HairStyleDataModel>();
+                bookedAppointmentData = new ArrayList<HashMap<String, String>>();
 
-                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
-                myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                                      @Override
-                                                      public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
-                   String currentUserId = mAuto.getCurrentUser().getUid();
-                   if (!appointmentTask.isSuccessful()) {
+                String currentUserId = mAuto.getCurrentUser().getUid();
+                if (!task.isSuccessful()) {
+                } else {
+                    if (task.getResult().hasChildren()) {
 
-                   } else {
-                       if (appointmentTask.getResult().hasChildren()) {
-                           Object objData = appointmentTask.getResult().getValue(Object.class);
-                           HashMap<String, HashMap<String,HairStyleDataModel>> appointmentMap = (HashMap<String, HashMap<String,HairStyleDataModel>>) objData;
-                           /*
-                           for (HashMap<String, HairStyleDataModel> map : appointmentMap.values()) {
-                               HashMap<String, HashMap<String, String>> appointmentDay = (HashMap<String, HashMap<String, String>) map;
-                               for (HashMap<String, String> dataModel : appointmentDay.values()) {
-                                   String modelId = dataModel.get("userId");
-                                   if (modelId.equals(currentUserId))
-                                       bookedAppointmentData.add();
-                               }
-                           }*/
-                       }
-                       adapter = new BookedCustomAdapter(bookedAppointmentData);
-                       recyclerView.setAdapter(adapter);
-                   }}
-                });
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+                        String today = dateFormat.format(new Date());
+                        Date currentDay = null;
+                        try {
+                            currentDay = dateFormat.parse(today);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
-                // TODO:: search on myRef for specific user's appointments
-                // TODO:: (if possible - get only future dates)
-                // TODO:: and add them to the list
+                        Object objData = task.getResult().getValue(Object.class);
+                        HashMap<String, HashMap<String,HashMap<String, String>>> appointmentMap = (HashMap<String, HashMap<String,HashMap<String, String>>>) objData;
+
+//                        HashMap<String, AppointmentsData> appointmentMap = (HashMap<String, AppointmentsData>) objData;
+//
+//                        for (String key : appointmentMap.keySet()) {
+//                            AppointmentsData appointmentsData = appointmentMap.get(key);
+//                            Date date = null;
+//                            try {
+//                                date = dateFormat.parse(key);
+//                            } catch (ParseException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                            for (String hour : appointmentsData.appointmentsList.keySet()) {
+//                                HairStyleDataModel hairStyleDataModel = appointmentsData.appointmentsList.get(hour);
+//                                if (hairStyleDataModel.getUserId().equals(currentUserId) && (date.after(currentDay) || date.equals(currentDay))) {
+//                                    bookedAppointmentData.add(hairStyleDataModel);
+//                                }
+//                            }
+//                        }
+
+                        for (HashMap<String,HashMap<String, String>> map : appointmentMap.values()) {
+
+                            for (HashMap<String,String> val: map.values()) {
+
+                                Date date = null;
+                                try {
+                                    date = dateFormat.parse(val.get("date"));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (val.get("userId").equals(currentUserId) && (date.after(currentDay) || date.equals(currentDay))) {
+                                    bookedAppointmentData.add(val);
+                                }
+                            }
+                        }
+                    }
+                    adapter = new BookedCustomAdapter(bookedAppointmentData);
+                    recyclerView.setAdapter(adapter);
+                }
             }
         });
+
+        // TODO:: sort list by hour\date?
+
+        // TODO:: implement change and delete button
 
         return view;
     }

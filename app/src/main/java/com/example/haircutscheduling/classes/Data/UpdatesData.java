@@ -12,6 +12,6 @@ public class UpdatesData
 
     public UpdatesData()
     {
-        updatesList = new HashMap();
+        this.updatesList = new HashMap();
     }
 }

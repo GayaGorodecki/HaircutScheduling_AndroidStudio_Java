@@ -17,9 +17,11 @@ import android.widget.Toast;
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
 import com.example.haircutscheduling.classes.CustomAdapters.AvailabilityCustomAdapter;
+import com.example.haircutscheduling.classes.Data.AppointmentsData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.classes.Day;
 import com.example.haircutscheduling.classes.Settings;
+import com.google.android.gms.common.util.concurrent.HandlerExecutor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -128,6 +131,8 @@ public class SelectAppointmentsFragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                // TODO:: if selected day id today - show future hours.. ?
+
                 if(selectedDate.before(current)) {
                     Toast.makeText(mainActivity, "Please select future date", Toast.LENGTH_LONG).show();
                 }
@@ -151,14 +156,18 @@ public class SelectAppointmentsFragment extends Fragment {
                     DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date);
                     myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> appointmentTask) {
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                            if (!appointmentTask.isSuccessful()) {
+                            if (!task.isSuccessful()) {
                             } else {
                                 ArrayList<String> hours = new ArrayList<>();
-                                if (appointmentTask.getResult().hasChildren()) {
-                                    Object objData = appointmentTask.getResult().getValue(Object.class);
-                                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
+                                if (task.getResult().hasChildren()) {
+
+                                    // TODO:: delete AppointmentsData and return this - ?
+//                                    Object objData = task.getResult().getValue(Object.class);
+//                                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
+
+                                    AppointmentsData appointmentDay = new AppointmentsData((HashMap) task.getResult().getValue());
                                     hours = getAvailableHours(appointmentDay, day);
                                 } else {
                                     hours = setNewDate();
@@ -180,14 +189,14 @@ public class SelectAppointmentsFragment extends Fragment {
         if (settings.DayOffList.containsValue(date)) {
             // TODO:: write 'not available day'...
             mainActivity = (MainActivity) getActivity();
-            Toast.makeText(mainActivity, "Not available appointments", Toast.LENGTH_LONG).show();
+            Toast.makeText(mainActivity, "No available appointments", Toast.LENGTH_LONG).show();
             return new ArrayList<>();
         } else {
-            return getAvailableHours(new HashMap<>(), day);
+            return getAvailableHours(new AppointmentsData(), day);
         }
     }
 
-    private ArrayList<String> getAvailableHours(HashMap<String, HairStyleDataModel> appointmentDay, Day day)
+    private ArrayList<String> getAvailableHours(AppointmentsData appointmentDay, Day day)
     {
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
 
@@ -198,7 +207,7 @@ public class SelectAppointmentsFragment extends Fragment {
             String startHour = day.getStartHour();
             String endHour = day.getEndHour();
 
-            Set<String> booked = appointmentDay.keySet();
+            Set<String> booked = appointmentDay.appointmentsList.keySet();
 
             Date start = null;
             Date end = null;

@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.haircutscheduling.R;
+import com.example.haircutscheduling.classes.Data.AppointmentsData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
@@ -67,8 +68,6 @@ public class TodayAppointmentsCustomAdapter extends RecyclerView.Adapter<TodayAp
         textViewDateHistory.setText(hashModel.get("date"));
         textViewHourHistory.setText(hashModel.get("hour"));
         textViewHairStyleHistory.setText(hashModel.get("hairStyle"));
-
-
     }
 
     @Override

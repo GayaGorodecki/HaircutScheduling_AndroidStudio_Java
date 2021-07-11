@@ -2,6 +2,8 @@ package com.example.haircutscheduling.classes.DataModels;
 
 import com.example.haircutscheduling.classes.Day;
 
+import java.util.HashMap;
+
 public class HairStyleDataModel {
 
     String hairStyle;
@@ -10,8 +12,9 @@ public class HairStyleDataModel {
     String date;
     String hour;
     Day day;
-    int _id;
     int image;
+
+    public HairStyleDataModel() {}
 
     public HairStyleDataModel(String hairStyle, String price, int image)
     {
@@ -36,20 +39,6 @@ public class HairStyleDataModel {
         this.image = image;
     }
 
-    public HairStyleDataModel(String hairStyle, String price, String date, String hour, int image, int id)
-    {
-        this.hairStyle = hairStyle;
-        this.price = price;
-        this.date = date;
-        this.hour = hour;
-        this.image = image;
-        this._id = id;
-    }
-
-
-
-
-
     public void setHairStyle(String hairStyle) {
         this.hairStyle = hairStyle;
     }
@@ -67,26 +56,13 @@ public class HairStyleDataModel {
     }
     public String getUserId() { return userId; }
     public void setUserId(String userId) { this.userId = userId; }
-    public Day getDay() {
-        return day;
-    }
     public void setDay(Day day) {
         this.day = day;
     }
-    public int get_id() {
-        return _id;
-    }
-    public void set_id(int _id) {
-        this._id = _id;
-    }
-
+    public Day getDay() { return day; }
     public String getDate() { return date; }
-
     public String getHour() { return hour; }
-
     public String getHairStyle() { return hairStyle; }
-
     public String getPrice() { return price; }
-
     public int getImage() { return image; }
 }

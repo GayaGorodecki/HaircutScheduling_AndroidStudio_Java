@@ -13,12 +13,13 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HistoryCustomAdapter extends RecyclerView.Adapter<HistoryCustomAdapter.MyViewHolder> {
 
-    private final ArrayList<HairStyleDataModel> dataSet;
+    private final ArrayList<HashMap<String, String>> dataSet;
 
-    public HistoryCustomAdapter(ArrayList<HairStyleDataModel> data) {
+    public HistoryCustomAdapter(ArrayList<HashMap<String, String>> data) {
         this.dataSet = data;
     }
 
@@ -59,9 +60,13 @@ public class HistoryCustomAdapter extends RecyclerView.Adapter<HistoryCustomAdap
         TextView textViewHourHistory = holder.textViewHourHistory;
         CardView cardViewHistory = holder.cardViewHistory;
 
-        textViewHairStyleHistory.setText(dataSet.get(position).getHairStyle());
-        textViewDateHistory.setText(dataSet.get(position).getDate());
-        textViewHourHistory.setText(dataSet.get(position).getHour());
+//        textViewHairStyleHistory.setText(dataSet.get(position).getHairStyle());
+//        textViewDateHistory.setText(dataSet.get(position).getDate());
+//        textViewHourHistory.setText(dataSet.get(position).getHour());
+
+        textViewHairStyleHistory.setText(dataSet.get(position).get("hairStyle"));
+        textViewDateHistory.setText(dataSet.get(position).get("date"));
+        textViewHourHistory.setText(dataSet.get(position).get("hour"));
     }
 
     @Override

@@ -18,11 +18,16 @@ import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.example.haircutscheduling.classes.CustomAdapters.HistoryCustomAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,9 +47,10 @@ public class UserHistoryFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
-    private static ArrayList<HairStyleDataModel> bookedData;
+    private static ArrayList<HashMap<String, String>> historyData;
     private static HistoryCustomAdapter adapter;
     private FirebaseDatabase database;
+    private FirebaseAuth mAuto;
 
     public UserHistoryFragment() {
         // Required empty public constructor
@@ -76,6 +82,7 @@ public class UserHistoryFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         database = FirebaseDatabase.getInstance();
+        mAuto = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -97,16 +104,48 @@ public class UserHistoryFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
 
-                bookedData = new ArrayList<HairStyleDataModel>();
+                historyData = new ArrayList<HashMap<String, String>>();
 
-                // TODO:: search on myRef for specific user's appointments
-                // TODO:: (all or - if possible get only past dates)
-                // TODO:: and add them to the list
+                String currentUserId = mAuto.getCurrentUser().getUid();
+                if (!task.isSuccessful()) {
+                } else {
+                    if (task.getResult().hasChildren()) {
 
-                adapter = new HistoryCustomAdapter(bookedData);
-                recyclerView.setAdapter(adapter);
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+                        String today = dateFormat.format(new Date());
+                        Date currentDay = null;
+                        try {
+                            currentDay = dateFormat.parse(today);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        Object objData = task.getResult().getValue(Object.class);
+                        HashMap<String, HashMap<String,HashMap<String, String>>> appointmentMap = (HashMap<String, HashMap<String,HashMap<String, String>>>) objData;
+                        for (HashMap<String,HashMap<String, String>> map : appointmentMap.values()) {
+
+                            for (HashMap<String,String> val: map.values()) {
+
+                                Date date = null;
+                                try {
+                                    date = dateFormat.parse(val.get("date"));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (val.get("userId").equals(currentUserId) && date.before(currentDay)) {
+                                    historyData.add(val);
+                                }
+                            }
+                        }
+                    }
+                    adapter = new HistoryCustomAdapter(historyData);
+                    recyclerView.setAdapter(adapter);
+                }
             }
         });
+
+        // TODO:: sort list by hour\date?
 
         return view;
     }

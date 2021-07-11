@@ -14,12 +14,13 @@ import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapter.MyViewHolder> {
 
-    private final ArrayList<HairStyleDataModel> dataSet;
+    private final ArrayList<HashMap<String, String>> dataSet;
 
-    public BookedCustomAdapter(ArrayList<HairStyleDataModel> data) {
+    public BookedCustomAdapter(ArrayList<HashMap<String, String>> data) {
         this.dataSet = data;
     }
 
@@ -30,7 +31,6 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         TextView textViewPriceBooked;
         TextView textViewDateBooked;
         TextView textViewHourBooked;
-        ImageView imageViewIconBooked;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -40,7 +40,6 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
             this.textViewPriceBooked = (TextView) itemView.findViewById(R.id.textViewPriceBooked);
             this.textViewDateBooked = (TextView) itemView.findViewById(R.id.textViewBookedDate);
             this.textViewHourBooked = (TextView) itemView.findViewById(R.id.textViewHourBooked);
-            this.imageViewIconBooked = (ImageView) itemView.findViewById(R.id.imageViewHairStyleBooked);
         }
     }
 
@@ -61,16 +60,19 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
 
         TextView textViewHairStyleBooked = holder.textViewHairStyleBooked;
         TextView textViewPriceBooked = holder.textViewPriceBooked;
-        ImageView imageViewBooked = holder.imageViewIconBooked;
         CardView cardViewBooked = holder.cardViewBooked;
         TextView textViewDateBooked = holder.textViewDateBooked;
         TextView textViewHourBooked = holder.textViewHourBooked;
 
-        textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
-        textViewPriceBooked.setText(dataSet.get(position).getPrice());
-        textViewDateBooked.setText(dataSet.get(position).getDate());
-        textViewHourBooked.setText(dataSet.get(position).getHour());
-        imageViewBooked.setImageResource(dataSet.get(position).getImage());
+//        textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
+//        textViewPriceBooked.setText(dataSet.get(position).getPrice());
+//        textViewDateBooked.setText(dataSet.get(position).getDate());
+//        textViewHourBooked.setText(dataSet.get(position).getHour());
+
+        textViewHairStyleBooked.setText(dataSet.get(position).get("hairStyle"));
+        textViewPriceBooked.setText(dataSet.get(position).get("price"));
+        textViewDateBooked.setText(dataSet.get(position).get("date"));
+        textViewHourBooked.setText(dataSet.get(position).get("hour"));
     }
 
     @Override

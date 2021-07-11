@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.classes.CustomAdapters.TodayAppointmentsCustomAdapter;
+import com.example.haircutscheduling.classes.Data.AppointmentsData;
 import com.example.haircutscheduling.classes.DataModels.HairStyleDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,8 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,17 +112,20 @@ public class TodayAppointmentsFragment extends Fragment {
                 else {
                     todayBooked = new ArrayList<HairStyleDataModel>();
 
-                    Object objData = task.getResult().getValue(Object.class);
-                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
+                    AppointmentsData appointmentDay = new AppointmentsData((HashMap) task.getResult().getValue());
+
+//                    Object objData = task.getResult().getValue(Object.class);
+//                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
                     /*if (appointmentDay != null)
                     {
                         for (HairStyleDataModel dataModel :appointmentDay.values()) {
                             todayBooked.add(dataModel);
                         }
                     }*/
-                    if (appointmentDay != null)
+                    if (appointmentDay.appointmentsList != null)
                     {
-                        todayBooked.addAll(appointmentDay.values());
+                        todayBooked.addAll(appointmentDay.appointmentsList.values());
+                        // TODO:: order by hour?
                     }
 
                     adapter = new TodayAppointmentsCustomAdapter(todayBooked);
