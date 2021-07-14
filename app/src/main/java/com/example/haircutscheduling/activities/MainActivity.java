@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
-    private static Boolean res;
+    private Map<String,String> blockList = new HashMap<>();;
 
     private boolean savedUserFlag;
     private static boolean blockFlag;
@@ -80,17 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
-        //  TODO:: save all last fragment data - with room \ SharedPreferences - ?
 
-        DatabaseReference myRef = database.getReference("settings").child("OperationTime");
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    initDaysHours(myRef); // TODO:: only on first time.
-                }
-            }
-        });
 
         fragmentManager = getSupportFragmentManager();
 
@@ -110,25 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void initDaysHours(DatabaseReference myRefChild)
-    {
-        Day sunday = new Day("sunday","9:00", "17:00",false);
-        Day monday = new Day("monday","9:00", "17:00",false);
-        Day tuesday = new Day("tuesday","9:00", "17:00",false);
-        Day wednesday = new Day("wednesday","9:00", "17:00",false);
-        Day thursday = new Day("thursday","9:00", "17:00",false);
-        Day friday = new Day("friday","00:00", "00:00",true);
-        Day saturday = new Day("saturday","00:00", "00:00",true);
 
-        myRefChild.child("1").setValue(sunday);
-        myRefChild.child("2").setValue(monday);
-        myRefChild.child("3").setValue(wednesday);
-        myRefChild.child("4").setValue(tuesday);
-        myRefChild.child("5").setValue(thursday);
-        myRefChild.child("6").setValue(friday);
-        myRefChild.child("7").setValue(saturday);
-        myRefChild.child(sunday.getName()).setValue(sunday);
-    }
 
     @Override
     public void onBackPressed() {
@@ -147,6 +119,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Login(String userName, String password) {
+        DatabaseReference myRef = database.getReference("blockUsers").child("blockList");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    blockList = (Map<String, String>) task.getResult().getValue();
+                }
+                else {
+
+                }
+            }
+        });
+
         mAuth.signInWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -159,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
                             setMainFragment();
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(MainActivity.this, "Successful Login", Toast.LENGTH_LONG).show();
-
                         } else {
                             if (userName.equals("admin") && password.equals("admin")) {
                                 setFragment(new AdminFragment());
@@ -204,26 +188,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean checkIfUserIsBlock(String email) {
-// TODO:: fix this
-//        DatabaseReference myRef = database.getReference("blockUsers").child("blockList");
-//        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    Map<String,String> blockList = (Map<String, String>) task.getResult().getValue();
-//                    if (blockList.containsValue(email)) {
-//                        res = true;
-//                    }
-//                    else {
-//                        res = false;
-//                    }
-//                }
-//                else {
-//                }
-//            }
-//        });
-//
-//        return res;
-        return false;
+        return blockList.containsValue(email);
+    }
+
+    public void VerifyOperationTimeExist() {
+        DatabaseReference myRef = database.getReference("settings").child("OperationTime");
+        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                }
+                else{
+                    if(task.getResult().hasChildren()) {
+                        Object objData = task.getResult().getValue(Object.class);
+                        HashMap<String, Day> hashMap = (HashMap) objData;
+                        initDaysHours(myRef,hashMap);
+                    }
+                }
+            }
+        });
+    }
+
+    private void initDaysHours(DatabaseReference myRefChild, HashMap<String, Day> hashMap)
+    {
+        Day sunday = new Day("sunday","9:00", "17:00",false);
+        Day monday = new Day("monday","9:00", "17:00",false);
+        Day tuesday = new Day("tuesday","9:00", "17:00",false);
+        Day wednesday = new Day("wednesday","9:00", "17:00",false);
+        Day thursday = new Day("thursday","9:00", "17:00",false);
+        Day friday = new Day("friday","00:00", "00:00",true);
+        Day saturday = new Day("saturday","00:00", "00:00",true);
+
+        if(!hashMap.containsKey("1")) myRefChild.child("1").setValue(sunday);
+        if(!hashMap.containsKey("2")) myRefChild.child("2").setValue(monday);
+        if(!hashMap.containsKey("3")) myRefChild.child("3").setValue(wednesday);
+        if(!hashMap.containsKey("4")) myRefChild.child("4").setValue(tuesday);
+        if(!hashMap.containsKey("5")) myRefChild.child("5").setValue(thursday);
+        if(!hashMap.containsKey("6"))myRefChild.child("6").setValue(friday);
+        if(!hashMap.containsKey("7"))myRefChild.child("7").setValue(saturday);
     }
 }

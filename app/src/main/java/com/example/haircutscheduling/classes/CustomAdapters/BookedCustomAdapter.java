@@ -78,11 +78,6 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         TextView textViewDateBooked = holder.textViewDateBooked;
         TextView textViewHourBooked = holder.textViewHourBooked;
 
-//        textViewHairStyleBooked.setText(dataSet.get(position).getHairStyle());
-//        textViewPriceBooked.setText(dataSet.get(position).getPrice());
-//        textViewDateBooked.setText(dataSet.get(position).getDate());
-//        textViewHourBooked.setText(dataSet.get(position).getHour());
-
         String date = dataSet.get(position).get("date");
         String hour = dataSet.get(position).get("hour");
         textViewHairStyleBooked.setText(dataSet.get(position).get("hairStyle"));

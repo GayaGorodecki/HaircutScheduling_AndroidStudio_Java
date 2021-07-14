@@ -69,27 +69,6 @@
                 android:padding="10dp" />
 
             <EditText
-                android:id="@+id/editTextPhoneLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/login_text_design"
-                android:drawableStart="@drawable/email_design"
-                android:drawableLeft="@drawable/email_design"
-                android:drawablePadding="10dp"
-                android:ems="10"
-                android:gravity="left"
-                android:hint="Phone"
-                android:inputType="phone"
-                android:padding="10dp" />
-
-            <EditText
                 android:id="@+id/editTextTextPasswordLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

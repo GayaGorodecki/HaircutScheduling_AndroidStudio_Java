@@ -6,16 +6,13 @@ public class User
     private String Email;
     private String Password;
     private String Phone;
-    private Boolean IsBlocked; // TODO delete?
-
     public User() {}
 
-    public User(String name, String email, String password, String phone, Boolean isBlocked) {
+    public User(String name, String email, String password, String phone) {
         setName(name);
         setEmail(email);
         setPassword(password);
         setPhone(phone);
-        setBlocked(isBlocked);
     }
 
     public User(String phone) {
@@ -23,8 +20,6 @@ public class User
         setPhone(phone);
     }
 
-    public Boolean getBlocked() { return IsBlocked; }
-    public void setBlocked(Boolean blocked) { IsBlocked = blocked; }
     public String getPhone() {
         return Phone;
     }

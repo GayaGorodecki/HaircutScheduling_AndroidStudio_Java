@@ -48,13 +48,6 @@ public class SelectAppointmentsFragment extends Fragment {
     private static RecyclerView recyclerView;
     private static AvailabilityCustomAdapter adapter;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String dayString, monthString, yearString;
     private FirebaseDatabase database;
     private MainActivity mainActivity;
     private HairStyleDataModel hairStyleAppointment;
@@ -76,19 +69,14 @@ public class SelectAppointmentsFragment extends Fragment {
      *
      * @return A new instance of fragment SelectAppointmentsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SelectAppointmentsFragment newInstance(HairStyleDataModel hairStyle) {
         SelectAppointmentsFragment fragment = new SelectAppointmentsFragment(hairStyle);
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
         database = FirebaseDatabase.getInstance();
         mainActivity = (MainActivity) getActivity();
     }
@@ -106,6 +94,7 @@ public class SelectAppointmentsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mainActivity.VerifyOperationTimeExist();
 
         CalendarView dayOffCalender = view.findViewById(R.id.calendarViewSelectAppointment);
         dayOffCalender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -187,7 +176,6 @@ public class SelectAppointmentsFragment extends Fragment {
     private ArrayList<String> setNewDate()
     {
         if (settings.DayOffList.containsValue(date)) {
-            // TODO:: write 'not available day'...
             mainActivity = (MainActivity) getActivity();
             Toast.makeText(mainActivity, "No available appointments", Toast.LENGTH_LONG).show();
             return new ArrayList<>();

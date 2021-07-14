@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.haircutscheduling.R;
 import com.example.haircutscheduling.activities.MainActivity;
@@ -37,15 +38,7 @@ import java.util.Set;
  */
 public class BookedAppoitmentsFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private RecyclerView.LayoutManager layoutManager;
     private static RecyclerView recyclerView;
     private static ArrayList<HashMap<String, String>> bookedAppointmentData;
@@ -62,29 +55,20 @@ public class BookedAppoitmentsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment BookedAppoitmentsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static BookedAppoitmentsFragment newInstance(String param1, String param2) {
+    public static BookedAppoitmentsFragment newInstance() {
         BookedAppoitmentsFragment fragment = new BookedAppoitmentsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         database = FirebaseDatabase.getInstance();
         mAuto = FirebaseAuth.getInstance();
+        mainActivity = (MainActivity) getActivity();
+
     }
 
     @Override
@@ -124,30 +108,8 @@ public class BookedAppoitmentsFragment extends Fragment {
 
                         Object objData = task.getResult().getValue(Object.class);
                         HashMap<String, HashMap<String,HashMap<String, String>>> appointmentMap = (HashMap<String, HashMap<String,HashMap<String, String>>>) objData;
-
-//                        HashMap<String, AppointmentsData> appointmentMap = (HashMap<String, AppointmentsData>) objData;
-//
-//                        for (String key : appointmentMap.keySet()) {
-//                            AppointmentsData appointmentsData = appointmentMap.get(key);
-//                            Date date = null;
-//                            try {
-//                                date = dateFormat.parse(key);
-//                            } catch (ParseException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                            for (String hour : appointmentsData.appointmentsList.keySet()) {
-//                                HairStyleDataModel hairStyleDataModel = appointmentsData.appointmentsList.get(hour);
-//                                if (hairStyleDataModel.getUserId().equals(currentUserId) && (date.after(currentDay) || date.equals(currentDay))) {
-//                                    bookedAppointmentData.add(hairStyleDataModel);
-//                                }
-//                            }
-//                        }
-
                         for (HashMap<String,HashMap<String, String>> map : appointmentMap.values()) {
-
                             for (HashMap<String,String> val: map.values()) {
-
                                 Date date = null;
                                 try {
                                     date = dateFormat.parse(val.get("date"));
@@ -162,7 +124,8 @@ public class BookedAppoitmentsFragment extends Fragment {
                         }
                     }
 
-                    mainActivity = (MainActivity) getActivity();
+                    if(bookedAppointmentData.isEmpty())
+                        Toast.makeText(mainActivity,"There is not Booked Appointment",Toast.LENGTH_LONG).show();
                     adapter = new BookedCustomAdapter(bookedAppointmentData, mainActivity);
                     recyclerView.setAdapter(adapter);
                 }
