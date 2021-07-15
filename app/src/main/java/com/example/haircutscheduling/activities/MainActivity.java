@@ -60,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
-    private Map<String,String> blockList = new HashMap<>();;
 
     private boolean savedUserFlag;
-    private static boolean blockFlag;
     public static final String SHARED_PREFS_LOGIN = "loginSharedPrefs";
     public static final String USERNAME = "userName";
     public static final String PASSWORD = "password";
@@ -79,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-
-
 
         fragmentManager = getSupportFragmentManager();
 
@@ -100,8 +96,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     public void onBackPressed() {
         if (fragmentManager.findFragmentById(R.id.fragmentcon).getClass() == MainFragment.class ||
@@ -119,19 +113,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Login(String userName, String password) {
-        DatabaseReference myRef = database.getReference("blockUsers").child("blockList");
-        myRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    blockList = (Map<String, String>) task.getResult().getValue();
-                }
-                else {
-
-                }
-            }
-        });
-
         mAuth.signInWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -185,10 +166,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(USERNAME, "");
         editor.putString(PASSWORD, "");
         editor.apply();
-    }
-
-    public boolean checkIfUserIsBlock(String email) {
-        return blockList.containsValue(email);
     }
 
     public void VerifyOperationTimeExist() {

@@ -41,7 +41,6 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         TextView textViewPriceBooked;
         TextView textViewDateBooked;
         TextView textViewHourBooked;
-        Button changeBtn;
         Button cancelBtn;
 
         public MyViewHolder(View itemView) {
@@ -53,7 +52,6 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
             this.textViewDateBooked = (TextView) itemView.findViewById(R.id.textViewBookedDate);
             this.textViewHourBooked = (TextView) itemView.findViewById(R.id.textViewHourBooked);
             this.cancelBtn = (Button) itemView.findViewById(R.id.buttonCancel);
-            this.changeBtn = (Button) itemView.findViewById(R.id.buttonChange);
         }
     }
 
@@ -85,18 +83,6 @@ public class BookedCustomAdapter extends RecyclerView.Adapter<BookedCustomAdapte
         textViewDateBooked.setText(date);
         textViewHourBooked.setText(hour);
         DatabaseReference myRef = database.getReference("appointments").child("appointmentsList");
-
-        Button change = holder.changeBtn;
-        change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO:: implement removeValue only after choosing new appointment?
-                DatabaseReference myRef = database.getReference("appointments").child("appointmentsList").child(date).child(hour);
-                myRef.removeValue();
-                mainActivity.setFragment(new AppointmentsMainFragment());
-                Toast.makeText(mainActivity, "Appointment removed.\nPlease choose new",Toast.LENGTH_SHORT).show();
-            }
-        });
 
         Button cancel = holder.cancelBtn;
         cancel.setOnClickListener(new View.OnClickListener() {

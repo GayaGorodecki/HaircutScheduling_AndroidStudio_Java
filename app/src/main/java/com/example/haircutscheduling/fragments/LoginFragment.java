@@ -87,10 +87,6 @@ public class LoginFragment extends Fragment {
                 if(userName.isEmpty() || password.isEmpty()) {
                     Toast.makeText(mainActivity, "Please enter user name and password", Toast.LENGTH_LONG).show();
                 }
-                else if (mainActivity.checkIfUserIsBlock(userName))
-                {
-                    Toast.makeText(mainActivity, "User is blocked. Cannot login.", Toast.LENGTH_LONG).show();
-                }
                 else {
                     mainActivity.Login(userName,password);
                 }

@@ -85,10 +85,6 @@ public class SigninFragment extends Fragment {
                 {
                     Toast.makeText(mainActivity, "Please fill in all the required information", Toast.LENGTH_LONG).show();
                 }
-                else if (mainActivity.checkIfUserIsBlock(email))
-                {
-                    Toast.makeText(mainActivity, "User is blocked! Cannot register.", Toast.LENGTH_LONG).show();
-                }
                 else {
                     User user = new User(name, email, password, phone);
                     Register(user);

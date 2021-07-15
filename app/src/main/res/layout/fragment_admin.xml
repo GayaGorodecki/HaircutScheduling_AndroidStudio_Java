@@ -108,47 +108,6 @@
                 android:paddingBottom="10dp">
 
                 <Button
-                    android:id="@+id/buttonTodayAppointment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/buttoms_design"
-                    android:text="Today's Queues"
-                    android:textSize="20sp"
-                    app:backgroundTint="#5CA7B1" />
-
-                <Button
-                    android:id="@+id/buttonManageUsers"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/buttoms_design"
-                    android:text="Manage users"
-                    android:textSize="18sp"
-                    app:backgroundTint="#5CA7B1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|fill|fill_horizontal|fill_vertical"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp">
-
-                <Button
                     android:id="@+id/buttonAddToUpdatesBoard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -177,6 +136,33 @@
                     android:text="Edit contact details"
                     android:textSize="18sp"
                     app:backgroundTint="#5CA7B1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|fill|fill_horizontal|fill_vertical"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp">
+
+                <Button
+                    android:id="@+id/buttonTodayAppointment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttoms_design"
+                    android:text="Today's Queues"
+                    android:textSize="20sp"
+                    app:backgroundTint="#5CA7B1" />
+
             </LinearLayout>
 
         </LinearLayout>

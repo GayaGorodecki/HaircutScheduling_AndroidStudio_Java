@@ -149,19 +149,19 @@ public class EditOpeningHour extends Fragment {
     {
         switch (day)
         {
-            case "sunday":
+            case "Sunday":
                 return "1";
-            case "monday":
+            case "Monday":
                 return "2";
-            case "tuesday":
+            case "Tuesday":
                 return "3";
-            case "wednesday":
+            case "Wednesday":
                 return "4";
-            case "thursday":
+            case "Thursday":
                 return "5";
-            case "friday":
+            case "Friday":
                 return "6";
-            case "saturday":
+            case "Saturday":
                 return "7";
             default:
                 return "0";
