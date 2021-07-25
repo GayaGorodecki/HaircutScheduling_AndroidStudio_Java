@@ -105,7 +105,6 @@ public class TodayAppointmentsFragment extends Fragment {
                     if (appointmentDay.appointmentsList != null)
                     {
                         todayBooked.addAll(appointmentDay.appointmentsList.values());
-                        // TODO:: order by hour?
                     }
 
                     adapter = new TodayAppointmentsCustomAdapter(todayBooked);

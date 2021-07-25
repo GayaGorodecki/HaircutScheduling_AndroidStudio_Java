@@ -188,13 +188,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDaysHours(DatabaseReference myRefChild, HashMap<String, Day> hashMap)
     {
-        Day sunday = new Day("sunday","9:00", "17:00",false);
-        Day monday = new Day("monday","9:00", "17:00",false);
-        Day tuesday = new Day("tuesday","9:00", "17:00",false);
-        Day wednesday = new Day("wednesday","9:00", "17:00",false);
-        Day thursday = new Day("thursday","9:00", "17:00",false);
-        Day friday = new Day("friday","00:00", "00:00",true);
-        Day saturday = new Day("saturday","00:00", "00:00",true);
+        Day sunday = new Day("Sunday","9:00", "17:00",false);
+        Day monday = new Day("Monday","9:00", "17:00",false);
+        Day tuesday = new Day("Tuesday","9:00", "17:00",false);
+        Day wednesday = new Day("Wednesday","9:00", "17:00",false);
+        Day thursday = new Day("Thursday","9:00", "17:00",false);
+        Day friday = new Day("Friday","00:00", "00:00",true);
+        Day saturday = new Day("Saturday","00:00", "00:00",true);
 
         if(!hashMap.containsKey("1")) myRefChild.child("1").setValue(sunday);
         if(!hashMap.containsKey("2")) myRefChild.child("2").setValue(monday);

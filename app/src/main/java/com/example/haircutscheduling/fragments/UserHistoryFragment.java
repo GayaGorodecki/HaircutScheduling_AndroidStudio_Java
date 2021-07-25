@@ -125,8 +125,6 @@ public class UserHistoryFragment extends Fragment {
             }
         });
 
-        // TODO:: sort list by hour\date?
-
         return view;
     }
 }

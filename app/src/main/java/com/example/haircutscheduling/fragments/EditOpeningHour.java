@@ -68,8 +68,6 @@ public class EditOpeningHour extends Fragment {
         mainActivity.VerifyOperationTimeExist();
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

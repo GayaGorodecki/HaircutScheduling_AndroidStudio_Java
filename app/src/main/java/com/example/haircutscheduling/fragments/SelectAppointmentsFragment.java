@@ -120,8 +120,6 @@ public class SelectAppointmentsFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                // TODO:: if selected day id today - show future hours.. ?
-
                 if(selectedDate.before(current)) {
                     Toast.makeText(mainActivity, "Please select future date", Toast.LENGTH_LONG).show();
                 }
@@ -151,11 +149,6 @@ public class SelectAppointmentsFragment extends Fragment {
                             } else {
                                 ArrayList<String> hours = new ArrayList<>();
                                 if (task.getResult().hasChildren()) {
-
-                                    // TODO:: delete AppointmentsData and return this - ?
-//                                    Object objData = task.getResult().getValue(Object.class);
-//                                    HashMap<String, HairStyleDataModel> appointmentDay = (HashMap<String, HairStyleDataModel>) objData;
-
                                     AppointmentsData appointmentDay = new AppointmentsData((HashMap) task.getResult().getValue());
                                     hours = getAvailableHours(appointmentDay, day);
                                 } else {

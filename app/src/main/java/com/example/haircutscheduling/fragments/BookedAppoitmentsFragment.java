@@ -132,8 +132,6 @@ public class BookedAppoitmentsFragment extends Fragment {
             }
         });
 
-        // TODO:: sort list by hour\date?
-
         return view;
     }
 }
